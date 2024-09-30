@@ -39,8 +39,8 @@ import { themeColor, siteName } from "../../data/items";
           <!-- contoh a href menuju ke id #about-section -->
           <li><a href="" class="nav-link">Technology</a></li>
           <li><a href="" class="nav-link">Product</a></li>
-          <li><router-link to="/blog" class="" active-class="active">Blog</router-link></li>
-          <li><a href="" class="nav-link">Contact Us</a></li>
+          <li><router-link to="/blog" active-class="active">Blog</router-link></li>
+          <li><router-link to="/contact" active-class="active">Contact Us</router-link></li>
           <li class="cta-button-rounded" :style="[{ color: themeColor }, { borderColor: themeColor }]">
             <a href="#">Sign in</a>
           </li>

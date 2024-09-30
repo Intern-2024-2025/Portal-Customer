@@ -12,6 +12,7 @@ import Blog from "../../components/LandingPage/Blog.vue";
 import Contact from "../../components/LandingPage/Contact.vue";
 import Footer from "../../components/LandingPage/Footer.vue";
 import Partner from "../../components/LandingPage/Partner.vue";
+import UseCase from "../../components/LandingPage/UseCase.vue"
 </script>
 
 <template>
@@ -20,6 +21,7 @@ import Partner from "../../components/LandingPage/Partner.vue";
   <Partner/>
   <service1/>
   <Service2/>
+  <UseCase/>
   <!-- <Advantage />
   <About /> -->
   <!-- <Feature/> -->
