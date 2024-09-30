@@ -9,7 +9,7 @@
       </div>
       <div class="col-lg-12">
         <p class="industries">By Industries</p>
-        <div class="oke-wrapper">
+        <div class="oke-wrapper-use-case">
           <div class="box-use-case">
             <div data-aos="fade-up" data-aos-delay="0">
               <img src="../../assets/images/logo/logo_bssn.png" />
@@ -52,15 +52,17 @@
           By Current Issues<br />In 2023 and 2024, Indonesia faced several
           significant cybercrime incidents, highlighting its growing
           vulnerability to cyber threats as the country becomes increasingly
-          digital.*
+          digital.
         </p>
-        <div class="oke-wrapper">
+        <div class="oke-wrapper-use-case">
           <div class="box-use-case">
             <div data-aos="fade-up" data-aos-delay="0">
               <img src="../../assets/images/logo/logo_bssn.png" />
               <br />
             </div>
-            <h5 class="bold">Data Breach of 34 Million Passport Records (2023)</h5>
+            <h5 class="bold">
+              Data Breach of 34 Million Passport Records (2023)
+            </h5>
             <p>
               Data protection solutions for banking and financial institutions
             </p>
@@ -99,7 +101,7 @@
 </template>
 
 <style>
-.oke-wrapper {
+.oke-wrapper-use-case {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* Membuat 3 kolom dengan lebar sama */
   gap: 10px; /* Menambah jarak antar elemen */
