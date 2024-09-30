@@ -1,0 +1,65 @@
+<script setup></script>
+<template>
+  <div class="jarak">
+    <div class="container">
+      <div class="col-lg-12">
+        <div class="oke-wrapper">
+          <div class="oke">
+            <div data-aos="fade-up" data-aos-delay="0">
+              <img src="../../assets/images/logo/logo_bssn.png" />
+            </div>
+          </div>
+          <div class="oke">
+            <div data-aos="fade-up" data-aos-delay="0">
+              <img src="../../assets/images/logo/logo_kominfo_tangsel.png" />
+            </div>
+          </div>
+          <div class="oke">
+            <div data-aos="fade-up" data-aos-delay="0">
+              <img
+                src="../../assets/images/logo/logo_telkom.jpg"
+                style="width: 300; height: 100px; border-radius: 5px"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style>
+.jarak {
+  padding-bottom: 40px;
+  position: relative;
+}
+
+.oke-wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Membuat 3 kolom dengan lebar sama */
+  gap: 10px; /* Menambah jarak antar elemen */
+}
+
+.oke {
+  text-align: center; /* Posisikan teks di tengah setiap elemen */
+  padding: 10px;
+}
+.oke img {
+  width: auto;
+  height: 100px;
+  border-radius: 5px;
+}
+
+/* Media query untuk layar lebih kecil */
+@media (max-width: 991px) {
+  .oke-wrapper {
+    grid-template-columns: repeat(2, 1fr); /* 2 kolom untuk layar sedang */
+  }
+}
+
+@media (max-width: 768px) {
+  .oke-wrapper {
+    grid-template-columns: 1fr; /* 1 kolom untuk layar kecil */
+  }
+}
+</style>
