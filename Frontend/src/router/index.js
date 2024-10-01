@@ -29,20 +29,9 @@ const routes = [
     component: () => import("../views/Product/Product.vue"),
   },
   {
-<<<<<<< HEAD
     path: "/blogdetail",
     name: "blogdetail",
     component: () => import( "../views/blog/BlogDetail.vue"),
-=======
-    path: "/blog-detail/:id",
-    name: "pricing",
-    component: () => import("../views/blog/BlogDetail.vue"),
-  },
-  {
-    path: "/technology",
-    name: "technology",
-    component: () => import("../views/Technology/Technology.vue"),
->>>>>>> 8d962a5488404500f514e7973aae33c7fb49e63d
   },
 ];
 
