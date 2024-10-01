@@ -1,4 +1,4 @@
-<script setup>
+  <script setup>
 import { themeColor, siteName } from "../../data/items";
 </script>
 <template>

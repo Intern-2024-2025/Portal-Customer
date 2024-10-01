@@ -12,6 +12,7 @@ const blogItems = [
     photo: "images/person_1.jpg",
     description:
       "This is called present tense. Do you know This is called present tense. Do you know This is called present tense...",
+    link: "/blogdetail",
   },
   {
     title: "Pak Vincent beserta muridnya pergi dengan jumlah orang 2",
@@ -21,6 +22,7 @@ const blogItems = [
     photo: "images/person_2.jpg",
     description:
       "This is called present tense. Do you know This is called present tense. Do you know This is called present tense...",
+    link: "/blogdetail",
   },
   {
     title: "Far far away behind the word mountains far from the countries",
@@ -30,6 +32,7 @@ const blogItems = [
     photo: "images/person_3.jpg",
     description:
       "This is called present tense. Do you know This is called present tense. Do you know This is called present tense...",
+    link: "/blogdetail",
   },
 ];
 
@@ -75,9 +78,11 @@ const filteredBlogItems = computed(() => {
         >
           <div class="news-item">
             <div class="vcard d-flex align-items-center mb-4">
-              <div class="img-wrap">
-                <img :src="item.photo" alt="Image" class="img-fluid" />
-              </div>
+                <div class="img-wrap">
+                  <a :href="item.link" title="Klik untuk melihat lebih lanjut">
+                    <img :src="item.photo" alt="Image" class="img-fluid" />
+                  </a>
+                </div>
             </div>
             <div class="news-contents mb-4">
               <span class="post-meta-2">{{ item.category }}, 4 min read</span>
