@@ -40,7 +40,7 @@ const total = 4;
       <div class="oke-wrapper-technology" data-aos="fade-up" data-aos-delay="100">
         <div class="box-technology">
           <div data-aos="fade-up" data-aos-delay="100">
-            <img src="../../assets/images/logo/logo_bssn.png" />
+            <img src="images/Home/sgx.png" />
             <br />
           </div>
           <h5 class="bold" >Intel® Software Guard Extensions (SGX)</h5>
@@ -55,27 +55,29 @@ const total = 4;
         </div>
         <div class="box-technology">
           <div data-aos="fade-up" data-aos-delay="100">
-            <img src="../../assets/images/logo/logo_bssn.png" />
+            <img src="images/Home/encrypted-file.png" />
             <br />
           </div>
-          <h5 class="bold">Healthcare</h5>
-          <p>Protection of patient data and HIPAA compliance</p>
+          <h5 class="bold">Sealing and Encryption</h5>
+          <p>SGX enables sealing, which ties encryption keys to specific CPUs, ensuring that keys can only be decrypted by the original CPU that sealed them. This enhances the security of key storage, preventing unauthorized access.</p>
         </div>
         <div class="box-technology">
           <div data-aos="fade-up" data-aos-delay="100">
-            <img src="../../assets/images/logo/logo_kominfo_tangsel.png" />
+            <img src="images/Home/attestation.png" />
             <br />
           </div>
-          <h5 class="bold">Government</h5>
-          <p>Meeting government security standards and data policies</p>
+          <h5 class="bold">Remote attestation</h5>
+          <p>ATHENA KMS uses SGX’s remote attestation feature to verify that the software running in the enclave is genuine and secure, further protecting against unauthorized tampering or access to sensitive keys.</p>
         </div>
         <div class="box-technology">
           <div data-aos="fade-up" data-aos-delay="100">
-            <img src="../../assets/images/logo/logo_telkom.jpg" />
+            <img src="images/Home/tee.png" />
             <br />
           </div>
-          <h5 class="bold">Retail & E-commerce</h5>
-          <p>Secure customer data and transaction details</p>
+          <h5 class="bold">Trusted Execution Environment (TEE)</h5>
+          <p>ATHENA KMS operates within a SoftTEE (a software-based trusted execution environment) enabled by Intel SGX.</p>
+          <p>This ensures that sensitive data like keys and certificates are processed in a secure, hardware-backed environment that protects against external threats.</p>
+          <p>These technologies combine to offer a highly secure environment for key management, making ATHENA KMS an effective solution for managing cryptographic keys in a secure and trusted manner.</p>
         </div>
       </div>
     </div>

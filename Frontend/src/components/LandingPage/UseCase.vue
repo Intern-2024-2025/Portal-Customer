@@ -55,7 +55,7 @@
           digital.
         </p>
         <div class="oke-wrapper-use-case">
-          <div class="box-use-case">
+          <div class="box-use-case justify">
             <div data-aos="fade-up" data-aos-delay="0">
               <img src="images/Home/data-leak.png" />
               <br />
@@ -65,27 +65,32 @@
             </h5>
             <p>
               A hacktivist named Bjorka stole the passport data of 34 million Indonesian citizens, which included sensitive information like names, passport numbers, and dates of birth. 
-            </p>
+            <br><br>
+            This raised concerns about identity theft and fraud, as the stolen data was sold on the dark web.</p>
           </div>
-          <div class="box-use-case">
+          <div class="box-use-case justify">
             <div data-aos="fade-up" data-aos-delay="0">
               <img src="images/Home/cyber-attack.png" />
               <br />
             </div>
             <h5 class="bold">Cyberattacks Ahead of the 2024 Elections</h5>
             <p>With Indonesia's elections approaching, the threat of cyberattacks has increased. Experts warned of potential attacks on voter data, particularly targeting the Permanent Voter List (DPT), containing sensitive personal information. 
-            </p>
+            <br><br>
+            Geopolitical tensions, hacktivism, and misinformation campaigns are also expected to escalate during the election period, posing risks to the integrity of the democratic process.
+          </p>
           </div>
-          <div class="box-use-case">
+          <div class="box-use-case justify">
             <div data-aos="fade-up" data-aos-delay="0">
               <img src="images/Home/medical-record.png" />
               <br />
             </div>
             <h5 class="bold">Healthcare and Social Security Data Leaks</h5>
             <p>In previous years, Indonesia experienced significant data breaches, including the leak of personal data from BPJS Kesehatan (the national healthcare agency) in 2021, which affected 279 million individuals. 
+            <br><br>
+            These breaches continue to raise alarms about the security of public institutions.
             </p>
           </div>
-          <div class="box-use-case">
+          <div class="box-use-case justify">
             <div data-aos="fade-up" data-aos-delay="0">
               <img
                 src="images/Home/database.png"
@@ -94,7 +99,11 @@
               <!-- style="width: 300; height: 100px; border-radius: 5px" -->
             </div>
             <h5 class="bold">Pusat Data National Ransomware</h5>
-            <p>The ransomware encrypted critical systems, disabling Windows Defender and deleting essential files, which hindered recovery efforts. However, authorities were able to migrate some essential services, such as immigration, to cloud platforms like Amazon Web Services, helping to restore operations partially.
+            <p>In June 2024, Indonesia's National Data Center was hit by a major ransomware attack using a variant of the LockBit 3.0 ransomware, known as Brain Cipher. The attack severely impacted over 200 government services, including immigration, passport processing, and visa systems, causing significant disruption at airports and other public services. Hackers demanded a ransom of $8 million, but the Indonesian government refused to pay.
+            <br> <br>
+            The ransomware encrypted critical systems, disabling Windows Defender and deleting essential files, which hindered recovery efforts. However, authorities were able to migrate some essential services, such as immigration, to cloud platforms like Amazon Web Services, helping to restore operations partially.
+            <br><br>
+            This attack highlighted weaknesses in the country's cyber defenses, particularly the lack of adequate backups, which could have mitigated the impact of the ransomware. Investigations are ongoing, involving Indonesia's National Cyber and Crypto Agency (BSSN), and cyber-forensic efforts are in place to assess the full scope of the breach
             </p>
           </div>
         </div>
@@ -112,7 +121,7 @@
 
 .box-use-case {
   text-align: center; /* Posisikan teks di tengah setiap elemen */
-  padding: 10px;
+  padding: 15px;
   background: white;
   border-radius: 5px;
 }
@@ -120,6 +129,10 @@
   width: 75px;
   height: 75px;
   border-radius: 5px;
+}
+.justify p{
+  text-align: justify;
+  padding: 20px;
 }
 .bold {
   font-weight: bold;
