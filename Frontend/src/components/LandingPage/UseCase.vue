@@ -57,42 +57,45 @@
         <div class="oke-wrapper-use-case">
           <div class="box-use-case">
             <div data-aos="fade-up" data-aos-delay="0">
-              <img src="../../assets/images/logo/logo_bssn.png" />
+              <img src="images/Home/data-leak.png" />
               <br />
             </div>
             <h5 class="bold">
               Data Breach of 34 Million Passport Records (2023)
             </h5>
             <p>
-              Data protection solutions for banking and financial institutions
+              A hacktivist named Bjorka stole the passport data of 34 million Indonesian citizens, which included sensitive information like names, passport numbers, and dates of birth. 
             </p>
           </div>
           <div class="box-use-case">
             <div data-aos="fade-up" data-aos-delay="0">
-              <img src="../../assets/images/logo/logo_bssn.png" />
+              <img src="images/Home/cyber-attack.png" />
               <br />
             </div>
-            <h5 class="bold">Healthcare</h5>
-            <p>Protection of patient data and HIPAA compliance</p>
+            <h5 class="bold">Cyberattacks Ahead of the 2024 Elections</h5>
+            <p>With Indonesia's elections approaching, the threat of cyberattacks has increased. Experts warned of potential attacks on voter data, particularly targeting the Permanent Voter List (DPT), containing sensitive personal information. 
+            </p>
           </div>
           <div class="box-use-case">
             <div data-aos="fade-up" data-aos-delay="0">
-              <img src="../../assets/images/logo/logo_kominfo_tangsel.png" />
+              <img src="images/Home/medical-record.png" />
               <br />
             </div>
-            <h5 class="bold">Government</h5>
-            <p>Meeting government security standards and data policies</p>
+            <h5 class="bold">Healthcare and Social Security Data Leaks</h5>
+            <p>In previous years, Indonesia experienced significant data breaches, including the leak of personal data from BPJS Kesehatan (the national healthcare agency) in 2021, which affected 279 million individuals. 
+            </p>
           </div>
           <div class="box-use-case">
             <div data-aos="fade-up" data-aos-delay="0">
               <img
-                src="../../assets/images/logo/logo_telkom.jpg"
-                style="width: 300; height: 100px; border-radius: 5px"
-              />
+                src="images/Home/database.png"
+                />
               <br />
+              <!-- style="width: 300; height: 100px; border-radius: 5px" -->
             </div>
-            <h5 class="bold">Retail & E-commerce</h5>
-            <p>Secure customer data and transaction details</p>
+            <h5 class="bold">Pusat Data National Ransomware</h5>
+            <p>The ransomware encrypted critical systems, disabling Windows Defender and deleting essential files, which hindered recovery efforts. However, authorities were able to migrate some essential services, such as immigration, to cloud platforms like Amazon Web Services, helping to restore operations partially.
+            </p>
           </div>
         </div>
       </div>
