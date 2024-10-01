@@ -4,7 +4,7 @@ import Hero from "../../components/LandingPage/Hero.vue";
 import Service1 from "../../components/LandingPage/Service1.vue";
 import Service2 from "../../components/LandingPage/Service2.vue";
 import Feature from "../../components/LandingPage/Feature.vue";
-import Pricing from "../../components/LandingPage/Pricing.vue";
+// import Pricing from "../../components/LandingPage/Pricing.vue";
 import Advantage from "../../components/LandingPage/Advantage.vue";
 import Testimonial from "../../components/LandingPage/Testimonial.vue";
 import About from "../../components/LandingPage/About.vue";

@@ -734,10 +734,9 @@ h4,
   /* padding: 6rem 0; */
   display: flex;
   justify-content: center; /* Untuk memusatkan konten secara horizontal */
-  align-items: center;     /* Untuk memusatkan konten secara vertikal */
-  min-height: 100vh;       /* Mengambil tinggi penuh dari viewport */
+  align-items: center; /* Untuk memusatkan konten secara vertikal */
+  min-height: 100vh; /* Mengambil tinggi penuh dari viewport */
   /* padding: 0;              Menghapus padding untuk sentralisasi penuh */
-
 }
 
 @media (max-width: 991.98px) {
@@ -777,7 +776,7 @@ h4,
   background: url("../images/dots.png") right top;
 }
 
-.untree_co-hero .excerpt  {
+.untree_co-hero .excerpt {
   margin-bottom: 30px;
   font-size: 18px;
 }
@@ -887,11 +886,11 @@ h4,
   transform: translate(-50%, -50%);
 }
 
-.service .service-contents h3{
+.service .service-contents h3 {
   font-size: 24px;
 }
 
-.service .service-contents p{
+.service .service-contents p {
   font-size: 18px;
 }
 
@@ -968,7 +967,7 @@ h4,
 }
 .pricing .body .price .plan {
   font-size: 30px;
-  color: #000000;
+  /* color: #000000; */
 }
 .pricing .body .price .price {
   color: #407bff;
@@ -1026,11 +1025,11 @@ h4,
   flex: 0 0 50px;
   margin-right: 20px; */
 
-  display : flex;
-  align-items: center; 
-  justify-content: center; 
-  width: 100%; 
-  height: 300px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 300px;
 }
 /* .news-item .vcard .img-wrap img {
   border-radius: 50%;
@@ -1047,7 +1046,7 @@ h4,
 }
 .news-item .vcard .post-meta span {
   color: #c6c6c6;
-} */ 
+} */
 .news-item .news-contents h3 {
   /* line-height: 1.2; */
   /* line-height: sm; */
@@ -1069,17 +1068,17 @@ h4,
 
 .pagination {
   display: flex;
-  justify-content: center; 
-  list-style: none; 
+  justify-content: center;
+  list-style: none;
   padding: 4rem;
 }
 
 .page-item {
-  margin: 0 10px; 
+  margin: 0 10px;
 }
 
 .page-link {
-  color: #007bff; 
+  color: #007bff;
   border: 1px solid #ddd;
   padding: 0.5em 1em;
   text-decoration: none;

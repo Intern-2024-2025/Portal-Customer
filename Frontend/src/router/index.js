@@ -18,35 +18,25 @@ const routes = [
     name: "blog",
     component: () => import("../views/blog/Blog.vue"),
   },
-  // {
-  //   path: "/login",
-  //   name: "login",
-  //   component: () => import( "../views/Authentication/Login.vue"),
-  // },
-  // {
-  //   path: "/logik",
-  //   name: "logik",
-  //   component: () => import( "../views/Authentication/logik.vue"),
-  // },
   {
     path: "/contact",
     name: "contact",
-    component: () => import( "../views/Contact/ContactView.vue"),
+    component: () => import("../views/Contact/ContactView.vue"),
   },
-  // {
-  //   path: "/Contact1",
-  //   name: "contact1",
-  //   component: () => import( "../views/Contact/MainPageView.vue"),
-  // },
   {
-    path: "/Pricing",
-    name: "pricing",
-    component: () => import( "../views/PricingV/PricingView.vue"),
+    path: "/product",
+    name: "prouct",
+    component: () => import("../views/Product/Product.vue"),
   },
   {
     path: "/blog-detail/:id",
     name: "pricing",
-    component: () => import( "../views/blog/BlogDetail.vue"),
+    component: () => import("../views/blog/BlogDetail.vue"),
+  },
+  {
+    path: "/technology",
+    name: "technology",
+    component: () => import("../views/Technology/Technology.vue"),
   },
 ];
 

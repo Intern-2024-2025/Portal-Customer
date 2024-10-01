@@ -33,30 +33,58 @@ import { themeColor, siteName } from "../../data/items";
           class="js-clone-nav d-none mt-1 d-lg-inline-block site-menu float-right"
         >
           <li class="">
-            <router-link to="/" class="" active-class="active">Home</router-link>
+            <router-link to="/" class="" active-class="active"
+              >Home</router-link
+            >
             <!-- <a href="/" class="nav-link">Home</a> -->
           </li>
           <!-- contoh a href menuju ke id #about-section -->
-          <li><a href="" class="nav-link">Technology</a></li>
-          <li><a href="/pricing" class="nav-link">Product</a></li>
-          <li><router-link to="/blog" active-class="active">Blog</router-link></li>
-          <li><router-link to="/contact" active-class="active">Contact Us</router-link></li>
-          <li class="cta-button-rounded" :style="[{ color: themeColor }, { borderColor: themeColor }]">
-            <a href="#">Sign in</a>
+          <li>
+            <router-link to="/technology" active-class="active"
+              >Technology</router-link
+            >
+          </li>
+          <li>
+            <router-link to="/product" active-class="active"
+              >Product</router-link
+            >
+          </li>
+          <li>
+            <router-link to="/blog" active-class="active">Blog</router-link>
+          </li>
+          <!-- <li><router-link to="/contact" active-class="active">Contact Us</router-link></li> -->
+          <li class="cta-button-rounded">
+            <a class="btn-outline-primary-header" href="/contact">Contact Us</a>
           </li>
           <!-- <li class="cta-primary">
             <a href="#" :style="[{ backgroundColor: themeColor }]">Register</a>
           </li> -->
         </ul>
-        <a
+        <!-- <a
           href="#"
           class="burger ml-auto float-right site-menu-toggle js-menu-toggle d-inline-block dark d-lg-none"
           data-toggle="collapse"
           data-target="#main-navbar"
         >
           <span></span>
-        </a>
+        </a> -->
       </div>
     </div>
   </nav>
 </template>
+
+<style>
+.btn-outline-primary-header:hover {
+  background-color: hsl(240, 100%, 50%) !important;
+  color: white !important;
+  border-color: hsl(240, 100%, 50%) !important;
+  font-size: 10px;
+  font-weight: normal;
+}
+
+.btn-primary:hover {
+  background-color: hsl(240, 80%, 40%) !important;
+  color: white !;
+  border-color: hsl(240, 80%, 40%);
+}
+</style>
