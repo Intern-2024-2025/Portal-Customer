@@ -12,7 +12,7 @@
         <div class="oke-wrapper-use-case">
           <div class="box-use-case">
             <div data-aos="fade-up" data-aos-delay="0">
-              <img src="../../assets/images/logo/logo_bssn.png" />
+              <img src="images/Home/financial-statement.png" />
               <br />
             </div>
             <h5 class="bold">Financial Services</h5>
@@ -22,7 +22,7 @@
           </div>
           <div class="box-use-case">
             <div data-aos="fade-up" data-aos-delay="0">
-              <img src="../../assets/images/logo/logo_bssn.png" />
+              <img src="images/Home/healthcare.png" />
               <br />
             </div>
             <h5 class="bold">Healthcare</h5>
@@ -30,7 +30,7 @@
           </div>
           <div class="box-use-case">
             <div data-aos="fade-up" data-aos-delay="0">
-              <img src="../../assets/images/logo/logo_kominfo_tangsel.png" />
+              <img src="images/Home/government-building.png" alt="Government Building"/>
               <br />
             </div>
             <h5 class="bold">Government</h5>
@@ -39,10 +39,10 @@
           <div class="box-use-case">
             <div data-aos="fade-up" data-aos-delay="0">
               <img
-                src="../../assets/images/logo/logo_telkom.jpg"
-                style="width: 300; height: 100px; border-radius: 5px"
+                src="images/Home/ecommerce.png"
               />
               <br />
+              <!-- style="width: 300; height: 100px; border-radius: 5px" -->
             </div>
             <h5 class="bold">Retail & E-commerce</h5>
             <p>Secure customer data and transaction details</p>
