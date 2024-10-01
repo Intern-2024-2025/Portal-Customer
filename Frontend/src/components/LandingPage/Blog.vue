@@ -2,38 +2,38 @@
 import { ref, computed } from "vue";
 
 const heading = "Our News";
-const subHeading = "Far from the countries Vokalia and Consonantia";
+const subHeading = "BLOGS";
 const blogItems = [
   {
-    title: "Nun Jauh disana ada lorem ipsum dolor siet qwerty",
-    name: "James",
+    title: "Kripto vs Kriptografi",
+    // name: "Encrypt vs Kriptografi",
     date: "Jun 14, 2020",
     category: "Digital Service",
-    photo: "images/person_1.jpg",
+    photo: "images/Kripto.png",
     description:
-      "This is called present tense. Do you know This is called present tense. Do you know This is called present tense...",
+      "Istilah kripto dan kriptografi sering terdengar, terutama ketika kita berbicara tentang keamanan siber dan mata uang digital...",
     link: "/blogdetail",
   },
-  {
-    title: "Pak Vincent beserta muridnya pergi dengan jumlah orang 2",
-    name: "John",
-    date: "Jun 15, 2020",
-    category: "Digital Service",
-    photo: "images/person_2.jpg",
-    description:
-      "This is called present tense. Do you know This is called present tense. Do you know This is called present tense...",
-    link: "/blogdetail",
-  },
-  {
-    title: "Far far away behind the word mountains far from the countries",
-    name: "Lucy",
-    date: "Jun 16, 2020",
-    category: "Business",
-    photo: "images/person_3.jpg",
-    description:
-      "This is called present tense. Do you know This is called present tense. Do you know This is called present tense...",
-    link: "/blogdetail",
-  },
+  // {
+  //   title: "Pak Vincent beserta muridnya pergi dengan jumlah orang 2",
+  //   name: "John",
+  //   date: "Jun 15, 2020",
+  //   category: "Digital Service",
+  //   photo: "images/person_2.jpg",
+  //   description:
+  //     "This is called present tense. Do you know This is called present tense. Do you know This is called present tense...",
+  //   link: "/blogdetail",
+  // },
+  // {
+  //   title: "Far far away behind the word mountains far from the countries",
+  //   name: "Lucy",
+  //   date: "Jun 16, 2020",
+  //   category: "Business",
+  //   photo: "images/person_3.jpg",
+  //   description:
+  //     "This is called present tense. Do you know This is called present tense. Do you know This is called present tense...",
+  //   link: "/blogdetail",
+  // },
 ];
 
 const searchQuery = ref("");
@@ -85,7 +85,7 @@ const filteredBlogItems = computed(() => {
                 </div>
             </div>
             <div class="news-contents mb-4">
-              <span class="post-meta-2">{{ item.category }}, 4 min read</span>
+              <!-- <span class="post-meta-2">{{ item.category }}, 4 min read</span> -->
               <h3>
                 <a href="/blogdetail">{{ item.title }}</a>
               </h3>

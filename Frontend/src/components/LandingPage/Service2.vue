@@ -42,7 +42,7 @@ const total = 4;
         </div>
         <div class="col-lg-5">
           <div
-            class="service link horizontal d-flex active"
+            class="service link horizontal d-flex bg-light"
             data-aos="fade-left"
             data-aos-delay="0"
           >
@@ -57,7 +57,7 @@ const total = 4;
             </div>
           </div>
           <div
-            class="service link horizontal d-flex active"
+            class="service link horizontal d-flex bg-light"
             data-aos="fade-left"
             data-aos-delay="100"
           >
@@ -73,7 +73,7 @@ const total = 4;
             </div>
           </div>
           <div
-            class="service link horizontal d-flex active"
+            class="service link horizontal d-flex bg-light"
             data-aos="fade-left"
             data-aos-delay="200"
           >

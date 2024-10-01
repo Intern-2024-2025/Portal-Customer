@@ -2,7 +2,7 @@
 import { contactInfo } from "../../data/items";
 
 const copyrightText = "Copyright 2024, All rights reserved.";
-const column1Heading = "Anthena Key Management Server";
+const column1Heading = "Athena Key Management Server";
 const column1Text =
   "Flexible and user friendly software-based key management system with hardware-based root of trust and protection.";
 const column2Heading = "Projects";
@@ -92,36 +92,38 @@ const socialItems = [
         <div class="col-lg-2">
           <div class="widget">
             <h3>{{ column3Heading }}</h3>
-            <ul class="list-unstyled float-left links">
+            <p> </p>
+            <p>Technology</p>
+            <p>Product</p>
+            <p>Blog</p>
+            <p>Contact Us</p>
+            <!-- <ul class="list-unstyled links">
               <li><a href="#">Home</a></li>
               <li><a href="#">Technology</a></li>
               <li><a href="#">Product</a></li>
               <li><a href="#">Blog</a></li>
               <li><a href="#">Contact Us</a></li>
-            </ul>
+            </ul> -->
           </div>
         </div>
         <div class="col-lg-3">
           <div class="widget">
             <h3>{{ column4Heading }}</h3>
             <address>{{ contactInfo.address }}</address>
-            <ul class="list-unstyled links mb-4">
+            <p>{{contactInfo.phone1}}</p>
+            <p>{{contactInfo.email}}</p>
+            <!-- <ul class="list-unstyled links mb-4">
               <li>
                 <a :href="'tel://' + contactInfo.phone1">{{
                   contactInfo.phone1
                 }}</a>
               </li>
-              <!-- <li>
-                <a :href="'tel://' + contactInfo.phone2">{{
-                  contactInfo.phone2
-                }}</a>
-              </li> -->
               <li>
                 <a :href="'mailto:' + contactInfo.email"
                   ><span>{{ contactInfo.email }}</span></a
                 >
               </li>
-            </ul>
+            </ul> -->
           </div>
         </div>
       </div>

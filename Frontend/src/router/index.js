@@ -18,42 +18,45 @@ const routes = [
     name: "blog",
     component: () => import("../views/blog/Blog.vue"),
   },
-  // {
-  //   path: "/login",
-  //   name: "login",
-  //   component: () => import( "../views/Authentication/Login.vue"),
-  // },
-  // {
-  //   path: "/logik",
-  //   name: "logik",
-  //   component: () => import( "../views/Authentication/logik.vue"),
-  // },
   {
     path: "/contact",
     name: "contact",
-    component: () => import( "../views/Contact/ContactView.vue"),
-  },
-  // {
-  //   path: "/Contact1",
-  //   name: "contact1",
-  //   component: () => import( "../views/Contact/MainPageView.vue"),
-  // },
-  {
-    path: "/Pricing",
-    name: "pricing",
-    component: () => import( "../views/PricingV/PricingView.vue"),
+    component: () => import("../views/Contact/ContactView.vue"),
   },
   {
+    path: "/product",
+    name: "prouct",
+    component: () => import("../views/Product/Product.vue"),
+  },
+  {
+<<<<<<< HEAD
     path: "/blogdetail",
     name: "blogdetail",
     component: () => import( "../views/blog/BlogDetail.vue"),
+=======
+    path: "/blog-detail/:id",
+    name: "pricing",
+    component: () => import("../views/blog/BlogDetail.vue"),
+  },
+  {
+    path: "/technology",
+    name: "technology",
+    component: () => import("../views/Technology/Technology.vue"),
+>>>>>>> 8d962a5488404500f514e7973aae33c7fb49e63d
   },
 ];
 
 //create router
 const router = createRouter({
   history: createWebHistory(),
-  routes, // <-- routes,
+  routes, // <-- routes
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { top: 0 };
+    }
+  },
 });
 
 export default router;

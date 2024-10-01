@@ -30,7 +30,7 @@ const buttonPricing = "Pricing";
               </h1>
               <p>
                 <a
-                  href="#pricing-section"
+                  href="/contact"
                   class="btn btn-outline-primary smoothscroll pricing"
                   :style="[{ color: themeColor }, { borderColor: themeColor }]"
                   >Contact Us</a
