@@ -80,7 +80,7 @@ const packages = [
               </div>
             </div>
             <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
-              <div class="pricing-product active">
+              <div class="pricing-product shadow active">
                 <div class="price">
                   <p>AthenaARCOS (aRC)</p>
                 </div>
@@ -153,7 +153,7 @@ const packages = [
   position: relative;
   padding: 20px;
   border: 2px solid #ffffff;
-  background: white;
+  background: rgb(251, 249, 249);
   border-radius: 10px;
   transition: all 0.3s ease; /* Animasi perubahan */
 }
