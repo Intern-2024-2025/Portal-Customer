@@ -205,27 +205,18 @@ const designation = "Facebook, Product Lead";
   padding-top: 50px;
 }
 .grid-container {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* Membuat 5 kolom dengan lebar sama */
-  gap: 10px; /* Jarak antar kotak */
-  justify-items: center; /* Memposisikan kotak di tengah horizontal */
-  align-items: center; /* Memposisikan konten di tengah vertical */
+  display: flex;
+  flex-wrap: wrap; /* Membuat elemen beralih ke baris baru saat tidak muat */
+  justify-content: center; /* Elemen berada di tengah */
 }
 
 .grid-item {
-  width: 200px;
-  height: 170px;
-  /* background-color: #ffffff; */
-  display: flex;
-  flex-direction: column; /* Susun item dalam kolom (gambar di atas, teks di bawah) */
-  /*justify-content: center; /*item berada di tengah dari atas ke bawah*/
-  align-items: center; /* item berada di tengah dari kanan ke kiri*/
-  padding: 10px;
+  flex: 1 1 200px; /* Setiap item memiliki lebar minimal 200px */
+  max-width: 300px; /* Set batas maksimum untuk mencegah terlalu lebar */
   margin: 10px;
-  /* border: 1px solid #000; */
-  /* font-size: 24px; */
-  /* font-weight: bold; */
+  margin: 10px;
 }
+
 
 .grid-item p {
   font-size: 14px; /* Ukuran teks */
@@ -245,4 +236,16 @@ const designation = "Facebook, Product Lead";
 .shadow-service2{
   border-radius: 15px;
 }
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr); /* Dua kolom pada layar sedang */
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-container {
+    grid-template-columns: 1fr; /* Satu kolom pada layar kecil */
+  }
+}
+
 </style>
