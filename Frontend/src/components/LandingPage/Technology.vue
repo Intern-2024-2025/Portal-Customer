@@ -40,7 +40,7 @@ const total = 4;
       <div class="oke-wrapper-technology" data-aos="fade-up" data-aos-delay="100">
         <div class="box-technology">
           <div data-aos="fade-up" data-aos-delay="100">
-            <img src="images/Home/sgx.png" />
+            <img src="../../../public/images/Home/sgx.png" />
             <br />
           </div>
           <h5 class="bold" >Intel® Software Guard Extensions (SGX)</h5>
@@ -55,7 +55,7 @@ const total = 4;
         </div>
         <div class="box-technology">
           <div data-aos="fade-up" data-aos-delay="100">
-            <img src="images/Home/encrypted-file.png" />
+            <img src="../../../public/images/Home/encrypted-file.png" />
             <br />
           </div>
           <h5 class="bold">Sealing and Encryption</h5>
@@ -63,7 +63,7 @@ const total = 4;
         </div>
         <div class="box-technology">
           <div data-aos="fade-up" data-aos-delay="100">
-            <img src="images/Home/attestation.png" />
+            <img src="../../../public/images/Home/attestation.png" />
             <br />
           </div>
           <h5 class="bold">Remote attestation</h5>
@@ -71,7 +71,7 @@ const total = 4;
         </div>
         <div class="box-technology">
           <div data-aos="fade-up" data-aos-delay="100">
-            <img src="images/Home/tee.png" />
+            <img src="../../../public/images/Home/tee.png" />
             <br />
           </div>
           <h5 class="bold">Trusted Execution Environment (TEE)</h5>
