@@ -49,7 +49,7 @@ const socialItems = [
               catastrophic damage.
             </p>
           </div>
-          <div class="widget">
+          <!-- <div class="widget">
             <h3>{{ connectHeading }}</h3>
             <ul class="list-unstyled social">
               <li style="margin-right: 4px">
@@ -78,7 +78,7 @@ const socialItems = [
                 ></a>
               </li>
             </ul>
-          </div>
+          </div> -->
         </div>
         <div class="col-lg-2 ml-auto">
           <!-- <div class="widget">
@@ -113,7 +113,7 @@ const socialItems = [
           <div class="widget">
             <h3>{{ column4Heading }}</h3>
             <address>{{ contactInfo.address }}</address>
-            <p>{{ contactInfo.phone1 }}</p>
+            <a href="https://wa.me/6281908824046" style="color:gray; margin-bottom: 15px;">{{ contactInfo.phone1 }}</a>
             <p>{{ contactInfo.email }}</p>
             <!-- <ul class="list-unstyled links mb-4">
               <li>
