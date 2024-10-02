@@ -12,7 +12,7 @@
         <div class="oke-wrapper-use-case">
           <div class="box-use-case">
             <div data-aos="fade-up" data-aos-delay="0">
-              <img src="images/Home/financial-statement.png" />
+              <img src="../../../public/images/Home/financial-statement.png" />
               <br />
             </div>
             <h5 class="bold">Financial Services</h5>
@@ -22,7 +22,7 @@
           </div>
           <div class="box-use-case">
             <div data-aos="fade-up" data-aos-delay="0">
-              <img src="images/Home/healthcare.png" />
+              <img src="../../../public/images/Home/healthcare.png" />
               <br />
             </div>
             <h5 class="bold">Healthcare</h5>
@@ -30,7 +30,7 @@
           </div>
           <div class="box-use-case">
             <div data-aos="fade-up" data-aos-delay="0">
-              <img src="images/Home/government-building.png" alt="Government Building"/>
+              <img src="../../../public/images/Home/government-building.png" alt="Government Building"/>
               <br />
             </div>
             <h5 class="bold">Government</h5>
@@ -39,7 +39,7 @@
           <div class="box-use-case">
             <div data-aos="fade-up" data-aos-delay="0">
               <img
-                src="images/Home/ecommerce.png"
+                src="../../../public/images/Home/ecommerce.png"
               />
               <br />
               <!-- style="width: 300; height: 100px; border-radius: 5px" -->
@@ -57,7 +57,7 @@
         <div class="oke-wrapper-use-case">
           <div class="box-use-case justify">
             <div data-aos="fade-up" data-aos-delay="0">
-              <img src="images/Home/data-leak.png" />
+              <img src="../../../public/images/Home/data-leak.png" />
               <br />
             </div>
             <h5 class="bold">
@@ -70,7 +70,7 @@
           </div>
           <div class="box-use-case justify">
             <div data-aos="fade-up" data-aos-delay="0">
-              <img src="images/Home/cyber-attack.png" />
+              <img src="../../../public/images/Home/cyber-attack.png" />
               <br />
             </div>
             <h5 class="bold">Cyberattacks Ahead of the 2024 Elections</h5>
@@ -81,7 +81,7 @@
           </div>
           <div class="box-use-case justify">
             <div data-aos="fade-up" data-aos-delay="0">
-              <img src="images/Home/medical-record.png" />
+              <img src="../../../public/images/Home/medical-record.png" />
               <br />
             </div>
             <h5 class="bold">Healthcare and Social Security Data Leaks</h5>
@@ -93,7 +93,7 @@
           <div class="box-use-case justify">
             <div data-aos="fade-up" data-aos-delay="0">
               <img
-                src="images/Home/database.png"
+                src="../../../public/images/Home/database.png"
                 />
               <br />
               <!-- style="width: 300; height: 100px; border-radius: 5px" -->
