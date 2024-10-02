@@ -3,8 +3,7 @@ import { contactInfo } from "../../data/items";
 
 const copyrightText = "Copyright 2024, All rights reserved.";
 const column1Heading = "Athena Key Management Server";
-const column1Text =
-  "Flexible and user friendly software-based key management system with hardware-based root of trust and protection.";
+const column1Text = "Secure Today. Safe Tomorrow";
 const column2Heading = "Projects";
 const column3Heading = "Services";
 const column4Heading = "Contact";
@@ -44,8 +43,12 @@ const socialItems = [
           <h3>PT Sandhiguna Widya Proteksi</h3>
           <div class="widget">
             <h3>{{ column1Heading }}</h3>
-            <p>{{ column1Text }}</p>
-          </div> 
+            <p>
+              {{ column1Text }} <br />
+              When you don't plan accident but you can plan to stay save from
+              catastrophic damage.
+            </p>
+          </div>
           <div class="widget">
             <h3>{{ connectHeading }}</h3>
             <ul class="list-unstyled social">
@@ -92,7 +95,7 @@ const socialItems = [
         <div class="col-lg-2">
           <div class="widget">
             <h3>{{ column3Heading }}</h3>
-            <p> </p>
+            <p></p>
             <p>Technology</p>
             <p>Product</p>
             <p>Blog</p>
@@ -110,8 +113,8 @@ const socialItems = [
           <div class="widget">
             <h3>{{ column4Heading }}</h3>
             <address>{{ contactInfo.address }}</address>
-            <p>{{contactInfo.phone1}}</p>
-            <p>{{contactInfo.email}}</p>
+            <p>{{ contactInfo.phone1 }}</p>
+            <p>{{ contactInfo.email }}</p>
             <!-- <ul class="list-unstyled links mb-4">
               <li>
                 <a :href="'tel://' + contactInfo.phone1">{{

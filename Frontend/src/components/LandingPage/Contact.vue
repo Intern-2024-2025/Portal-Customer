@@ -1,15 +1,35 @@
 <script setup>
 import { themeColor, contactInfo } from "../../data/items";
+import { reactive } from "vue";
+import API from "../../data/Api";
 
 const heading = "Contact Us";
 const subHeading = "We are waiting for your message with pleasure";
-const contactInfoHeading = "Contact Information";
-const buttonSendMessage = "Send Message";
 const labels = {
   firstName: "First Name",
   lastName: "Last Name",
   email: "Email Address",
   message: "Message",
+};
+
+const formData = reactive({
+  firstName: "",
+  lastName: "",
+  email: "",
+  message: "",
+});
+
+const submitForm = async () => {
+  try {
+    const response = await API.createContact(formData);
+    if (response.code == 500) {
+      alert(response.message);
+    } else {
+      alert("Form submitted successfully!");
+    }
+  } catch (error) {
+    alert("There was an error submitting the form.");
+  }
 };
 </script>
 
@@ -24,44 +44,70 @@ const labels = {
       </div>
       <div class="row center">
         <div class="col-lg-12">
-          <form class="contact-form" data-aos="fade-up" data-aos-delay="100">
+          <form
+            @submit.prevent="submitForm"
+            class="contact-form"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
             <div class="row">
               <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                   <label class="" for="fname">{{ labels.firstName }}</label
                   ><br />
-                  <input type="text" class="small-input-field" id="fname" />
+                  <input
+                    v-model="formData.firstName"
+                    type="text"
+                    class="small-input-field"
+                    id="fname"
+                    required
+                  />
                 </div>
               </div>
               <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                   <label class="" for="lname">{{ labels.lastName }}</label>
-                  <input type="text" class="small-input-field" id="lname" />
+                  <input
+                    v-model="formData.lastName"
+                    type="text"
+                    class="small-input-field"
+                    id="lname"
+                    required
+                  />
                 </div>
               </div>
             </div>
             <div class="form-group">
               <label class="" for="email">{{ labels.email }}</label> <br />
-              <input type="text" class="large-input-field" id="email" />
+              <input
+                v-model="formData.email"
+                type="email"
+                class="large-input-field"
+                id="email"
+                required
+              />
             </div>
             <div class="form-group">
               <label class="" for="message">{{ labels.message }}</label>
               <br />
               <textarea
+                v-model="formData.message"
                 name=""
                 rows="3"
                 cols="71"
                 class="input-text-area"
                 id="message"
+                required
               />
             </div>
             <div class="button">
-              <a
+              <button
                 href="/contact"
                 class="btn btn-outline-primary smoothscroll pricing"
                 :style="[{ color: themeColor }, { borderColor: themeColor }]"
-                >Send Message</a
               >
+                Send Message
+              </button>
             </div>
           </form>
         </div>
