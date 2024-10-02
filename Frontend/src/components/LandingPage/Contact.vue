@@ -3,6 +3,7 @@ import { themeColor, contactInfo } from "../../data/items";
 import { reactive } from "vue";
 import API from "../../data/Api";
 
+// Heading
 const heading = "Contact Us";
 const subHeading = "We are waiting for your message with pleasure";
 const labels = {
@@ -12,6 +13,7 @@ const labels = {
   message: "Message",
 };
 
+// Form data
 const formData = reactive({
   firstName: "",
   lastName: "",
@@ -19,13 +21,17 @@ const formData = reactive({
   message: "",
 });
 
+// Function to submit form
 const submitForm = async () => {
   try {
     const response = await API.createContact(formData);
     if (response.code == 500) {
       alert(response.message);
     } else {
-      alert("Form submitted successfully!");
+      // Notifikasi unik
+      alert(`Thank you, ${formData.firstName}! Your message has been sent successfully.`);
+      // Refresh the page immediately
+      window.location.reload();
     }
   } catch (error) {
     alert("There was an error submitting the form.");
@@ -119,17 +125,17 @@ const submitForm = async () => {
 <style>
 /* Atur ukuran input menggunakan CSS */
 .large-input-field {
-  width: 100%; /* Sesuaikan lebar */
-  height: 50px; /* Atur tinggi yang lebih besar */
-  padding: 15px; /* Berikan padding yang cukup */
-  font-size: 16px; /* Ukuran font */
+  width: 100%;
+  height: 50px;
+  padding: 15px;
+  font-size: 16px;
   border: 1px solid hsl(0, 0%, 0%);
   border-radius: 5px;
   box-sizing: border-box;
 }
 .input-text-area {
-  padding: 15px; /* Berikan padding yang cukup */
-  font-size: 16px; /* Ukuran font */
+  padding: 15px;
+  font-size: 16px;
   border: 1px solid hsl(0, 0%, 0%);
   border-radius: 5px;
   box-sizing: border-box;
@@ -145,10 +151,10 @@ const submitForm = async () => {
   justify-content: flex-end;
 }
 .small-input-field {
-  width: 100%; /* Sesuaikan lebar */
-  height: 50px; /* Atur tinggi yang lebih besar */
-  padding: 15px; /* Berikan padding yang cukup */
-  font-size: 16px; /* Ukuran font */
+  width: 100%;
+  height: 50px;
+  padding: 15px;
+  font-size: 16px;
   border: 1px solid hsl(0, 0%, 0%);
   border-radius: 5px;
   box-sizing: border-box;
@@ -165,9 +171,9 @@ const submitForm = async () => {
 /* Media queries untuk layar kecil */
 @media (max-width: 767px) {
   .row {
-    display: flex; /* Gunakan flexbox */
-    justify-content: center; /* Mengatur elemen agar berada di tengah secara horizontal */
-    align-items: center; /* Jika ingin elemen juga berada di tengah secara vertikal */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
   }
 
