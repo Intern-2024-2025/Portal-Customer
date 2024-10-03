@@ -30,7 +30,7 @@ const total = 4;
     <div class="container">
       <div class="row pricing-title">
         <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
-          <h2 class="heading">Anthena - KMS Enhances Security</h2>
+          <h2 class="heading">Athena - KMS Enhances Security</h2>
           <p>Provides Highest Data Protection at Application Level</p>
         </div>
       </div>
