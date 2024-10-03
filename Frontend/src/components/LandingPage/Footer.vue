@@ -109,13 +109,13 @@ const socialItems = [
             </ul> -->
           </div>
         </div>
-        <div class="col-lg-3">
+        <!-- <div class="col-lg-3">
           <div class="widget">
             <h3>{{ column4Heading }}</h3>
             <address>{{ contactInfo.address }}</address>
             <a href="https://wa.me/6281908824046" style="color:gray; margin-bottom: 15px;">{{ contactInfo.phone1 }}</a>
             <p>{{ contactInfo.email }}</p>
-            <!-- <ul class="list-unstyled links mb-4">
+            <ul class="list-unstyled links mb-4">
               <li>
                 <a :href="'tel://' + contactInfo.phone1">{{
                   contactInfo.phone1
@@ -126,9 +126,9 @@ const socialItems = [
                   ><span>{{ contactInfo.email }}</span></a
                 >
               </li>
-            </ul> -->
+            </ul>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="row mt-5">
         <div class="col-12 text-center">
