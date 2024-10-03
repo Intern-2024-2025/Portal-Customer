@@ -1,5 +1,5 @@
 {
-  "name": "be-medis",
+  "name": "portal-customer",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DiptyaBagusSumantry/BE-Medis.git"
+    "url": "git+https://github.com/Intern-2024-2025/Portal-Customer.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/DiptyaBagusSumantry/BE-Medis/issues"
+    "url": "https://github.com/Intern-2024-2025/Portal-Customer/issues"
   },
-  "homepage": "https://github.com/DiptyaBagusSumantry/BE-Medis#readme",
+  "homepage": "https://github.com/Intern-2024-2025/Portal-Customer#readme",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",

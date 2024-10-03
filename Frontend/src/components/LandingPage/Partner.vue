@@ -6,20 +6,33 @@
         <div class="oke-wrapper">
           <div class="oke">
             <div data-aos="fade-up" data-aos-delay="0">
-              <img src="../../assets/images/logo/logo_bssn.png" />
-            </div>
-          </div>
-          <div class="oke">
-            <div data-aos="fade-up" data-aos-delay="0">
-              <img src="../../assets/images/logo/logo_kominfo_tangsel.png" />
+              <img
+                style="
+                  padding-bottom: 20px;
+                  width: auto;
+                  height: 100px;
+                  border-radius: 5px;
+                "
+                src="../../assets/images/logo/logo_idealeb.png"
+              />
             </div>
           </div>
           <div class="oke">
             <div data-aos="fade-up" data-aos-delay="0">
               <img
-                src="../../assets/images/logo/logo_telkom.jpg"
-                style="width: 300; height: 100px; border-radius: 5px"
+                style="
+                  padding-top: 20px;
+                  width: 230px;
+                  height: 80px;
+                  border-radius: 5px;
+                "
+                src="../../assets/images/logo/logo_sandhiguna.png"
               />
+            </div>
+          </div>
+          <div class="oke">
+            <div data-aos="fade-up" data-aos-delay="0">
+              <img src="../../assets/images/logo/logo_analytic.png" />
             </div>
           </div>
         </div>
