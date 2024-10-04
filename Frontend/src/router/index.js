@@ -4,7 +4,7 @@ import { createRouter, createWebHistory } from "vue-router";
 //define a routes
 const routes = [
   {
-    path: "/maintenance",
+    path: "/",
     name: "maintenance",
     component: () => import("../views/Maintenance/Maintenance.vue"),
   },
