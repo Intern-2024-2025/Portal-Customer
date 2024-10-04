@@ -7,7 +7,7 @@ const blogdet = ref([
   {
     heading: "Kripto VS Kriptografi",
     post: {
-    image: "images/Kripto.png", 
+    image: "../src/assets/images/Kripto.svg", 
     // sectionTitle: "1. Kripto VS Kriptografi",
     sectionContent: `Istilah kripto dan kriptografi sering terdengar, terutama ketika kita berbicara tentang keamanan siber dan mata uang digital.								
                       Meski terdengar mirip, keduanya sangat berbeda dari segi fungsi dan penggunaan. Mari kita bahas perbedaannya,								
