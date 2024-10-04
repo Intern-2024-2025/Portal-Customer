@@ -7,6 +7,7 @@
           <div class="oke">
             <div data-aos="fade-up" data-aos-delay="0">
               <img
+                class="moving-logo"
                 style="
                   padding-bottom: 20px;
                   width: auto;
@@ -20,6 +21,7 @@
           <div class="oke">
             <div data-aos="fade-up" data-aos-delay="0">
               <img
+                class="moving-logo"
                 style="
                   padding-top: 20px;
                   width: 230px;
@@ -32,7 +34,10 @@
           </div>
           <div class="oke">
             <div data-aos="fade-up" data-aos-delay="0">
-              <img src="../../assets/images/logo/logo_analytic.png" />
+              <img
+                class="moving-logo"
+                src="../../assets/images/logo/logo_analytic.png"
+              />
             </div>
           </div>
         </div>
@@ -45,22 +50,36 @@
 .jarak {
   padding-bottom: 40px;
   position: relative;
+  overflow: hidden; /* Menghindari gambar keluar dari batas kontainer */
+  width: 100%; /* Mengatur lebar kontainer */
 }
 
 .oke-wrapper {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Membuat 3 kolom dengan lebar sama */
-  gap: 10px; /* Menambah jarak antar elemen */
+  display: flex; /* Menggunakan flexbox untuk pengaturan horizontal */
+  animation: move 10s linear infinite; /* Durasi gerakan untuk efek berjalan */
 }
 
 .oke {
+  flex: 0 0 auto; /* Menghindari flex grow/shrink */
   text-align: center; /* Posisikan teks di tengah setiap elemen */
   padding: 10px;
+  margin: 0 30px; /* Jarak antar logo (30px di kiri dan kanan) */
 }
+
 .oke img {
   width: auto;
   height: 100px;
   border-radius: 5px;
+}
+
+/* Animasi gerakan dari kanan ke kiri */
+@keyframes move {
+  0% {
+    transform: translateX(100%); /* Mulai dari luar layar di sebelah kanan */
+  }
+  100% {
+    transform: translateX(-100%); /* Berakhir di luar layar di sebelah kiri */
+  }
 }
 
 /* Media query untuk layar lebih kecil */
