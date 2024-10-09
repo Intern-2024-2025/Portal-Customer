@@ -23,6 +23,26 @@ Content-Type: application/json
     "message" : "masuk"
 }
 
+//register
+###
+POST http://localhost:5003/register
+Content-Type: application/json
+
+{
+    "username": "diptya", 
+    "email":"diptyasoemantry@gmail.com", 
+    "password":"Diptya1234!"
+}
+
+//verification-email
+###
+POST http://localhost:5003/verification-email
+Content-Type: application/json
+
+{
+    "otp": "12345"
+}
+
 # //Get-User Managmenet
 # ###
 # GET http://localhost:5003/user-management
