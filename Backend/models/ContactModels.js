@@ -2,7 +2,7 @@ const Sequelize = require("sequelize");
 
 const ContactUs = (sequelizeInstance) => {
   return sequelizeInstance.define(
-    "contact",
+    "contacts",
     {
       id: {
         type: Sequelize.UUID,

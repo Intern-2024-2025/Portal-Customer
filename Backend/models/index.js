@@ -2,6 +2,10 @@ const dbConfig = require("../config/config.js");
 const Sequelize = require("sequelize");
 const User = require("./UserModels.js");
 const Contact = require("./ContactModels.js")
+const Client = require("./ClientModels.js")
+const Produk = require("./ProdukModels.js")
+const ClientDetail = require("./ClientDetailModels.js")
+const Blog = require("./BlogModels.js")
 
 const sequelizeInstance = new Sequelize(
   dbConfig.DB,
@@ -24,6 +28,10 @@ const db = {};
 db.sequelizeInstance = sequelizeInstance;
 db.User = User(sequelizeInstance);
 db.Contact = Contact(sequelizeInstance)
+db.Client = Client(sequelizeInstance)
+db.Produk = Produk(sequelizeInstance)
+db.ClientDetail = ClientDetail(sequelizeInstance)
+db.Blog = Blog(sequelizeInstance)
 
 // // History Patient - Patient
 // db.Patient.hasMany(db.HistoryPatient, {
@@ -37,6 +45,28 @@ db.Contact = Contact(sequelizeInstance)
 // db.HistoryPatient.belongsTo(db.Patient, {
 //   targetKey: "id",
 // });
+db.Client.hasMany(db.Produk, {
+  foreignKey:{
+    name: "clientId",
+    type: Sequelize.UUID,
+    allowNull: false
+  },
+});
+
+db.Produk.belongsTo(db.Client, {
+  tergetKey:"id",
+});
+
+db.Client.hasOne(db.ClientDetail, {
+  foreignKey:{
+    name:"clientId",
+    type: Sequelize.UUID,
+    allowNull: false
+  }
+});
+db.ClientDetail.belongsTo(db.Client, {
+  targetKey:"id",
+})
 
 
 
