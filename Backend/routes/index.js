@@ -8,6 +8,7 @@ router.post("/login", AuthController.Login);
 // router.get("/fetch", verifyToken, AuthController.Fetch);
 
 router.post("/register", AuthController.registerClient)
+router.post("/verification-email", AuthController.verificationEmail)
 router.post("/contact", ContactController.CreateContact)
 
 module.exports = router;

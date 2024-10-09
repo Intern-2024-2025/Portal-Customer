@@ -89,7 +89,24 @@ class AuthController {
       });
 
       sendMail(email, "Kode OTP Register Sandhiguna", `Kode OTP Anda adalah: ${codeOtp}`);
-      handleCreateCustom(res, "Silahkan cek Email Anda");
+      handleCreateCustom(res, "Kami sudah kirim OTP di Email Anda");
+    } catch (error) {
+      handlerError(res, error);
+    }
+  }
+  static async verificationEmail(req, res) {
+    try {
+      const chekOtp = await User.findOne({
+        where: {
+          otp: req.body.otp
+        }
+      })
+
+      if(!chekOtp){
+        return res.status(400).json({ msg: "OTP anda Salah!" });
+      }
+      
+      handleCreateCustom(res, "OTP Anda terverifikasi");
     } catch (error) {
       handlerError(res, error);
     }
