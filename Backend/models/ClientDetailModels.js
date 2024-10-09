@@ -2,112 +2,117 @@ const Sequelize = require("sequelize");
 
 const ClientDetail = (sequelizeInstance) =>{
     return sequelizeInstance.define(
-        "client_details",
-        {
-            id: {
-                type: Sequelize.UUID,
-                defaultValue: Sequelize.UUIDV4,
-                primaryKey: true,
-                allowNull: false,
-                unique: "id",
+      "client_details",
+      {
+        id: {
+          type: Sequelize.UUID,
+          defaultValue: Sequelize.UUIDV4,
+          primaryKey: true,
+          allowNull: false,
+          unique: "id",
+        },
+        fullname: {
+          type: Sequelize.STRING,
+          allowNull: false,
+          validate: {
+            notNull: {
+              args: true,
+              msg: "FullName Can't be Null!",
             },
-            fullname:{
-                type: Sequelize.STRING,
-                allowNull: false,
-                validate:{
-                    notNull:{
-                        args: true,
-                        msg: "FullName Can't be Null!",
-                    },
-                    notEmpty:{
-                        args:true,
-                        msg:"Fullname Can't be Empty!",
-                    }
-                }
+            notEmpty: {
+              args: true,
+              msg: "Fullname Can't be Empty!",
             },
-            phone:{
-                type: Sequelize.STRING,
-                unique: {
-                    args: "phone",
-                    msg: "Phone Already Registered!",
-                },
-                allowNull: false,
-                validate: {
-                    notNull: {
-                        args: true,
-                        msg: "Phone Can't be Null",
-                    },
-                    notEmpty: {
-                        args: true,
-                        msg: "Phone Can't be Empty",
-                    },
-                    isNumeric: {
-                        args: true,
-                        msg: "Phone Must be Number",
-                    },
-                    len: {
-                        args: [10, 15],
-                        msg: "Phone Must be 10 - 15 Number!",
-                    },
-                },
+          },
+        },
+        phone: {
+          type: Sequelize.STRING,
+          unique: {
+            args: "phone",
+            msg: "Phone Already Registered!",
+          },
+          allowNull: false,
+          validate: {
+            notNull: {
+              args: true,
+              msg: "Phone Can't be Null",
             },
-            address:{
-                type: Sequelize.STRING,
-                allowNull: false,
-                validate:{
-                    notNull:{
-                        args: true,
-                        msg: "Address Can't be Null!",
-                    },
-                    notEmpty:{
-                        args:true,
-                        msg:"Address Can't be Empty!",
-                    }
-                }
+            notEmpty: {
+              args: true,
+              msg: "Phone Can't be Empty",
             },
-            category_business:{
-                type: Sequelize.STRING,
-                allowNull: false,
-                validate:{
-                    notNull:{
-                        args: true,
-                        msg: "Category Business Can't be Null!",
-                    },
-                    notEmpty:{
-                        args:true,
-                        msg:"Category Business Can't be Empty!",
-                    }
-                }
+            isNumeric: {
+              args: true,
+              msg: "Phone Must be Number",
             },
-            description_business:{
-                type: Sequelize.TEXT,
-                allowNull: false,
-                validate:{
-                    notNull:{
-                        args: true,
-                        msg: "Desription Business Can't be Null!",
-                    },
-                    notEmpty:{
-                        args:true,
-                        msg:"Desription Business Can't be Empty!",
-                    }
-                }
+            len: {
+              args: [10, 15],
+              msg: "Phone Must be 10 - 15 Number!",
             },
-            image:{
-                type: Sequelize.TEXT("long"),
-                allowNull: false,
-                validate:{
-                    notNull:{
-                        args: true,
-                        msg: "Image Can't be Null!",
-                    },
-                    notEmpty:{
-                        args:true,
-                        msg:"Image Can't be Empty!",
-                    }
-                }
+          },
+        },
+        address: {
+          type: Sequelize.STRING,
+          allowNull: false,
+          validate: {
+            notNull: {
+              args: true,
+              msg: "Address Can't be Null!",
             },
-        }
-    )
+            notEmpty: {
+              args: true,
+              msg: "Address Can't be Empty!",
+            },
+          },
+        },
+        category_business: {
+          type: Sequelize.STRING,
+          allowNull: false,
+          validate: {
+            notNull: {
+              args: true,
+              msg: "Category Business Can't be Null!",
+            },
+            notEmpty: {
+              args: true,
+              msg: "Category Business Can't be Empty!",
+            },
+          },
+        },
+        description_business: {
+          type: Sequelize.TEXT,
+          allowNull: false,
+          validate: {
+            notNull: {
+              args: true,
+              msg: "Desription Business Can't be Null!",
+            },
+            notEmpty: {
+              args: true,
+              msg: "Desription Business Can't be Empty!",
+            },
+          },
+        },
+        image: {
+          type: Sequelize.TEXT("long"),
+          allowNull: false,
+          validate: {
+            notNull: {
+              args: true,
+              msg: "Image Can't be Null!",
+            },
+            notEmpty: {
+              args: true,
+              msg: "Image Can't be Empty!",
+            },
+          },
+        },
+      },
+      {
+        freezeTableName: true,
+        paranoid: true,
+        underscored: true,
+      }
+    );
 };
 module.exports = ClientDetail;

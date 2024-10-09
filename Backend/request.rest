@@ -1,4 +1,4 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMzYjY0NmVhLTI2YjAtNGNiZi1hZTRmLTQzZTY2ODk3YTM5NyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyMjc4ODg5NiwiZXhwIjoxNzIzMTM0NDk2fQ.CzSI7OWlVj2zdmPmOyzJizQQh2YJIhCuaSCYyZX4Wrc
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUwZDExYTcxLTk4ZjgtNDA0OC04ZmNhLTFjMzQwMDI5ZjM2OSIsImlhdCI6MTcyODQ2NjI3OCwiZXhwIjoxNzI4ODExODc4fQ.kJw5txc6Xw03Fc8N8BCq-J1EP8CRkOalvQ3gVjdfUUo
 
 
 //login
@@ -40,7 +40,26 @@ POST http://localhost:5003/verification-email
 Content-Type: application/json
 
 {
-    "otp": "12345"
+    "otp": "860839"
+}
+
+//reset-password
+###
+POST http://localhost:5003/reset-password
+Content-Type: application/json
+
+{
+    "email": "diptyasoemantry@gmail.com"
+}
+
+
+//new-password
+###
+POST http://localhost:5003/new-password/{{token}}
+Content-Type: application/json
+
+{
+    "newPassword": "MasukAja1234!"
 }
 
 # //Get-User Managmenet

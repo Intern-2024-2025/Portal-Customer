@@ -1,11 +1,4 @@
 const Sequelize = require("sequelize");
-const bcrypt = require("bcrypt");
-
-function hashPassword(password){
-    const salt = bcrypt.genSaltySync(10);
-    const hash = bcrypt.hashSync(password, salt);
-    return hash;
-}
 
 const Produk = (sequelizeInstance) =>{
     return sequelizeInstance.define(
@@ -130,26 +123,6 @@ const Produk = (sequelizeInstance) =>{
             freezeTableName: true,
             paranoid: true,
             underscored: true,
-            //don't show password
-            defaultScope:{
-                attributes:{
-                    exclude: ["password"],
-                },
-            },
-            //do show password with visible password
-            scopes:{
-                visiblePassword: {
-                    attributes:{
-                        include: ["password"],
-                    },
-                }
-            },
-            hooks: {
-                beforeCreate:(admin, opt) =>{
-                    const hashedPassword = hashPassword(admin.password);
-                    admin.password = hashedPassword;
-                }
-            }
         }
     )
 

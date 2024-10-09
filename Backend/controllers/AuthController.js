@@ -2,8 +2,6 @@ const Models = require("../models/index.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { sendMail } = require("../utils/sendEmail.js");
-const nodemailer = require("nodemailer");
-const crypto = require("crypto");
 
 const {
   handlerError,
@@ -15,6 +13,13 @@ const {
 } = require("../helper/HandlerError.js");
 
 const User = Models.User;
+const { accesToken } = require("../helper/chekAccessToken.js");
+
+function hashPassword(password) {
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(password, salt);
+  return hash;
+}
 
 class AuthController {
   static async Login(req, res) {
@@ -46,25 +51,41 @@ class AuthController {
       });
     }
   }
-
   static async ResetPassword(req, res) {
     try {
-      const { email } = req.body;
-      const token = Math.floor(100000 + Math.random() * 900000);
-  
-      // Kirim email dengan menggunakan fungsi sendMail
-      await sendMail(
-        email,
-        "Reset Password Token",
-        `Hello! This is your password reset token: ${token}. Please use this to reset your password.`
+      const client = await Models.Client.scope("visiblePassword").findOne({
+        where: { email: req.body.email },
+      });
+      if (!client)
+        return res.status(400).json({ msg: "email tidak ditemukan" });
+
+      const accessToken = jwt.sign(
+        {
+          id: client.id,
+          role: client.role,
+        },
+        process.env.ACCESS_TOKEN_SECRET,
+        {
+          expiresIn: "5760m",
+        }
       );
-  
-      res.status(200).json({ msg: "Email reset password telah dikirim" });
+
+      sendMail(
+        req.body.email,
+        "Reset Password Sandhiguna",
+        `Klik Link Berikut: http://localhost:5003/${accessToken}`
+      );
+
+      handleGet(res, {
+        data: {
+          linkRedirect: `http:/localhost:5003/new-password/${accessToken}`,
+        },
+      });
     } catch (error) {
       handlerError(res, error);
     }
   }
-  
+
   // static async Fetch(req, res) {
   //   try {
   //     const authHeader = req.headers["authorization"];
@@ -99,16 +120,19 @@ class AuthController {
     try {
       const { username, email, password } = req.body;
       const otp = Math.floor(100000 + Math.random() * 900000);
-      
-      // await Models.User.create({
-      //   username,
-      //   email,
-      //   password,
-      //   otp,
-      //   status_verification: false,
-      // });
 
-      sendMail(email, "Kode OTP Register Sandhiguna", `Kode OTP Anda adalah: ${otp}`);
+      await Models.Client.create({
+        username,
+        email,
+        password,
+        otp,
+      });
+
+      sendMail(
+        email,
+        "Kode OTP Register Sandhiguna",
+        `Kode OTP Anda adalah: ${otp}`
+      );
       handleCreateCustom(res, "Kami sudah kirim OTP di Email Anda");
     } catch (error) {
       handlerError(res, error);
@@ -116,17 +140,36 @@ class AuthController {
   }
   static async verificationEmail(req, res) {
     try {
-      const chekOtp = await User.findOne({
-        where: {
-          otp: req.body.otp
-        }
-      })
-
-      if(!chekOtp){
+      const chekOtp = await Models.Client.findOne({
+        where: { otp: req.body.otp },
+      });
+      if (!chekOtp) {
         return res.status(400).json({ msg: "OTP anda Salah!" });
       }
-      
-      handleCreateCustom(res, "OTP Anda terverifikasi");
+      await Models.Client.update(
+        { status_verification_email: true },
+        { where: { otp: req.body.otp } }
+      ).then((data) => {
+        handleUpdate(res, data);
+      });
+    } catch (error) {
+      handlerError(res, error);
+    }
+  }
+  static async newPassword(req, res) {
+    try {
+      const token = accesToken({
+        headers: {
+          ["authorization"]: `Bearer ${req.params.token}`,
+        },
+      });
+
+      await Models.Client.update(
+        { password: hashPassword(req.body.newPassword) },
+        { where: { id: token.id } }
+      ).then((data) => {
+        handleUpdate(res, data);
+      });
     } catch (error) {
       handlerError(res, error);
     }

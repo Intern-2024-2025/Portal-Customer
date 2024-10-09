@@ -11,6 +11,7 @@ router.post("/register", AuthController.registerClient)
 router.post("/verification-email", AuthController.verificationEmail)
 router.post("/contact", ContactController.CreateContact)
 router.post("/reset-password", AuthController.ResetPassword);
+router.post("/new-password/:token", AuthController.newPassword);
 
 module.exports = router;
  
