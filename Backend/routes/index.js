@@ -10,6 +10,7 @@ router.post("/login", AuthController.Login);
 router.post("/register", AuthController.registerClient)
 router.post("/verification-email", AuthController.verificationEmail)
 router.post("/contact", ContactController.CreateContact)
+router.post("/reset-password", AuthController.ResetPassword);
 
 module.exports = router;
  

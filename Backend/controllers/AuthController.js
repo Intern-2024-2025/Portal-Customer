@@ -2,6 +2,8 @@ const Models = require("../models/index.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { sendMail } = require("../utils/sendEmail.js");
+const nodemailer = require("nodemailer");
+const crypto = require("crypto");
 
 const {
   handlerError,
@@ -45,6 +47,24 @@ class AuthController {
     }
   }
 
+  static async ResetPassword(req, res) {
+    try {
+      const { email } = req.body;
+      const token = Math.floor(100000 + Math.random() * 900000);
+  
+      // Kirim email dengan menggunakan fungsi sendMail
+      await sendMail(
+        email,
+        "Reset Password Token",
+        `Hello! This is your password reset token: ${token}. Please use this to reset your password.`
+      );
+  
+      res.status(200).json({ msg: "Email reset password telah dikirim" });
+    } catch (error) {
+      handlerError(res, error);
+    }
+  }
+  
   // static async Fetch(req, res) {
   //   try {
   //     const authHeader = req.headers["authorization"];
@@ -80,15 +100,15 @@ class AuthController {
       const { username, email, password } = req.body;
       const otp = Math.floor(100000 + Math.random() * 900000);
       
-      await Models.User.create({
-        username,
-        email,
-        password,
-        otp,
-        status_verification: false,
-      });
+      // await Models.User.create({
+      //   username,
+      //   email,
+      //   password,
+      //   otp,
+      //   status_verification: false,
+      // });
 
-      sendMail(email, "Kode OTP Register Sandhiguna", `Kode OTP Anda adalah: ${codeOtp}`);
+      sendMail(email, "Kode OTP Register Sandhiguna", `Kode OTP Anda adalah: ${otp}`);
       handleCreateCustom(res, "Kami sudah kirim OTP di Email Anda");
     } catch (error) {
       handlerError(res, error);
