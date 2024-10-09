@@ -17,6 +17,12 @@ function handleCreate(res) {
     message: "Success Create Data",
   });
 }
+function handleCreateCustom(res, message) {
+  res.status(201).json({
+    code: 201,
+    message,
+  });
+}
 function handleGet(res, data) {
   res.status(200).json({
     code: 200,
@@ -73,4 +79,5 @@ module.exports = {
   handleUpdate,
   handleDelete,
   handleGetPaginator,
+  handleCreateCustom,
 };
