@@ -1,4 +1,4 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk1Yjc5ZTljLWU5YzctNDhmYS05NDE4LTJiZmU3MDRlOTNkYyIsInJvbGUiOiJjbGllbnQiLCJpYXQiOjE3Mjg1MzAyNTAsImV4cCI6MTcyODg3NTg1MH0.W0hpVw-5ayOrh8p07SYtTTQSzDPuGOWaoay5OQv0JLE
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZlYTNiNjlmLTk3ZDYtNGU3MC1iNTY0LTMxOGU3YjM2ZTZjYyIsInJvbGUiOiJjbGllbnQiLCJpYXQiOjE3Mjg1MzUxNzYsImV4cCI6MTcyODg4MDc3Nn0.Wn2lcFueUKqpmn_fRRHf6dTsQXo6yhBJNfFEwq394Ug
 
 //login
 ###
@@ -28,8 +28,8 @@ POST http://localhost:5003/register
 Content-Type: application/json
 
 {
-    "username": "diptya", 
-    "email":"diptyasoemantry@gmail.com", 
+    "username": "asep", 
+    "email":"jovanbryanginting@gmail.com", 
     "password":"Diptya1234!"
 }
 
@@ -39,7 +39,48 @@ POST http://localhost:5003/verification-email
 Content-Type: application/json
 
 {
-    "otp": "788901"
+    "otp": "218316"
+}
+
+
+
+//Create-Clientdet
+###
+POST http://localhost:5003/create-clientdet
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "fullname": "dicobamasulk",
+    "phone": "098765432123",
+    "address": "jl.apel",
+    "category_business": "Rumah",
+    "description_business": "oke",
+    "image": "sip"
+}
+
+//Update-Clientdet
+###
+POST http://localhost:5003/update-clientdet
+Content-Type: application/json
+
+{
+    "fullname": "aser",
+    "phone": "098765432133",
+    "address": "jl.apel",
+    "category_business": "asd",
+    "description_business": "sad",
+    "image": "wqer",
+     "id" : "77ce5883-64fb-48d9-8f67-ff029ee308d5"
+}
+
+//delete-Clientdet
+###
+POST http://localhost:5003/delete-clientdet
+Content-Type: application/json
+
+{
+    "id" : "77ce5883-64fb-48d9-8f67-ff029ee308d5"
 }
 
 //reset-password
@@ -76,13 +117,13 @@ Authorization: Bearer {{token}}
     "image": ""
 }
 
-//get-detail-verifiation
+//get-detail-verification
 ###
 GET  http://localhost:5003/client-detail
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
-//get-detail-verifiation-Admin
+//get-detail-verification-Admin
 ###
 GET  http://localhost:5003/client-detail/dasdas
 Content-Type: application/json
