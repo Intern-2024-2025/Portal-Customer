@@ -61,6 +61,15 @@ class ProductController {
                 slot_id,
                 password,
                 finance_key
+            },{
+                where:{
+                    name : "coba12",
+                    csr_key: "halolur@gmail.com",
+                    postman_pem:"",
+                    slot_id:"",
+                    password: "tes321!Agak",
+                    finance_key:"",
+                }
             });
             handleUpdate(res);
         } catch (error) {

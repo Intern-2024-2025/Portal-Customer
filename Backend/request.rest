@@ -23,6 +23,79 @@ Content-Type: application/json
     "message" : "masuk"
 }
 
+//get-all-client
+###
+GET http://localhost:5003/clients
+Content-Type: application/json
+
+//get-client-id
+###
+GET http://localhost:5003/clients/{id}
+Content-Type: application/json
+
+//update-client
+###
+PUT http://localhost:5003/clients/bb4e96c9-b80f-44b4-a8ac-5b7b7a8e1dc8
+Content-Type: application/json
+
+{
+    "username": "coba12", 
+    "email": "halolu@gmail.com", 
+    "password": "te321!Agak", 
+    "otp": "765432"
+}
+
+//delete-client
+###
+DELETE http://localhost:5003/clients/bb4e96c9-b80f-44b4-a8ac-5b7b7a8e1dc8
+Content-Type: application/json
+
+
+
+//Create-Product
+###
+POST http://localhost:5003/create-product
+Content-Type: application/json
+
+{
+    "name": "coba1",
+    "csr_key": "haloadaapa",
+    "postman_pem": "permisibro",
+    "slot_id" : "99",
+    "password" : "tes123!gAfyhfh",
+    "finance_key" : "coba123!"
+}
+//get-all-Product
+###
+GET http://localhost:5003/products
+Content-Type: application/json
+
+//get-product-id
+GET http://localhost:5003/products/{id}
+Content-Type: application/json
+
+//update-product
+###
+POST http://localhost:5003/products/{id}
+Content-Type: application/json
+
+{
+    "name": "coba2",
+    "csr_key": "halogimana",
+    "postman_pem": "kulonuwun",
+    "slot_id" : "777",
+    "password" : "tes123!gAfcdcdcd",
+    "finance_key" : "coba321!"
+}
+
+//delete-product
+DELETE http://localhost:5003/products/{id}
+Content-Type: application/json
+{
+    "id":""
+}
+
+
 //register
 ###
 POST http://localhost:5003/register
