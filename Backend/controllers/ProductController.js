@@ -1,98 +1,142 @@
-const { handlerError, handleCreate, handleRead, handleUpdate, handleDelete } = require("../helper/HandlerError.js");
+const {
+  handlerError,
+  handleCreate,
+  handleRead,
+  handleUpdate,
+  handleDelete,
+} = require("../helper/HandlerError.js");
 const Models = require("../models/index.js");
-const Products = Models.Products;
+const Product = Models.Products;
+const { accesToken } = require("../helper/chekAccessToken.js");
 
 class ProductController {
-
-    static async CreateProduct(req, res) {
-        try {
-            const { name, csr_key, postman_pem, slot_id, password, finance_key } = req.body;
-            await Products.create({
-                name,
-                csr_key,
-                postman_pem,
-                slot_id,
-                password,
-                finance_key
-            });
-            handleCreate(res);
-        } catch (error) {
-            handlerError(res, error);
-        }
+  static async createProduct(req, res) {
+    try {
+      const token = accesToken(req);
+      const {
+        name,
+        csr_key,
+        postman_pem,
+        slot_id,
+        password,
+        finance_key,
+        status,
+        call_api,
+        count_trial,
+      } = req.body;
+      await Product.create({
+        name,
+        csr_key,
+        postman_pem,
+        slot_id,
+        password,
+        finance_key,
+        status,
+        call_api,
+        count_trial,
+        clientId: token.id,
+      });
+      await Models.Client.update(
+        { status_verification_data: true },
+        { where: { id: token.id } }
+      );
+      handleCreate(res);
+    } catch (error) {
+      handlerError(res, error);
     }
+  }
 
-
-    static async GetAllProducts(req, res) {
-        try {
-            const products = await Products.findAll();
-            handleRead(res, products);
-        } catch (error) {
-            handlerError(res, error);
-        }
+  static async GetAllProducts(req, res) {
+    try {
+      const products = await Product.findAll();
+      handleRead(res, products);
+    } catch (error) {
+      handlerError(res, error);
     }
+  }
 
-    static async GetProductById(req, res) {
-        try {
-            const { id } = req.params;
-            const product = await Products.findByPk(id);
-            if (!product) {
-                return res.status(404).json({ message: 'Product not found' });
-            }
-            handleRead(res, product);
-        } catch (error) {
-            handlerError(res, error);
+  static async getDetailProductById(req, res) {
+    try {
+      await Product.findOne({ where: { clientId: req.params.id } }).then(
+        (data) => {
+          handleGet(res, data);
         }
+      );
+    } catch (error) {
+      handlerError(res, error);
     }
+  }
 
-    static async UpdateProduct(req, res) {
-        try {
-            const { id } = req.params;
-            const { name, csr_key, postman_pem, slot_id, password, finance_key } = req.body;
-            const product = await Products.findByPk(id);
+  static async UpdateProduct(req, res) {
+    try {
+      const { id } = req.params;
+      const { name, csr_key, postman_pem, slot_id, password, finance_key } =
+        req.body;
+      const product = await Product.findByPk(id);
 
-            if (!product) {
-                return res.status(404).json({ message: 'Product not found' });
-            }
+      if (!product) {
+        return res.status(404).json({ message: "Product not found" });
+      }
 
-            await product.update({
-                name,
-                csr_key,
-                postman_pem,
-                slot_id,
-                password,
-                finance_key
-            },{
-                where:{
-                    name : "coba12",
-                    csr_key: "halolur@gmail.com",
-                    postman_pem:"",
-                    slot_id:"",
-                    password: "tes321!Agak",
-                    finance_key:"",
-                }
-            });
-            handleUpdate(res);
-        } catch (error) {
-            handlerError(res, error);
+      await product.update(
+        {
+          name,
+          csr_key,
+          postman_pem,
+          slot_id,
+          password,
+          finance_key,
+        },
+        {
+          where: {
+            id,
+          },
         }
+      );
+      handleUpdate(res);
+    } catch (error) {
+      handlerError(res, error);
     }
+  }
 
+  static async DeleteProduct(req, res) {
+    try {
+      const { id } = req.params;
+      const product = await Products.findByPk(id);
 
-    static async DeleteProduct(req, res) {
-        try {
-            const { id } = req.params;
-            const product = await Products.findByPk(id);
+      if (!product) {
+        return res.status(404).json({ message: "Product not found" });
+      }
 
-            if (!product) {
-                return res.status(404).json({ message: 'Product not found' });
-            }
-
-            await product.destroy();
-            handleDelete(res);
-        } catch (error) {
-            handlerError(res, error);
-        }
+      await product.destroy();
+      handleDelete(res);
+    } catch (error) {
+      handlerError(res, error);
     }
+  }
+  static async getDetailProductByClient(req, res) {
+    try {
+      const token = accesToken(req);
+      await Product.findOne({ where: { clientId: token.id } }).then((data) => {
+        handleGet(res, data);
+      });
+    } catch (error) {
+      handlerError(res, error);
+    }
+  }
+  static async getTransaction(req, res) {
+    try {
+      const token = accesToken(req);
+      await Product.findOne({
+        where: { clientId: token.id },
+        attributes: ["call_api", "count_trial"],
+      }).then((data) => {
+        handleGet(res, data);
+      });
+    } catch (error) {
+      handlerError(res, error);
+    }
+  }
 }
 
 module.exports = ProductController;
