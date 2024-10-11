@@ -2,6 +2,7 @@ const Models = require("../models/index.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { sendMail } = require("../utils/sendEmail.js");
+const { Op } = require("sequelize");
 
 const {
   handlerError,
@@ -24,17 +25,35 @@ function hashPassword(password) {
 class AuthController {
   static async Login(req, res) {
     try {
-      const user = await User.scope("visiblePassword").findOne({
+      const userAdmin = await User.scope("visiblePassword").findOne({
         where: { username: req.body.username },
       });
-      if (!user)
-        return res.status(400).json({ msg: "username tidak ditemukan" });
+
+      const userClient = await Models.Client.scope("visiblePassword").findOne({
+        where: {
+          [Op.or]: [
+            { username: req.body.username },
+            { email: req.body.username },
+          ],
+        },
+      });
+
+      let user;
+      if (userAdmin) {
+        user = userAdmin;
+      } else {
+        user = userClient;
+        user.dataValues.role = "client"
+      }
+      console.log(user)
+      if (!user) return res.status(400).json({ msg: "Akun tidak ditemukan" });
+
       const match = await bcrypt.compare(req.body.password, user.password);
       if (!match) return res.status(400).json({ msg: "password anda salah" });
       const accessToken = jwt.sign(
         {
           id: user.id,
-          role: user.role,
+          role: user.dataValues.role,
         },
         process.env.ACCESS_TOKEN_SECRET,
         {
@@ -43,7 +62,7 @@ class AuthController {
       );
       res.status(200).json({
         accessToken: accessToken,
-        role: user.role.name,
+        role: user.dataValues.role,
       });
     } catch (error) {
       res.status(500).json({

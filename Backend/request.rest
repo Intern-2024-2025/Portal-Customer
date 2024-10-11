@@ -1,5 +1,4 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUwZDExYTcxLTk4ZjgtNDA0OC04ZmNhLTFjMzQwMDI5ZjM2OSIsImlhdCI6MTcyODQ2NjI3OCwiZXhwIjoxNzI4ODExODc4fQ.kJw5txc6Xw03Fc8N8BCq-J1EP8CRkOalvQ3gVjdfUUo
-
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk1Yjc5ZTljLWU5YzctNDhmYS05NDE4LTJiZmU3MDRlOTNkYyIsInJvbGUiOiJjbGllbnQiLCJpYXQiOjE3Mjg1MzAyNTAsImV4cCI6MTcyODg3NTg1MH0.W0hpVw-5ayOrh8p07SYtTTQSzDPuGOWaoay5OQv0JLE
 
 //login
 ###
@@ -7,8 +6,8 @@ POST http://localhost:5003/login
 Content-Type: application/json
 
 {
-    "username" : "admin",
-    "password" : "Admin1234!"
+    "username" : "diptya",
+    "password" : "Diptya1234!"
 }
 
 //Create-Contact
@@ -113,7 +112,7 @@ POST http://localhost:5003/verification-email
 Content-Type: application/json
 
 {
-    "otp": "860839"
+    "otp": "788901"
 }
 
 //reset-password
@@ -134,6 +133,33 @@ Content-Type: application/json
 {
     "newPassword": "MasukAja1234!"
 }
+
+//Verification Data Business
+###
+POST http://localhost:5003/verification-data
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "fullname": "Diptya Sumantry",
+    "phone": "08123456789",
+    "address": "JL. Kaliurang Km.14",
+    "category_business": "Perbankan",
+    "description_business": "Memberikan layanan tabungan dan pinjaman",
+    "image": ""
+}
+
+//get-detail-verifiation
+###
+GET  http://localhost:5003/client-detail
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+//get-detail-verifiation-Admin
+###
+GET  http://localhost:5003/client-detail/dasdas
+Content-Type: application/json
+Authorization: Bearer {{token}}
 
 # //Get-User Managmenet
 # ###
