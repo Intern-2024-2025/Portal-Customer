@@ -1,4 +1,4 @@
-const { handlerError, handleCreate, handleRead, handleUpdate, handleDelete } = require("../helper/HandlerError.js");
+const { handlerError, handleCreate, handleUpdate, handleDelete, handleGet } = require("../helper/HandlerError.js");
 const Models = require("../models/index.js");
 const Client = Models.Client;
 
@@ -20,8 +20,8 @@ class ClientController {
     }
     static async GetAllClient(req, res) {
         try {
-            const Client = await Client.findAll();
-            handleRead(res, Client);
+            const data = await Client.findAll();
+            handleGet(res, data);
         } catch (error) {
             handlerError(res, error);
         }
@@ -34,7 +34,7 @@ class ClientController {
             if (!Client) {
                 return res.status(404).json({ message: 'Client not found' });
             }
-            handleRead(res, Client);
+            handleGet(res, Client);
         } catch (error) {
             handlerError(res, error);
         }
@@ -65,15 +65,14 @@ class ClientController {
 
     static async DeleteClient(req, res) {
         try {
-            const { id } = req.params;
-            const Client = await Client.findByPk(id);
-
-            if (!Client) {
-                return res.status(404).json({ message: 'Client not found' });
+            const { id } = req.params;  
+            const deleted = await Client.destroy({ where: {id} });  
+        
+            if (deleted) {
+              handleDelete(res, deleted)
+            } else {
+              res.status(404).json({ message: "ClientDetail not found" });
             }
-
-            await Client.destroy();
-            handleDelete(res);
         } catch (error) {
             handlerError(res, error);
         }

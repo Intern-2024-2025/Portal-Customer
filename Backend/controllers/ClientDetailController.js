@@ -2,6 +2,8 @@ const {
   handlerError,
   handleCreate,
   handleGet,
+  handleUpdate,
+  handleDelete
 } = require("../helper/HandlerError.js");
 const Models = require("../models/index.js");
 const ClientDetail = Models.ClientDetail;
@@ -67,6 +69,51 @@ class ClientDetailController {
       handlerError(res, error);
     }
   }
+   
+  static async UpdateClientDetail(req, res) {
+    try {
+        const { id } = req.params;
+        const { fullname, phone, address, category_business, description_business, image } = req.body;
+        
+        console.log(id);
+
+        const updated = await ClientDetail.update(
+            {
+                fullname,
+                phone,
+                address,
+                category_business,
+                description_business,
+                image
+            },
+            { where: { id } }
+        );
+
+        if (updated) {
+            handleUpdate(res, updated);
+        } else {
+            res.status(404).json({ message: "ClientDetail not found" });
+        }
+    } catch (error) {
+        console.error("Error updating client detail:", error);
+        handlerError(res, error);
+    }
+ }
+ 
+ static async DeleteClientDetail(req, res) {
+  try {
+    const { id } = req.params;  
+    const deleted = await ClientDetail.destroy({ where: {id} });  
+
+    if (deleted) {
+      handleDelete(res, deleted)
+    } else {
+      res.status(404).json({ message: "ClientDetail not found" });
+    }
+  } catch (error) {
+    handlerError(res, error);  
+  }
+}
 }
 
 module.exports = ClientDetailController;

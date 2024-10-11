@@ -27,6 +27,8 @@ router.delete("/clients/:id", verifyToken, ClientController.DeleteClient);
 //verification Data Business
 router.post("/verification-data", verifyToken, IsClinet, ClientDetailController.createClientDetail);
 router.get("/client-detail", verifyToken, ClientDetailController.getClientDetailById);
+router.put("/client-detail/:id", verifyToken, ClientDetailController.UpdateClientDetail);
+router.delete("/client-detail/:id", verifyToken, ClientDetailController.DeleteClientDetail);
 router.get("/client-detail/:id", verifyToken, IsAdmin, ClientDetailController.getClientDetailByIdAdmin);
 
 //Verification Admin Produk

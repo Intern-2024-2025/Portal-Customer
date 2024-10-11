@@ -1,4 +1,4 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZlYTNiNjlmLTk3ZDYtNGU3MC1iNTY0LTMxOGU3YjM2ZTZjYyIsInJvbGUiOiJjbGllbnQiLCJpYXQiOjE3Mjg1MzUxNzYsImV4cCI6MTcyODg4MDc3Nn0.Wn2lcFueUKqpmn_fRRHf6dTsQXo6yhBJNfFEwq394Ug
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZkZDc1OWUxLTczMjUtNDFlNi04ZjNmLTUwOGU1YTVkOTVjZCIsInJvbGUiOiJjbGllbnQiLCJpYXQiOjE3Mjg2MzQ0MDcsImV4cCI6MTcyODk4MDAwN30.UXQz1SUl5kqxPpqAMshCI1ptigxFLSdnx8sv62osL-I
 
 //login
 ###
@@ -6,7 +6,7 @@ POST http://localhost:5003/login
 Content-Type: application/json
 
 {
-    "username" : "diptya",
+    "username" : "asep",
     "password" : "Diptya1234!"
 }
 
@@ -40,47 +40,6 @@ Content-Type: application/json
 
 {
     "otp": "218316"
-}
-
-
-
-//Create-Clientdet
-###
-POST http://localhost:5003/create-clientdet
-Content-Type: application/json
-Authorization: Bearer {{token}}
-
-{
-    "fullname": "dicobamasulk",
-    "phone": "098765432123",
-    "address": "jl.apel",
-    "category_business": "Rumah",
-    "description_business": "oke",
-    "image": "sip"
-}
-
-//Update-Clientdet
-###
-POST http://localhost:5003/update-clientdet
-Content-Type: application/json
-
-{
-    "fullname": "aser",
-    "phone": "098765432133",
-    "address": "jl.apel",
-    "category_business": "asd",
-    "description_business": "sad",
-    "image": "wqer",
-     "id" : "77ce5883-64fb-48d9-8f67-ff029ee308d5"
-}
-
-//delete-Clientdet
-###
-POST http://localhost:5003/delete-clientdet
-Content-Type: application/json
-
-{
-    "id" : "77ce5883-64fb-48d9-8f67-ff029ee308d5"
 }
 
 //reset-password
@@ -119,7 +78,7 @@ Authorization: Bearer {{token}}
 
 //get-detail-verification
 ###
-GET  http://localhost:5003/client-detail
+GET  http://localhost:5003/client-detail/fea3b69f-97d6-4e70-b564-318e7b36e6cc
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -128,6 +87,56 @@ Authorization: Bearer {{token}}
 GET  http://localhost:5003/client-detail/dasdas
 Content-Type: application/json
 Authorization: Bearer {{token}}
+
+//Update-Client-detail
+###
+PUT http://localhost:5003/client-detail/f07be547-f310-436d-9e2a-4b1ec2f16bdc
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "fullname": "aser",
+    "phone": "098765432133",
+    "address": "jl.apel",
+    "category_business": "asd",
+    "description_business": "sad",
+    "image": ""
+}
+
+//delete-Client-detail
+###
+DELETE http://localhost:5003/client-detail/f07be547-f310-436d-9e2a-4b1ec2f16bdc
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+//detail client
+###
+GET  http://localhost:5003/clients
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+//Update-Client
+###
+PUT http://localhost:5003/clients/6dd759e1-7325-41e6-8f3f-508e5a5d95cd
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "username" : "",
+    "email" : "",
+    "password" : "",
+    "otp" : ""
+}
+
+//delete-Client
+###
+DELETE http://localhost:5003/clients/6dd759e1-7325-41e6-8f3f-508e5a5d95cd
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+# {
+#     "id" : "f07be547-f310-436d-9e2a-4b1ec2f16bdc"
+# }
 
 # //Get-User Managmenet
 # ###
