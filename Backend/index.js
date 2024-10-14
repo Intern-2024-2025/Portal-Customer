@@ -8,7 +8,7 @@ const cookieParser = require("cookie-parser");
 const { createAdmin } = require("./seeders/AdminSeeders.js");
 const path = require("path");
 
-// //Insialisasi ke Database
+//Insialisasi ke Database
 // Models.sequelizeInstance
 //   .sync({ force: false, alter: true })
 //   .then(async () => {
