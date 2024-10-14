@@ -125,7 +125,7 @@ const Client = (sequelizeInstance) =>{
           },
         },
         hooks: {
-          beforeCreate: (admin, otp) => {
+          beforeCreate: (admin, opt) => {
             const hashedPassword = hashPassword(admin.password);
             admin.password = hashedPassword;
           },

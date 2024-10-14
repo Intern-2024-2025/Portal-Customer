@@ -49,8 +49,8 @@ function handleUpdate(res, data) {
       status,
     });
   } else {
-    res.status(200).json({
-      code: 200,
+    res.status(500).json({
+      code: 500,
       message: "Failed Update Data",
       status,
     });
@@ -64,8 +64,8 @@ function handleDelete(res, status) {
       status,
     });
   } else {
-    res.status(200).json({
-      code: 200,
+    res.status(500).json({
+      code: 500,
       message: "Failed Delete Data",
       status,
     });

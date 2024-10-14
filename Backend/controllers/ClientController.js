@@ -1,15 +1,27 @@
-const { where } = require("sequelize");
-const { handlerError, handleCreate, handleRead, handleUpdate, handleDelete } = require("../helper/HandlerError.js");
+const { handlerError, handleCreate, handleUpdate, handleDelete, handleGet } = require("../helper/HandlerError.js");
 const Models = require("../models/index.js");
 const Client = Models.Client;
 
 class ClientController {
 
-    
+    static async CreateClient(req, res) {
+        try {
+            const { username, email, password, otp} = req.body;
+            await Client.create({
+                username,
+                email,
+                otp,
+                password,
+            });
+            handleCreate(res);
+        } catch (error) {
+            handlerError(res, error);
+        }
+    }
     static async GetAllClient(req, res) {
         try {
-            const Client = await Client.findAll();
-            handleRead(res, Client);
+            const data = await Client.findAll();
+            handleGet(res, data);
         } catch (error) {
             handlerError(res, error);
         }
@@ -22,7 +34,7 @@ class ClientController {
             if (!Client) {
                 return res.status(404).json({ message: 'Client not found' });
             }
-            handleRead(res, Client);
+            handleGet(res, Client);
         } catch (error) {
             handlerError(res, error);
         }
@@ -32,9 +44,9 @@ class ClientController {
         try {
             const { id } = req.params;
             const { username, email, password, otp } = req.body;
-            const ChckClient = await Client.findByPk(id);
+            const Client = await Client.findByPk(id);
 
-            if (!ChckClient) {
+            if (!Client) {
                 return res.status(404).json({ message: 'Client not found' });
             }
 
@@ -43,13 +55,6 @@ class ClientController {
                 email, 
                 password, 
                 otp
-            },{
-                where:{
-                    username: "coba12",
-                    email: "halolur@gmail.com",
-                    password: "tes321!Agak",
-                    otp: "7654321",
-                }
             });
             handleUpdate(res);
         } catch (error) {
@@ -60,15 +65,14 @@ class ClientController {
 
     static async DeleteClient(req, res) {
         try {
-            const { id } = req.params;
-            const chekClient = await Client.findByPk(id);
-
-            if (!chekClient) {
-                return res.status(404).json({ message: 'Client not found' });
+            const { id } = req.params;  
+            const deleted = await Client.destroy({ where: {id} });  
+        
+            if (deleted) {
+              handleDelete(res, deleted)
+            } else {
+              res.status(404).json({ message: "ClientDetail not found" });
             }
-
-            const deleted = await Client.destroy({where: {id :id}});
-            handleDelete(res, deleted);
         } catch (error) {
             handlerError(res, error);
         }
