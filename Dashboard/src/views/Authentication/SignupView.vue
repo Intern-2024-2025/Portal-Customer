@@ -1,20 +1,36 @@
 <script setup lang="ts">
 import DefaultAuthCard from '@/components/Auths/DefaultAuthCard.vue'
 import InputGroup from '@/components/Auths/InputGroup.vue'
-// import BreadcrumbDefault from '@/components/Breadcrumbs/BreadcrumbDefault.vue'
-// import DefaultLayout from '@/layouts/DefaultLayout.vue'
-// import { ref } from 'vue'
-// const pageTitle = ref('Sign Up')
+import API from '@/api/auth';
+import router from '@/router/index'
+import { ref } from 'vue'
+
+const username = ref('')
+const email = ref('')
+const password = ref('') 
+const rePassword = ref('') 
+
+const registerClient = async () => {
+  try {
+    if(password.value != rePassword.value){
+      console.log("password ngga metch")
+    }
+    
+    const response = await API.register(username.value, email.value, password.value);
+    console.log(response)
+    if(response.code == 201){
+      router.push('/auth/verification-email');
+    }
+  } catch (error) {
+    console.error('Login gagal:', error);
+  }
+};
 </script>
 
 <template>
-<!--  
-    <BreadcrumbDefault :pageTitle="pageTitle" /> -->
-    <!-- Breadcrumb End -->
-
     <DefaultAuthCard subtitle="Start for free">
-      <form>
-        <InputGroup label="Name" type="text" placeholder="Enter your full name">
+      <form @submit.prevent="registerClient">
+        <InputGroup v-model="username" label="Username" type="text" placeholder="Enter your Username">
           <svg
             class="fill-current"
             width="22"
@@ -36,7 +52,7 @@ import InputGroup from '@/components/Auths/InputGroup.vue'
           </svg>
         </InputGroup>
 
-        <InputGroup label="Email" type="email" placeholder="Enter your email">
+        <InputGroup v-model="email" label="Email" type="email" placeholder="Enter your email">
           <svg
             class="fill-current"
             width="22"
@@ -54,7 +70,7 @@ import InputGroup from '@/components/Auths/InputGroup.vue'
           </svg>
         </InputGroup>
 
-        <InputGroup label="Password" type="password" placeholder="Enter your password">
+        <InputGroup v-model="password" label="Password" type="password" placeholder="Enter your password">
           <svg
             class="fill-current"
             width="22"
@@ -76,7 +92,7 @@ import InputGroup from '@/components/Auths/InputGroup.vue'
           </svg>
         </InputGroup>
 
-        <InputGroup label="Re-type Password" type="password" placeholder="Re-enter your password">
+        <InputGroup v-model="rePassword" label="Re-type Password" type="password" placeholder="Re-enter your password">
           <svg
             class="fill-current"
             width="22"
@@ -114,5 +130,4 @@ import InputGroup from '@/components/Auths/InputGroup.vue'
         </div>
       </form>
     </DefaultAuthCard>
-  <!-- </DefaultLayout> -->
 </template>

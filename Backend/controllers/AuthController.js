@@ -138,6 +138,7 @@ class AuthController {
   static async registerClient(req, res) {
     try {
       const { username, email, password } = req.body;
+      
       const otp = Math.floor(100000 + Math.random() * 900000);
 
       await Models.Client.create({

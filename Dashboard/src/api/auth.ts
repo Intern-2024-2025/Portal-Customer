@@ -20,6 +20,18 @@ class API {
       return err.response.data;
     }
   }
+  static async register(username:any, email:any, password:any) {
+    try {
+      const response = await axiosInstance.post("register", {
+        username, email, password
+      });
+      return response.data;
+    } catch (err:any) {
+      console.log(err);
+      console.error("error login:", err.response.data);
+      return err.response.data;
+    }
+  }
 }
 
 export default API;

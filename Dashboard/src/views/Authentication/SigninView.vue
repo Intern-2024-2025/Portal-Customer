@@ -2,12 +2,11 @@
 import DefaultAuthCard from '@/components/Auths/DefaultAuthCard.vue'
 import InputGroup from '@/components/Auths/InputGroup.vue'
 import API from '@/api/auth';
-import { ref } from 'vue'
 import router from '@/router/index'
+import { ref } from 'vue'
 
 const username = ref('')
 const password = ref('') 
-// console.log(username.value)
 
 const loginUser = async () => {
   try {
@@ -23,10 +22,8 @@ const loginUser = async () => {
     }
   } catch (error) {
     console.error('Login gagal:', error);
-    // Tambahkan penanganan error jika diperlukan
   }
 };
-
 </script>
 
 <template>
