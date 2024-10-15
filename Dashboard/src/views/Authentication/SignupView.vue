@@ -12,7 +12,7 @@ import InputGroup from '@/components/Auths/InputGroup.vue'
     <BreadcrumbDefault :pageTitle="pageTitle" /> -->
     <!-- Breadcrumb End -->
 
-    <DefaultAuthCard subtitle="Start for free">
+    <DefaultAuthCard title="Start for free">
       <form>
         <InputGroup label="Name" type="text" placeholder="Enter your full name">
           <svg

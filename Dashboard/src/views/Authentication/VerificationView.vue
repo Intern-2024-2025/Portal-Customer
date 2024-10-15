@@ -10,7 +10,6 @@ const email = ref<string>('')
 const otp = ref<string>('') 
 const errorMessage = ref<string>('')
 
-
 // Fungsi untuk mengirim OTP
 const sendOtp = (): void => {
   console.log('Email entered:', email.value)  
@@ -39,7 +38,7 @@ const handleSubmit = (): void => {
       <form @submit.prevent="handleSubmit">
         <p v-if="errorMessage" class="text-a-500 ">{{ errorMessage }}</p>
         <template v-if="step === 1">
-          <InputGroup type="email" placeholder="Enter your email" v-model="email"></InputGroup>
+          <InputGroup class="required" type="email" placeholder="Enter your email" v-model="email"></InputGroup>
           <div class="mb-5 mt-6">
             <button type="submit" class="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 font-medium text-white transition hover:bg-opacity-90">
               Send OTP
