@@ -45,7 +45,7 @@ class AuthController {
         user = userClient;
         user.dataValues.role = "client"
       }
-      console.log(user)
+
       if (!user) return res.status(400).json({ msg: "Akun tidak ditemukan" });
 
       const match = await bcrypt.compare(req.body.password, user.password);

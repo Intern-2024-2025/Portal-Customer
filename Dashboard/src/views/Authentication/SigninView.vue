@@ -1,23 +1,43 @@
 <script setup lang="ts">
 import DefaultAuthCard from '@/components/Auths/DefaultAuthCard.vue'
 import InputGroup from '@/components/Auths/InputGroup.vue'
-// import BreadcrumbDefault from '@/components/Breadcrumbs/BreadcrumbDefault.vue'
-// import DefaultLayout from '@/layouts/DefaultLayout.vue'
+import API from '@/api/auth';
+import { ref } from 'vue'
+import router from '@/router/index'
 
-// import { ref } from 'vue'
+const username = ref('')
+const password = ref('') 
+// console.log(username.value)
 
-// const pageTitle = ref('Sign In')
+const loginUser = async () => {
+  try {
+    const response = await API.login(username.value, password.value);
+    localStorage.setItem('token', response.accessToken);
+    localStorage.setItem('role', response.role);
+    if(response.role != 'admin'){
+      router.push('/client-dashboard');
+    }else if(response.role != 'client'){
+      router.push('/admin-dashboard');
+    }else{
+      console.log("login gagal")
+    }
+  } catch (error) {
+    console.error('Login gagal:', error);
+    // Tambahkan penanganan error jika diperlukan
+  }
+};
+
 </script>
 
 <template>
-  <!-- <DefaultLayout> -->
-    <!-- Breadcrumb Start -->
-    <!-- <BreadcrumbDefault :pageTitle="pageTitle" /> -->
-    <!-- Breadcrumb End -->
-
     <DefaultAuthCard title="Sign In to Athena">
-      <form>
-        <InputGroup label="Email" type="email" placeholder="Enter your email">
+      <form @submit.prevent="loginUser">
+        <InputGroup
+        v-model="username"
+        label="Username"
+        type="text"
+        placeholder="Masukkan username"
+      >
           <svg
             class="fill-current"
             width="22"
@@ -35,7 +55,12 @@ import InputGroup from '@/components/Auths/InputGroup.vue'
           </svg>
         </InputGroup>
 
-        <InputGroup label="Password" type="password" placeholder="6+ Characters, 1 Capital letter">
+        <InputGroup
+        v-model="password"
+        label="Password"
+        type="password"
+        placeholder="Masukkan password"
+      >
           <svg
             class="fill-current"
             width="22"
@@ -58,11 +83,11 @@ import InputGroup from '@/components/Auths/InputGroup.vue'
         </InputGroup>
 
         <div class="mb-5 mt-6">
-          <router-link to="/">
-            <button type="button"
+          <!-- <router-link to="/"> -->
+            <button type="submit"
               class="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 font-medium text-white transition hover:bg-opacity-90">Sign In
             </button>
-          </router-link>
+          <!-- </router-link> -->
         </div>
         
         <div class="mb-5 mt-6">
@@ -82,6 +107,4 @@ import InputGroup from '@/components/Auths/InputGroup.vue'
         </div>
       </form>
     </DefaultAuthCard>
-  <!-- </DefaultLayout> -->
-
 </template>
