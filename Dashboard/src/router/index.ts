@@ -13,10 +13,9 @@ import TablesView from '@/views/TablesView.vue'
 import AlertsView from '@/views/UiElements/AlertsView.vue'
 import ButtonsView from '@/views/UiElements/ButtonsView.vue'
 import ResetView from '@/views/Authentication/ResetView.vue'
+import VerificationView from '@/views/Authentication/VerificationView.vue'
 import AdminDashboard from '@/views/Dashboard/AdminDashboardView.vue'
 import ClientDashbaord from '@/views/Dashboard/ClientDashbaordView.vue'
-
-
 
 const routes = [
   {
@@ -123,6 +122,14 @@ const routes = [
     meta: {
       title: 'ResetPassword'
     }
+  },
+  {
+    path: '/auth/verification-email',
+    name: 'verification email',
+    component: VerificationView,
+    meta: {
+      title: 'VerificationEmail'
+    },
   },
   {
     path: '/admin-dashboard',
