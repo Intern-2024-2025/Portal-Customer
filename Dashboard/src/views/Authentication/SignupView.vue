@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import DefaultAuthCard from '@/components/Auths/DefaultAuthCard.vue'
 import InputGroup from '@/components/Auths/InputGroup.vue'
-import BreadcrumbDefault from '@/components/Breadcrumbs/BreadcrumbDefault.vue'
-import DefaultLayout from '@/layouts/DefaultLayout.vue'
+// import BreadcrumbDefault from '@/components/Breadcrumbs/BreadcrumbDefault.vue'
+// import DefaultLayout from '@/layouts/DefaultLayout.vue'
 
 import { ref } from 'vue'
 
@@ -10,12 +10,12 @@ const pageTitle = ref('Sign Up')
 </script>
 
 <template>
-  <DefaultLayout>
+  <!-- <DefaultLayout> -->
     <!-- Breadcrumb Start -->
     <BreadcrumbDefault :pageTitle="pageTitle" />
     <!-- Breadcrumb End -->
 
-    <DefaultAuthCard subtitle="Start for free" title="Sign Up to TailAdmin">
+    <DefaultAuthCard subtitle="Start for free">
       <form>
         <InputGroup label="Name" type="text" placeholder="Enter your full name">
           <svg
@@ -109,7 +109,7 @@ const pageTitle = ref('Sign Up')
           />
         </div>
 
-        <button
+        <!-- <button
           class="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 font-medium hover:bg-opacity-80 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-80"
         >
           <span>
@@ -146,7 +146,7 @@ const pageTitle = ref('Sign Up')
             </svg>
           </span>
           Sign up with Google
-        </button>
+        </button> -->
 
         <div class="mt-6 text-center">
           <p class="font-medium">
@@ -156,5 +156,5 @@ const pageTitle = ref('Sign Up')
         </div>
       </form>
     </DefaultAuthCard>
-  </DefaultLayout>
+  <!-- </DefaultLayout> -->
 </template>
