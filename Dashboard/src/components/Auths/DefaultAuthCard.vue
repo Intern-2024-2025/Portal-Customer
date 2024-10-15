@@ -8,10 +8,10 @@ const props = defineProps(['subtitle', 'title', 'customClasses'])
     class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark min-h-screen flex flex-col xl:flex-row"
   >
     <div class="w-full xl:w-1/2 flex justify-center items-center bg-gray-100 dark:bg-boxdark">
-      <div class="py-10 px-6 sm:py-16 sm:px-10 xl:py-20 xl:px-26 text-center">
-        <router-link class="mb-6 inline-block" to="/">
-          <img class="hidden dark:block w-32 mx-auto" src="@/assets/images/logo/logo.svg" alt="Logo" />
-          <img class="dark:hidden w-32 mx-auto" src="@/assets/images/logo/logo-dark.svg" alt="Logo" />
+      <div class="py-20 px-6 sm:py-16 sm:px-10 xl:py-20 xl:px-26 text-center">
+        <router-link class="mb-11 inline-block" to="/">
+          <!-- <img class="hidden dark:block w-32 mx-auto" src="@/assets/images/logo/logo.svg" alt="Logo" />
+          <img class="dark:hidden w-32 mx-auto" src="@/assets/images/logo/logo-dark.svg" alt="Logo" /> -->
         </router-link>
 
         <p class="font-medium text-sm sm:text-base xl:text-lg 2xl:px-20">
@@ -21,8 +21,8 @@ const props = defineProps(['subtitle', 'title', 'customClasses'])
           Secure Today, Safe Tommorow
         </p>
 
-        <span class="mt-10 inline-block">
-          <img class="w-full max-w-xs mx-auto" src="@/assets/images/illustration/illustration-03.svg" alt="illustration" />
+        <span class="mt-20 inline-block">
+          <img class="w-auto max-w-xs mx-auto" src="@/assets/images/join-community.svg" alt="illustration" />
         </span>
       </div>
     </div>
