@@ -13,6 +13,10 @@ import TablesView from '@/views/TablesView.vue'
 import AlertsView from '@/views/UiElements/AlertsView.vue'
 import ButtonsView from '@/views/UiElements/ButtonsView.vue'
 import ResetView from '@/views/Authentication/ResetView.vue'
+import AdminDashboard from '@/views/Dashboard/AdminDashboardView.vue'
+import ClientDashbaord from '@/views/Dashboard/ClientDashbaordView.vue'
+
+
 
 const routes = [
   {
@@ -20,6 +24,7 @@ const routes = [
     name: 'eCommerce',
     component: ECommerceView,
     meta: {
+      requiresAuth: true,
       title: 'eCommerce Dashboard'
     }
   },
@@ -118,6 +123,18 @@ const routes = [
     meta: {
       title: 'ResetPassword'
     }
+  },
+  {
+    path: '/admin-dashboard',
+    name: 'admin-dashboard',
+    component: AdminDashboard,
+    meta: { requiresAuth: true, role: 'admin' }
+  },
+  {
+    path: '/client-dashboard',
+    name: 'client-dashboard',
+    component: ClientDashbaord,
+    meta: { requiresAuth: true, role: 'client' }
   }
 ]
 
@@ -130,8 +147,26 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  document.title = `Vue.js ${to.meta.title} | TailAdmin - Vue.js Tailwind CSS Dashboard Template`
-  next()
+  document.title = `${to.meta.title} | Athena Dashboard`
+  const isAuthenticated = !!localStorage.getItem('token')
+  const userRole = localStorage.getItem('role')
+  
+  console.log(userRole)
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!isAuthenticated) {
+      next({ name: 'signin' })
+    } else if (to.meta.role && to.meta.role !== userRole) {
+      if (userRole === 'admin') {
+        next({ name: 'admin-dashboard' })
+      } else {
+        next({ name: 'client-dashboard' })
+      }
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
 })
 
 export default router
