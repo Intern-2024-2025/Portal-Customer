@@ -29,9 +29,6 @@ const registerClient = async () => {
 
 <template>
     <DefaultAuthCard title="Start for free">
-      <form>
-        <InputGroup label="Name" type="text" placeholder="Enter your full name">
-    <DefaultAuthCard subtitle="Start for free">
       <form @submit.prevent="registerClient">
         <InputGroup v-model="username" label="Username" type="text" placeholder="Enter your Username">
           <svg
