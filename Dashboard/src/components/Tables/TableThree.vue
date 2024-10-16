@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const packages = ref([
+const csrkey = ref([
   { name: 'Free Package', price: '$0.00', invoiceDate: 'Jan 13, 2025', status: 'Paid' },
   { name: 'Standard Package', price: '$59.00', invoiceDate: 'Jan 13, 2025', status: 'Paid' },
   { name: 'Business Package', price: '$99.00', invoiceDate: 'Jan 13, 2025', status: 'Unpaid' },
@@ -18,17 +18,19 @@ const packages = ref([
         <thead>
           <tr class="bg-gray-2 text-left dark:bg-meta-4">
             <th class="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-              Package
+              CSR.Key
             </th>
             <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-              Invoice date
+              Postman.pem
             </th>
-            <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">Status</th>
+            <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">slotd</th>
+            <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">Password</th>
+            <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">Keyld</th>
             <th class="py-4 px-4 font-medium text-black dark:text-white">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in packages" :key="index">
+          <tr v-for="(item, index) in csrkey" :key="index">
             <td class="py-5 px-4 pl-9 xl:pl-11">
               <h5 class="font-medium text-black dark:text-white">{{ item.name }}</h5>
               <p class="text-sm">{{ item.price }}</p>
@@ -37,6 +39,15 @@ const packages = ref([
               <p class="text-black dark:text-white">{{ item.invoiceDate }}</p>
             </td>
             <td class="py-5 px-4">
+              <p class="text-black dark:text-white">{{ item.invoiceDate }}</p>
+            </td>
+            <td class="py-5 px-4">
+              <p class="text-black dark:text-white">{{ item.invoiceDate }}</p>
+            </td>
+            <td class="py-5 px-4">
+              <p class="text-black dark:text-white">{{ item.invoiceDate }}</p>
+            </td>
+            <!-- <td class="py-5 px-4">
               <p
                 class="inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium"
                 :class="{
@@ -47,7 +58,7 @@ const packages = ref([
               >
                 {{ item.status }}
               </p>
-            </td>
+            </td> -->
             <td class="py-5 px-4">
               <div class="flex items-center space-x-3.5">
                 <button class="hover:text-primary">
