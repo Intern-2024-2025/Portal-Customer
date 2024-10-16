@@ -39,7 +39,8 @@ POST http://localhost:5003/verification-email
 Content-Type: application/json
 
 {
-    "otp": "218316"
+    "otp": "218316",
+    "email": "diptyasoemantry.com"
 }
 
 //reset-password
@@ -54,11 +55,13 @@ Content-Type: application/json
 
 //new-password
 ###
-POST http://localhost:5003/new-password/{{token}}
+POST http://localhost:5003/new-password
 Content-Type: application/json
 
 {
-    "newPassword": "MasukAja1234!"
+    "email": "diptyasoemantry@gmail.com",
+    "otp": "601999",
+    "newPassword": "Okemasuksip1234!"
 }
 
 //Verification Data Business

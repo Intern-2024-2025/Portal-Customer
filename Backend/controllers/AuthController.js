@@ -44,6 +44,9 @@ class AuthController {
       } else {
         user = userClient;
         user.dataValues.role = "client"
+        if(user.dataValues.status_verification_email != true){
+          res.status(400).json({ msg: "Akun tidak ditemukan" });
+        }
       }
 
       if (!user) return res.status(400).json({ msg: "Akun tidak ditemukan" });
@@ -77,27 +80,22 @@ class AuthController {
       });
       if (!client)
         return res.status(400).json({ msg: "email tidak ditemukan" });
+      
+      const otp = Math.floor(100000 + Math.random() * 900000);
 
-      const accessToken = jwt.sign(
-        {
-          id: client.id,
-          role: client.role,
-        },
-        process.env.ACCESS_TOKEN_SECRET,
-        {
-          expiresIn: "5760m",
-        }
-      );
+      await Models.Client.update({otp},{
+        where: {id: client.id}
+      })
 
       sendMail(
         req.body.email,
         "Reset Password Sandhiguna",
-        `Klik Link Berikut: http://localhost:5003/${accessToken}`
+        `Kode OTP Anda adalah: ${otp}`
       );
 
       handleGet(res, {
         data: {
-          linkRedirect: `http:/localhost:5003/new-password/${accessToken}`,
+          status: `success`,
         },
       });
     } catch (error) {
@@ -160,15 +158,16 @@ class AuthController {
   }
   static async verificationEmail(req, res) {
     try {
+      const {otp, email} = req.body
       const chekOtp = await Models.Client.findOne({
-        where: { otp: req.body.otp },
+        where: { [Op.and]: [{ otp }, { email}] },
       });
       if (!chekOtp) {
         return res.status(400).json({ msg: "OTP anda Salah!" });
       }
       await Models.Client.update(
         { status_verification_email: true },
-        { where: { otp: req.body.otp } }
+        { where: { otp, email} }
       ).then((data) => {
         handleUpdate(res, data);
       });
@@ -178,15 +177,10 @@ class AuthController {
   }
   static async newPassword(req, res) {
     try {
-      const token = accesToken({
-        headers: {
-          ["authorization"]: `Bearer ${req.params.token}`,
-        },
-      });
-
+      const { email, otp, newPassword} = req.body
       await Models.Client.update(
-        { password: hashPassword(req.body.newPassword) },
-        { where: { id: token.id } }
+        { password: hashPassword(newPassword) },
+        { where: {[Op.and]: [{ email }, { otp }] } }
       ).then((data) => {
         handleUpdate(res, data);
       });

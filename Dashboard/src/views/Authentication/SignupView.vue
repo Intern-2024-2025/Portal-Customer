@@ -13,13 +13,16 @@ const rePassword = ref('')
 const registerClient = async () => {
   try {
     if(password.value != rePassword.value){
-      console.log("password ngga metch")
+      alert("password ngga metch");
+      return
     }
     
     const response = await API.register(username.value, email.value, password.value);
     console.log(response)
     if(response.code == 201){
-      router.push('/auth/verification-email');
+      router.push(`/auth/verification-email/2?email=${email.value}`);
+    }else if (response.code != 201){
+      alert(response.message);
     }
   } catch (error) {
     console.error('Login gagal:', error);

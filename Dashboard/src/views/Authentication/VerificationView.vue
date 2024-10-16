@@ -1,37 +1,53 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-// import { useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import DefaultAuthCard from '@/components/Auths/DefaultAuthCard.vue'
 import InputGroup from '@/components/Auths/InputGroup.vue'
+import API from '@/api/auth';
 
-// const router = useRouter()  
-const step = ref<number>(1)  
+const route = useRoute()
+const router = useRouter() 
+const step = ref<number>(1)
 const email = ref<string>('')  
-const otp = ref<string>('') 
+const otp = ref<string>('')  
 const errorMessage = ref<string>('')
+
+
+onMounted(() => {
+  //params
+  const id = route.params.id
+  if (id && !isNaN(Number(id))) {
+    step.value = Number(id)
+  }
+  //query
+  email.value = route.query.email as string || ''
+})
 
 // Fungsi untuk mengirim OTP
 const sendOtp = (): void => {
-  console.log('Email entered:', email.value)  
-  errorMessage.value = ''
-  console.log('Mengirim OTP ke:', email.value)   
   step.value = 2
 }
 
-// Fungsi untuk menangani submit
-const handleSubmit = (): void => {
+const handleSubmit = async () => {
   if (step.value === 1) {
     sendOtp()
   } else if (step.value === 2) {
     if (otp.value === '') {
-      errorMessage.value = 'Please enter the OTP'
+      alert('Please enter the OTP')
       return
     }
-    errorMessage.value = ''  
-    console.log('Memverifikasi OTP:', otp.value)
+
+    //API verification email
+    const response = await API.verificationEmail(otp.value, email.value)
+    if(response.status != 0 && response.code == 200){
+      router.push('/auth/signin')
+    }else{
+      alert(response.message || "OTP SALAH!")
+    }
   }
 }
 </script>
+
 
 <template>
     <DefaultAuthCard title="Verification Email">
@@ -47,6 +63,7 @@ const handleSubmit = (): void => {
         </template>
 
         <template v-else-if="step === 2">
+          <p>Chek Otp in your Email! <b>{{ email }}</b> <br> <br></p>
           <InputGroup label="OTP" type="text" placeholder="Enter the OTP sent to your email" v-model="otp"></InputGroup>
           <div class="mb-5 mt-6">
             <button type="submit" class="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 font-medium text-white transition hover:bg-opacity-90">

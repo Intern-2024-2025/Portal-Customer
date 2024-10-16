@@ -15,8 +15,6 @@ class API {
       });
       return response.data;
     } catch (err:any) {
-      console.log(err);
-      console.error("error login:", err.response.data);
       return err.response.data;
     }
   }
@@ -27,9 +25,31 @@ class API {
       });
       return response.data;
     } catch (err:any) {
-      console.log(err);
-      console.error("error login:", err.response.data);
       return err.response.data;
+    }
+  }
+  static async resetPassword(email:any) {
+    try {
+      const response = await axiosInstance.post("reset-password", {email});
+      return response.data;
+    } catch (err:any) {
+      return err.response.data;
+    }
+  }
+  static async newPassword(email:any, otp:any, newPassword:any) {
+    try {
+      const response = await axiosInstance.post("new-password", {email, otp, newPassword});
+      return response.data;
+    } catch (err:any) {
+      return err.response.data;  
+    }
+  }
+  static async verificationEmail(otp:any, email: any) {
+    try {
+      const response = await axiosInstance.post("verification-email", {otp, email});
+      return response.data;
+    } catch (err:any) {
+      return err.response.data;  
     }
   }
 }

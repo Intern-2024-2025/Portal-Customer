@@ -14,7 +14,7 @@ router.post("/login", AuthController.Login);
 router.post("/register", AuthController.registerClient)
 router.post("/verification-email", AuthController.verificationEmail)
 router.post("/reset-password", AuthController.ResetPassword);
-router.post("/new-password/:token", AuthController.newPassword);
+router.post("/new-password", AuthController.newPassword);
 
 router.post("/contact", ContactController.CreateContact)
 

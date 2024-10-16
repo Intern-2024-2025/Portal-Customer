@@ -124,7 +124,7 @@ const routes = [
     }
   },
   {
-    path: '/auth/verification-email',
+    path: '/auth/verification-email/:id',
     name: 'verification email',
     component: VerificationView,
     meta: {

@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import DefaultAuthCard from '@/components/Auths/DefaultAuthCard.vue'
 import InputGroup from '@/components/Auths/InputGroup.vue'
+import API from '@/api/auth';
 
 const router = useRouter()  
 const step = ref(1)  
@@ -11,23 +12,27 @@ const otp = ref('')
 const newPassword = ref('')  
 const confirmPassword = ref('')  
 
-const sendOtp = () => {
-  console.log('Mengirim OTP ke:', email.value)
-  step.value = 2 // pindah ke langkah 2 setelah mengirim OTP
-  console.log('Langkah saat ini:', step.value)
+const sendOtp = async () => {
+  const response = await API.resetPassword(email.value);
+  if(response.code == 200){
+    step.value = 2
+  }else{
+    alert("gagal send email")
+  }
 }
 
-const resetPassword = () => {
-  // Logika untuk mereset password
+const resetPassword = async () => {
   if (newPassword.value === confirmPassword.value) {
-    console.log('Reset password ke:', newPassword.value)
-    // plus logika verifikasi OTP dan reset password  
-
-    // Jika reset password berhasil
-    router.push('/auth/signin') // Redirect ke halaman sign in setelah berhasil
+    const response = await API.newPassword(email.value, otp.value, newPassword.value );
+    console.log(response)
+    if(response.status != 0 && response.code == 200){
+      router.push('/auth/signin') 
+    }else{
+      alert(response.message || "OTP Salah!")
+    }
   } else {
+    alert('Password tidak cocok')
     console.error('Password tidak cocok')
-    // Tambahkan logika untuk menampilkan pesan kesalahan jika perlu
   }
 }
 </script>
@@ -46,6 +51,7 @@ const resetPassword = () => {
         </template>
 
         <template v-else-if="step === 2">
+          <p>Chek Otp in your Email! {{ email }}</p> <br>
           <InputGroup label="OTP" type="text" placeholder="Enter the OTP sent to your email" v-model="otp"></InputGroup>
           <InputGroup label="New Password" type="password" placeholder="Enter your new password" v-model="newPassword"></InputGroup>
           <InputGroup label="Confirm Password" type="password" placeholder="Confirm your new password" v-model="confirmPassword"></InputGroup>
