@@ -13,13 +13,19 @@ const loginUser = async () => {
     const response = await API.login(username.value, password.value);
     localStorage.setItem('token', response.accessToken);
     localStorage.setItem('role', response.role);
-    if(response.role != 'admin'){
-      router.push('/client-dashboard');
-    }else if(response.role != 'client'){
-      router.push('/admin-dashboard');
+    console.log(response)
+    if(!response.accessToken){
+      alert(response.message)
     }else{
-      console.log("login gagal")
+      router.push('/')
     }
+    // if(response.role != 'admin'){
+    //   router.push('/client-dashboard');
+    // }else if(response.role != 'client'){
+    //   router.push('/admin-dashboard');
+    // }else{
+    //   console.log("login gagal")
+    // }
   } catch (error) {
     console.error('Login gagal:', error);
   }

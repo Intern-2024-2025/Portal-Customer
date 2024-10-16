@@ -1,13 +1,21 @@
 <script setup lang="ts">
 import HeaderArea from '@/components/Header/HeaderArea.vue'
 import SidebarArea from '@/components/Sidebar/SidebarArea.vue'
+import SidebarAreaAdmin from '@/components/Sidebar/SidebarAreaAdmin.vue';
+import SidebarAreaClient from '@/components/Sidebar/SidebarAreaClient.vue';
+
+import { computed } from 'vue'
+
+const role = computed(() => localStorage.getItem('role'))
+console.log(role)
 </script>
 
 <template>
   <!-- ===== Page Wrapper Start ===== -->
   <div class="flex h-screen overflow-hidden">
     <!-- ===== Sidebar Start ===== -->
-    <SidebarArea />
+    <SidebarAreaAdmin v-if="role === 'admin'" />
+    <SidebarAreaClient v-else-if="role === 'client'" />
     <!-- ===== Sidebar End ===== -->
 
     <!-- ===== Content Area Start ===== -->

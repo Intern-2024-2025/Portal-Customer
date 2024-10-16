@@ -4,7 +4,7 @@ import SigninView from '@/views/Authentication/SigninView.vue'
 import SignupView from '@/views/Authentication/SignupView.vue'
 import CalendarView from '@/views/CalendarView.vue'
 import BasicChartView from '@/views/Charts/BasicChartView.vue'
-import ECommerceView from '@/views/Dashboard/ECommerceView.vue'
+import Dashboard from '@/views/Dashboard/DashboardView.vue'
 import FormElementsView from '@/views/Forms/FormElementsView.vue'
 import FormLayoutView from '@/views/Forms/FormLayoutView.vue'
 import SettingsView from '@/views/Pages/SettingsView.vue'
@@ -14,17 +14,15 @@ import AlertsView from '@/views/UiElements/AlertsView.vue'
 import ButtonsView from '@/views/UiElements/ButtonsView.vue'
 import ResetView from '@/views/Authentication/ResetView.vue'
 import VerificationView from '@/views/Authentication/VerificationView.vue'
-import AdminDashboard from '@/views/Dashboard/AdminDashboardView.vue'
-import ClientDashbaord from '@/views/Dashboard/ClientDashbaordView.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'eCommerce',
-    component: ECommerceView,
+    name: 'dashboard',
+    component: Dashboard,
     meta: {
       requiresAuth: true,
-      title: 'eCommerce Dashboard'
+      title: 'Dashboard'
     }
   },
   {
@@ -131,18 +129,6 @@ const routes = [
       title: 'VerificationEmail'
     },
   },
-  {
-    path: '/admin-dashboard',
-    name: 'admin-dashboard',
-    component: AdminDashboard,
-    meta: { requiresAuth: true, role: 'admin' }
-  },
-  {
-    path: '/client-dashboard',
-    name: 'client-dashboard',
-    component: ClientDashbaord,
-    meta: { requiresAuth: true, role: 'client' }
-  }
 ]
 
 const router = createRouter({
@@ -158,15 +144,14 @@ router.beforeEach((to, from, next) => {
   const isAuthenticated = !!localStorage.getItem('token')
   const userRole = localStorage.getItem('role')
   
-  console.log(userRole)
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!isAuthenticated) {
       next({ name: 'signin' })
     } else if (to.meta.role && to.meta.role !== userRole) {
       if (userRole === 'admin') {
-        next({ name: 'admin-dashboard' })
+        next({ name: 'dashboard' })
       } else {
-        next({ name: 'client-dashboard' })
+        next({ name: 'dashboard' })
       }
     } else {
       next()
