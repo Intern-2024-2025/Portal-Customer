@@ -129,6 +129,6 @@ const pageTitle = ref('Product')
         </tbody>
       </table>
     </div>
-  </div>
+  </div> 
 </DefaultLayout>
 </template>

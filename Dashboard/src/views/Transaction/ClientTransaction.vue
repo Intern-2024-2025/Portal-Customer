@@ -36,7 +36,7 @@ const pageTitle = ref('Transaction')
             <th class="py-4 px-4 font-medium text-black dark:text-white">Actions</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody> 
           <tr v-for="(item, index) in csrkey" :key="index">
             <td class="py-5 px-4 pl-9 xl:pl-11">
               <h5 class="font-medium text-black dark:text-white">{{ item.name }}</h5>
