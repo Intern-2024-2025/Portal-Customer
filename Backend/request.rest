@@ -137,6 +137,37 @@ DELETE http://localhost:5003/clients/6dd759e1-7325-41e6-8f3f-508e5a5d95cd
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
+
+// create-product
+###
+POST http://localhost:5003/product
+Content-Type: application/json
+
+{
+    "name" :"Dicoba",
+    "csr_key": "satu dua 3",
+    "postman_pem": "2345enam",
+    "slot_id":"13",
+    "password":"Dicoba12345!",
+    "finance_key":"apapun yang terjadi345",
+    "status":"",
+    "call_api":"",
+    "count_trial":""
+}
+//Update-product
+###
+PUT http://localhost:5003/product/:id
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "name" :"tes1",
+    "csr_key": "3 2 satu",
+    "postman_pem": "sijisiji1",
+    "slot_id":"20",
+    "password":"Pablo12345!",
+    "finance_key":"santai123",
+}
 //get-product
 ###
 GET http://localhost:5003/product
@@ -148,6 +179,13 @@ Authorization: Bearer {{token}}
 GET http://localhost:5003/product/:id
 Content-Type: application/json
 Authorization: Bearer {{token}}
+
+//delete-product
+###
+DELETE http://localhost:5003/product/id
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
 
 
 # {
