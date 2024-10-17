@@ -43,8 +43,7 @@ const menuGroups = ref([
                   />
                 </svg>`,
         label: 'Dashboard',
-        route: '#',
-        children: [{ label: 'eCommerce', route: '/' }]
+        route: '/',
       },
       {
         icon: `<svg

@@ -1,3 +1,5 @@
+
+
 import { createRouter, createWebHistory } from 'vue-router'
 
 import SigninView from '@/views/Authentication/SigninView.vue'
@@ -14,6 +16,9 @@ import AlertsView from '@/views/UiElements/AlertsView.vue'
 import ButtonsView from '@/views/UiElements/ButtonsView.vue'
 import ResetView from '@/views/Authentication/ResetView.vue'
 import VerificationView from '@/views/Authentication/VerificationView.vue'
+import ClientProduct from '@/views/Product/ClientProduct.vue'
+import ClientTransaction from '@/views/Transaction/ClientTransaction.vue'
+import ExampleAppClient from '@/views/Example App/ExampleAppClient.vue'
 
 const routes = [
   {
@@ -63,6 +68,30 @@ const routes = [
     component: TablesView,
     meta: {
       title: 'Tables'
+    }
+  },
+  {
+    path: '/product',
+    name: 'Product',
+    component: ClientProduct,
+    meta: {
+      title: 'Client Product'
+    }
+  },
+  {
+    path: '/transaction',
+    name: 'Transaction',
+    component: ClientTransaction,
+    meta: {
+      title: 'Client Transaction '
+    }
+  },
+  {
+    path: '/example-app',
+    name: 'Example App',
+    component: ExampleAppClient,
+    meta: {
+      title: 'Example App '
     }
   },
   {

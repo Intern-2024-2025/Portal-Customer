@@ -42,8 +42,8 @@ const menuGroups = ref([
                     fill=""
                   />
                 </svg>`,
-        label: 'Produk',
-        route: '/tables',
+        label: 'Product',
+        route: '/product',
       },
       {
         icon: `<svg
@@ -60,7 +60,7 @@ const menuGroups = ref([
                   />
                 </svg>`,
         label: 'Transaction',
-        route: '/tables'
+        route: '/transaction'
       },
       {
         icon: `<svg
@@ -84,7 +84,7 @@ const menuGroups = ref([
                   </defs>
                 </svg>`,
         label: 'Example App',
-        route: '/tables'
+        route: '/example-app'
       },
     ]
   }
