@@ -137,6 +137,19 @@ DELETE http://localhost:5003/clients/6dd759e1-7325-41e6-8f3f-508e5a5d95cd
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
+//get-product
+###
+GET http://localhost:5003/product
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+//get-product-by-id
+###
+GET http://localhost:5003/product/:id
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
 # {
 #     "id" : "f07be547-f310-436d-9e2a-4b1ec2f16bdc"
 # }
