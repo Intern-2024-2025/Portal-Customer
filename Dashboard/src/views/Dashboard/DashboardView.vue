@@ -6,7 +6,7 @@ import BreadcrumbDefault from '@/components/Breadcrumbs/BreadcrumbDefault.vue'
 import TableThree from '@/components/Tables/TableThree.vue'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 
-  const pageTitle = ref('Produk')
+  const pageTitle = ref('')
 </script>
 
 <template>
