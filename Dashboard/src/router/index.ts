@@ -19,6 +19,10 @@ import VerificationView from '@/views/Authentication/VerificationView.vue'
 import ClientProduct from '@/views/Product/ClientProduct.vue'
 import ClientTransaction from '@/views/Transaction/ClientTransaction.vue'
 import ExampleAppClient from '@/views/Example App/ExampleAppClient.vue'
+import ListClient from '@/views/List Admin/ListClient.vue'
+import AdminTransaction from '@/views/Transaction/AdminTransaction.vue'
+import RegisterVerification from '@/views/List Admin/SubmissionTrial.vue'
+import SubmissionTrial from '@/views/List Admin/SubmissionTrial.vue'
 
 const routes = [
   {
@@ -92,6 +96,30 @@ const routes = [
     component: ExampleAppClient,
     meta: {
       title: 'Example App '
+    }
+  },
+  {
+    path: '/list-client',
+    name: 'List Client',
+    component: ListClient,
+    meta: {
+      title: 'List client'
+    }
+  },
+  {
+    path: '/submission-trial',
+    name: 'Submission Trial',
+    component: SubmissionTrial,
+    meta: {
+      title: ' Submission Trial'
+    }
+  },
+  {
+    path: '/transaction-admin',
+    name: 'Admin Transaction',
+    component: AdminTransaction,
+    meta: {
+      title: 'Admin Transaction'
     }
   },
   {
