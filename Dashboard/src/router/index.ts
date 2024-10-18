@@ -1,5 +1,3 @@
-
-
 import { createRouter, createWebHistory } from 'vue-router'
 
 import SigninView from '@/views/Authentication/SigninView.vue'
@@ -23,6 +21,7 @@ import ListClient from '@/views/List Admin/ListClient.vue'
 import AdminTransaction from '@/views/Transaction/AdminTransaction.vue'
 import RegisterVerification from '@/views/List Admin/SubmissionTrial.vue'
 import SubmissionTrial from '@/views/List Admin/SubmissionTrial.vue'
+import ExampleAppClient from '@/views/ExampleApp/ExampleAppClient.vue'
 
 const routes = [
   {
@@ -90,14 +89,14 @@ const routes = [
       title: 'Client Transaction '
     }
   },
-  {
-    path: '/example-app',
-    name: 'Example App',
-    component: ExampleAppClient,
-    meta: {
-      title: 'Example App '
-    }
-  },
+  // {
+  //   path: '/example-app',
+  //   name: 'Example App',
+  //   component: ExampleAppClient,
+  //   meta: {
+  //     title: 'Example App '
+  //   }
+  // },
   {
     path: '/list-client',
     name: 'List Client',
@@ -186,6 +185,14 @@ const routes = [
       title: 'VerificationEmail'
     },
   },
+  {
+    path: '/example-app',
+    name: 'example-app',
+    component: ExampleAppClient,
+    meta: {
+      title: 'How To Make SGKMS'
+    },
+  },
 ]
 
 const router = createRouter({
@@ -205,11 +212,7 @@ router.beforeEach((to, from, next) => {
     if (!isAuthenticated) {
       next({ name: 'signin' })
     } else if (to.meta.role && to.meta.role !== userRole) {
-      if (userRole === 'admin') {
         next({ name: 'dashboard' })
-      } else {
-        next({ name: 'dashboard' })
-      }
     } else {
       next()
     }

@@ -5,11 +5,16 @@ import API from '@/api/auth';
 import router from '@/router/index'
 import { ref } from 'vue'
 
+localStorage.clear();
+
 const username = ref('')
 const password = ref('') 
 
 const loginUser = async () => {
   try {
+    if(!username || !password){
+      alert("Masukan email atau username dan password Anda")
+    }
     const response = await API.login(username.value, password.value);
     localStorage.setItem('token', response.accessToken);
     localStorage.setItem('role', response.role);
@@ -19,13 +24,6 @@ const loginUser = async () => {
     }else{
       router.push('/')
     }
-    // if(response.role != 'admin'){
-    //   router.push('/client-dashboard');
-    // }else if(response.role != 'client'){
-    //   router.push('/admin-dashboard');
-    // }else{
-    //   console.log("login gagal")
-    // }
   } catch (error) {
     console.error('Login gagal:', error);
   }
@@ -37,7 +35,7 @@ const loginUser = async () => {
       <form @submit.prevent="loginUser">
         <InputGroup
         v-model="username"
-        label="Username"
+        label="Email atau Username"
         type="text"
         placeholder="Masukkan username"
       >

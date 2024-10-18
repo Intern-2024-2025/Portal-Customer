@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import API from '@/api/auth';
+import router from '@/router';
 import { onClickOutside } from '@vueuse/core'
 import { ref } from 'vue'
 
@@ -8,6 +10,15 @@ const dropdownOpen = ref(false)
 onClickOutside(target, () => {
   dropdownOpen.value = false
 })
+
+const logout = async () =>{
+  try {
+    await API.logout();
+    router.push('/auth/signin')
+  } catch (error) {
+    console.log("error")
+  }
+}
 </script>
 
 <template>
@@ -124,6 +135,7 @@ onClickOutside(target, () => {
       </ul>
       <button
         class="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+        @click="logout"
       >
         <svg
           class="fill-current"
