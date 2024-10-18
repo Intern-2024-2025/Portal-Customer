@@ -6,10 +6,12 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue'
 const csrkey = ref([
   { name: 'Free Package', price: '$0.00', invoiceDate: 'Jan 13, 2025', status: 'Paid' },
   { name: 'Standard Package', price: '$59.00', invoiceDate: 'Jan 13, 2025', status: 'Paid' },
+  { name: 'Business Package', price: '$99.00', invoiceDate: 'Jan 13, 2025', status: 'Unpaid' },
+  { name: 'Standard Package', price: '$59.00', invoiceDate: 'Jan 13, 2025', status: 'Pending' }
 ])
 
-const pageTitle = ref('Transaction')
-
+const pageTitle = ref('Example-App')
+ 
 </script>
 
 <template>
@@ -34,7 +36,7 @@ const pageTitle = ref('Transaction')
             <th class="py-4 px-4 font-medium text-black dark:text-white">Actions</th>
           </tr>
         </thead>
-        <tbody> 
+        <tbody>
           <tr v-for="(item, index) in csrkey" :key="index">
             <td class="py-5 px-4 pl-9 xl:pl-11">
               <h5 class="font-medium text-black dark:text-white">{{ item.name }}</h5>
