@@ -37,13 +37,10 @@ class AuthController {
           ],
         },
       });
-      if(!userClient){
-        return res.status(400).json({ msg: "Akun tidak ditemukan" });
-      }
       let user;
       if (userAdmin) {
         user = userAdmin;
-      } else {
+      } else if(userClient){
         user = userClient;
         user.dataValues.role = "client"
         if(user.dataValues.status_verification_email != true){
