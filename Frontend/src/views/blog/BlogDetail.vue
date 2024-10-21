@@ -7,7 +7,7 @@ const blogdet = ref([
   {
     heading: "Kripto VS Kriptografi",
     post: {
-    image: "images/Kripto.png", 
+    image: "../src/assets/images/Kripto.svg", 
     // sectionTitle: "1. Kripto VS Kriptografi",
     sectionContent: `Istilah kripto dan kriptografi sering terdengar, terutama ketika kita berbicara tentang keamanan siber dan mata uang digital.								
                       Meski terdengar mirip, keduanya sangat berbeda dari segi fungsi dan penggunaan. Mari kita bahas perbedaannya,								
@@ -30,7 +30,7 @@ const blogData = blogdet.value[0];
       <div class="row mb-4 justify-content-center">
         <div class="col-12">
           <div class="card mb-4">
-            <img :src="blogData.post.image" class="card-img-top" alt="Blog Image" style="width: 100%; height: 75vh;" />
+            <img :src="blogData.post.image" class="card-img-top" alt="Blog Image" style="width: 100%; height: 75vh; border-radius: 20px;" />
             <div class="wrap-text">
               <div class="1-text" style="margin-top: 30px;">
                 <p class="card-text">{{ blogData.post.sectionContent }}</p>

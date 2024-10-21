@@ -1,10 +1,10 @@
 <template>
-  <div class="untree_co-section bg-light">
+  <div class="untree_co-section" style="background-color: #141c2c;">
     <div class="container">
       <div class="row pricing-title">
-        <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
-          <h2 class="heading">Use Cases</h2>
-          <p>How Athena-KMS Helps Your Business</p>
+        <div class="col-12 text-center">
+          <h2 class="heading" style="color: white; font-weight: bold;">Use Cases</h2>
+          <p style="color: white;">How Athena-KMS Helps Your Business</p>
         </div>
       </div>
       <div class="col-lg-12">
@@ -48,12 +48,13 @@
             <p>Secure customer data and transaction details</p>
           </div>
         </div>
-        <p class="current-issue">
-          By Current Issues<br />In 2023 and 2024, Indonesia faced several
+        <h6 class="current-issue">
+          <p style="font-weight: bold;">By Current Issues</p>
+          <p style="color:azure;"><br />In 2023 and 2024, Indonesia faced several
           significant cybercrime incidents, highlighting its growing
           vulnerability to cyber threats as the country becomes increasingly
-          digital.
-        </p>
+          digital.</p>
+        </h6>
         <div class="oke-wrapper-use-case">
           <div class="box-use-case justify">
             <div data-aos="fade-up" data-aos-delay="0">
@@ -124,6 +125,7 @@
   padding: 15px;
   background: white;
   border-radius: 5px;
+  color: #141c2c;
 }
 .box-use-case img {
   width: 75px;
@@ -141,9 +143,12 @@
 .current-issue {
   padding-top: 130px;
   text-align: center;
+  color: white;
 }
 .industries {
   text-align: center;
+  color: white;
+  font-weight:bolder;
 }
 
 /* Media query untuk layar lebih kecil */

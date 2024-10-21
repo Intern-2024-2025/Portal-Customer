@@ -8,7 +8,10 @@ const cookieParser = require("cookie-parser");
 const { createAdmin } = require("./seeders/AdminSeeders.js");
 const path = require("path");
 
-// //Insialisasi ke Database
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./openapi.json');
+
+// // Insialisasi ke Database
 // Models.sequelizeInstance
 //   .sync({ force: false, alter: true })
 //   .then(async () => {
@@ -30,6 +33,8 @@ const path = require("path");
 app.get("/", (req, res) => {
   res.send("API Running");
 });
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));

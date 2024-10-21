@@ -1,0 +1,278 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Athena API Documentation",
+    "description": "CRUD API for User, Client, ClientDetail, and Product",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://sgkms.sandhiguna.com/"
+    }
+  ],
+  "paths": {
+    "/login": {
+      "post": {
+        "summary": "auth access for website",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responses-login"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/encrypt": {
+      "post": {
+        "summary": "register account in website",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/encrypt"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Register was create",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/response-encrypt"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/decrypt": {
+      "post": {
+        "summary": "check OTP message in email",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/decrypt"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Verification was successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/response-decrypt"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "login": {
+        "type": "object",
+        "properties": {
+          "slotId": {
+            "type": "integer",
+            "example": 1
+          },
+          "password": {
+            "type": "string",
+            "example": "Example1234!"
+          }
+        },
+        "required": [
+          "slotId",
+          "password"
+        ]
+      },
+      "responses-login": {
+        "type": "object",
+        "properties": {
+          "sessionToken": {
+            "type": "string",
+            "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
+          },
+          "agentDN": {
+            "type": "string",
+            "example": "cn=keuangan1,dc=houseapp,dc=com"
+          },
+          "lastUsedTime": {
+            "type": "integer",
+            "example": 1642623118
+          },
+          "idleTimeoutInMins": {
+            "type": "integer",
+            "example": 15
+          },
+          "expiredAt": {
+            "type": "integer",
+            "example": 1643623118
+          }
+        }
+      },
+      "encrypt": {
+        "type": "object",
+        "properties": {
+          "sessionToken": {
+            "type": "string",
+            "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
+          },
+          "slotId": {
+            "type": "integer",
+            "example": 1
+          },
+          "keyId": {
+            "type": "string",
+            "example": "keuangan1"
+          },
+          "plaintext": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "example": "Plaintext1"
+                },
+                "aad": {
+                  "type": "string",
+                  "example": "aad1"
+                }
+              }
+            }
+          }
+        }
+      },
+      "response-encrypt": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "object",
+            "properties": {
+              "keyVersion": {
+                "type": "integer",
+                "example": "3"
+              },
+              "ciphertext": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "example": "j1XAcRImCh3ehdMmyak6n0ZXpVHZ05Q8/tQPqDATDNhIA=="
+                  },
+                  "mac": {
+                    "type": "string",
+                    "example": "8/tQPqDATDNhIA=="
+                  },
+                  "iv": {
+                    "type": "string",
+                    "example": "lfnugylknwfyefbwfp"
+                  }
+                }
+              }
+            }
+            }
+          }
+        }
+      },
+      "decrypt": {
+        "type": "object",
+        "properties": {
+          "sessionToken": {
+            "type": "string",
+            "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
+          },
+          "slotId": {
+            "type": "integer",
+            "example": 1
+          },
+          "keyId": {
+            "type": "string",
+            "example": "keuangan1"
+          },
+          "ciphertext": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "example": "j1XAcRImCh3ehdMmyak6n0ZXpVHZ05Q8/tQPqDATDNhIA=="
+                  },
+                  "mac": {
+                    "type": "string",
+                    "example": "8/tQPqDATDNhIA=="
+                  },
+                  "iv": {
+                    "type": "string",
+                    "example": "lfnugylknwfyefbwfp"
+                  }
+                }
+              }
+            }
+        }
+      },
+      "response-decrypt": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "object",
+            "properties": {
+              "plaintext": {
+              "type": "array",
+              "items":{
+                "type": "string",
+                "example": "Plaintext1"
+              }
+            }
+            }
+          }
+        }
+      }
+    }
+  }
+}

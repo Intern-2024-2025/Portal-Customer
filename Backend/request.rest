@@ -1,5 +1,4 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMzYjY0NmVhLTI2YjAtNGNiZi1hZTRmLTQzZTY2ODk3YTM5NyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyMjc4ODg5NiwiZXhwIjoxNzIzMTM0NDk2fQ.CzSI7OWlVj2zdmPmOyzJizQQh2YJIhCuaSCYyZX4Wrc
-
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZkZDc1OWUxLTczMjUtNDFlNi04ZjNmLTUwOGU1YTVkOTVjZCIsInJvbGUiOiJjbGllbnQiLCJpYXQiOjE3Mjg2MzQ0MDcsImV4cCI6MTcyODk4MDAwN30.UXQz1SUl5kqxPpqAMshCI1ptigxFLSdnx8sv62osL-I
 
 //login
 ###
@@ -7,8 +6,8 @@ POST http://localhost:5003/login
 Content-Type: application/json
 
 {
-    "username" : "admin",
-    "password" : "Admin1234!"
+    "username" : "asep",
+    "password" : "Diptya1234!"
 }
 
 //Create-Contact
@@ -22,6 +21,176 @@ Content-Type: application/json
     "emailAddress": "dicobamasulk@gmail.com",
     "message" : "masuk"
 }
+
+//register
+###
+POST http://localhost:5003/register
+Content-Type: application/json
+
+{
+    "username": "asep", 
+    "email":"jovanbryanginting@gmail.com", 
+    "password":"Diptya1234!"
+}
+
+//verification-email
+###
+POST http://localhost:5003/verification-email
+Content-Type: application/json
+
+{
+    "otp": "218316",
+    "email": "diptyasoemantry.com"
+}
+
+//reset-password
+###
+POST http://localhost:5003/reset-password
+Content-Type: application/json
+
+{
+    "email": "diptyasoemantry@gmail.com"
+}
+
+
+//new-password
+###
+POST http://localhost:5003/new-password
+Content-Type: application/json
+
+{
+    "email": "diptyasoemantry@gmail.com",
+    "otp": "601999",
+    "newPassword": "Okemasuksip1234!"
+}
+
+//Verification Data Business
+###
+POST http://localhost:5003/verification-data
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "fullname": "Diptya Sumantry",
+    "phone": "08123456789",
+    "address": "JL. Kaliurang Km.14",
+    "category_business": "Perbankan",
+    "description_business": "Memberikan layanan tabungan dan pinjaman",
+    "image": ""
+}
+
+//get-detail-verification
+###
+GET  http://localhost:5003/client-detail/fea3b69f-97d6-4e70-b564-318e7b36e6cc
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+//get-detail-verification-Admin
+###
+GET  http://localhost:5003/client-detail/dasdas
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+//Update-Client-detail
+###
+PUT http://localhost:5003/client-detail/f07be547-f310-436d-9e2a-4b1ec2f16bdc
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "fullname": "aser",
+    "phone": "098765432133",
+    "address": "jl.apel",
+    "category_business": "asd",
+    "description_business": "sad",
+    "image": ""
+}
+
+//delete-Client-detail
+###
+DELETE http://localhost:5003/client-detail/f07be547-f310-436d-9e2a-4b1ec2f16bdc
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+//detail client
+###
+GET  http://localhost:5003/clients
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+//Update-Client
+###
+PUT http://localhost:5003/clients/6dd759e1-7325-41e6-8f3f-508e5a5d95cd
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "username" : "",
+    "email" : "",
+    "password" : "",
+    "otp" : ""
+}
+
+//delete-Client
+###
+DELETE http://localhost:5003/clients/6dd759e1-7325-41e6-8f3f-508e5a5d95cd
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+// create-product
+###
+POST http://localhost:5003/product
+Content-Type: application/json
+
+{
+    "name" :"Dicoba",
+    "csr_key": "satu dua 3",
+    "postman_pem": "2345enam",
+    "slot_id":"13",
+    "password":"Dicoba12345!",
+    "finance_key":"apapun yang terjadi345",
+    "status":"",
+    "call_api":"",
+    "count_trial":""
+}
+//Update-product
+###
+PUT http://localhost:5003/product/:id
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "name" :"tes1",
+    "csr_key": "3 2 satu",
+    "postman_pem": "sijisiji1",
+    "slot_id":"20",
+    "password":"Pablo12345!",
+    "finance_key":"santai123",
+}
+//get-product
+###
+GET http://localhost:5003/product
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+//get-product-by-id
+###
+GET http://localhost:5003/product/:id
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+//delete-product
+###
+DELETE http://localhost:5003/product/id
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+
+# {
+#     "id" : "f07be547-f310-436d-9e2a-4b1ec2f16bdc"
+# }
 
 # //Get-User Managmenet
 # ###
