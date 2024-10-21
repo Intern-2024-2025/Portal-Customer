@@ -7,11 +7,11 @@
   },
   "servers": [
     {
-      "url": "https://sandhiguna.com/"
+      "url": "https://sgkms.sandhiguna.com/"
     }
   ],
   "paths": {
-    "/Login": {
+    "/login": {
       "post": {
         "summary": "auth access for website",
         "tags": [
@@ -22,7 +22,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Login"
+                "$ref": "#/components/schemas/login"
               }
             }
           }
@@ -33,10 +33,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Login"
-                  }
+                  "$ref": "#/components/schemas/responses-login"
                 }
               }
             }
@@ -44,7 +41,7 @@
         }
       }
     },
-    "/Register": {
+    "/encrypt": {
       "post": {
         "summary": "register account in website",
         "tags": [
@@ -55,7 +52,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Register"
+                "$ref": "#/components/schemas/encrypt"
               }
             }
           }
@@ -68,7 +65,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Register"
+                    "$ref": "#/components/schemas/response-encrypt"
                   }
                 }
               }
@@ -77,7 +74,7 @@
         }
       }
     },
-    "/Verification": {
+    "/decrypt": {
       "post": {
         "summary": "check OTP message in email",
         "tags": [
@@ -88,7 +85,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Verification"
+                "$ref": "#/components/schemas/decrypt"
               }
             }
           }
@@ -101,563 +98,11 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Verification"
+                    "$ref": "#/components/schemas/response-decrypt"
                   }
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/Reset-Password": {
-      "post": {
-        "summary": "reset for password",
-        "tags": [
-          "Auth"
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Repassword"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "reset password successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Repassword"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/New-Password/{token}": {
-      "post": {
-        "summary": "create new password by token",
-        "tags": [
-          "Auth"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "token",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "token for create new password"
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Newpassword"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "new password success update",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Newpassword"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "token not found"
-          }
-        }
-      }
-    },
-    "/Verification-data/{token}": {
-      "post": {
-        "summary": "token verification data to access edit data",
-        "tags": [
-          "Auth"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "token",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "token for updated your data"
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Verdata"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "new data success update",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Verdata"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "token not found"
-          }
-        }
-      }
-    },
-    "/clients": {
-      "get": {
-        "summary": "Get all clients",
-        "tags": [
-          "Clients"
-        ],
-        "responses": {
-          "200": {
-            "description": "A list of clients",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Client"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/clients/{id}": {
-      "get": {
-        "summary": "Get client by ID",
-        "tags": [
-          "Clients"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "Client ID"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Client found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Client"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Client not found"
-          }
-        }
-      },
-      "put": {
-        "summary": "Update a client by ID",
-        "tags": [
-          "Clients"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "Client ID"
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Client"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Client updated successfully"
-          },
-          "404": {
-            "description": "Client not found"
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete a client by ID",
-        "tags": [
-          "Clients"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "Client ID"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Client deleted successfully"
-          },
-          "404": {
-            "description": "Client not found"
-          }
-        }
-      }
-    },
-    "/client-details": {
-      "get": {
-        "summary": "Get all client details",
-        "tags": [
-          "Client Details"
-        ],
-        "responses": {
-          "200": {
-            "description": "A list of client details",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ClientDetail"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "summary": "Create a new client detail",
-        "tags": [
-          "Client Details"
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ClientDetail"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Client detail created successfully"
-          },
-          "400": {
-            "description": "Bad request"
-          }
-        }
-      }
-    },
-    "/client-details/{id}": {
-      "get": {
-        "summary": "Get client detail by ID",
-        "tags": [
-          "Client Details"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "Client detail ID"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Client detail found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ClientDetail"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Client detail not found"
-          }
-        }
-      },
-      "put": {
-        "summary": "Update a client detail by ID",
-        "tags": [
-          "Client Details"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "Client detail ID"
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ClientDetail"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Client detail updated successfully"
-          },
-          "404": {
-            "description": "Client detail not found"
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete a client detail by ID",
-        "tags": [
-          "Client Details"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "Client detail ID"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Client detail deleted successfully"
-          },
-          "404": {
-            "description": "Client detail not found"
-          }
-        }
-      }
-    },
-    "/products": {
-      "get": {
-        "summary": "Get all products",
-        "tags": [
-          "Products"
-        ],
-        "responses": {
-          "200": {
-            "description": "A list of products",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Product"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "summary": "Create a new product",
-        "tags": [
-          "Products"
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Product"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Product created successfully"
-          },
-          "400": {
-            "description": "Bad request"
-          }
-        }
-      }
-    },
-    "/products/{id}": {
-      "get": {
-        "summary": "Get product by ID",
-        "tags": [
-          "Products"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "Product ID"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Product found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Product"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Product not found"
-          }
-        }
-      },
-      "put": {
-        "summary": "Update a product by ID",
-        "tags": [
-          "Products"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "Product ID"
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Product"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Product updated successfully"
-          },
-          "404": {
-            "description": "Product not found"
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete a product by ID",
-        "tags": [
-          "Products"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "description": "Product ID"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Product deleted successfully"
-          },
-          "404": {
-            "description": "Product not found"
-          }
-        }
-      }
-    },
-    "/contacts": {
-      "post": {
-        "summary": "Submit a Contact Us message",
-        "tags": [
-          "Contact Us"
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ContactUs"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Message sent successfully"
-          },
-          "400": {
-            "description": "Bad request"
           }
         }
       }
@@ -665,331 +110,168 @@
   },
   "components": {
     "schemas": {
-      "User": {
+      "login": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "username": {
-            "type": "string",
-            "example": "johndoe"
+          "slotId": {
+            "type": "integer",
+            "example": 1
           },
           "password": {
             "type": "string",
-            "example": "Password@123"
-          },
-          "fullname": {
-            "type": "string",
-            "example": "John Doe"
-          },
-          "phone": {
-            "type": "string",
-            "example": 8123456789
-          },
-          "email": {
-            "type": "string",
-            "example": "johndoe@example.com"
-          },
-          "role": {
-            "type": "string",
-            "example": "admin"
-          },
-          "refreshToken": {
-            "type": "string",
-            "nullable": true
+            "example": "Example1234!"
           }
         },
         "required": [
-          "username",
-          "password",
-          "role"
-        ]
-      },
-      "Login": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "username": {
-            "type": "string",
-            "example": "asep"
-          },
-          "password": {
-            "type": "string",
-            "example": "dada1234!"
-          }
-        },
-        "required": [
-          "username",
+          "slotId",
           "password"
         ]
       },
-      "Register": {
+      "responses-login": {
         "type": "object",
         "properties": {
-          "id": {
+          "sessionToken": {
             "type": "string",
-            "format": "uuid"
+            "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
           },
-          "username": {
+          "agentDN": {
             "type": "string",
-            "example": "asep"
+            "example": "cn=keuangan1,dc=houseapp,dc=com"
           },
-          "email": {
-            "type": "string",
-            "example": "jajan@example.com"
-          },
-          "password": {
-            "type": "string",
-            "example": "Cicak1234!"
-          }
-        },
-        "required": [
-          "username",
-          "email",
-          "password"
-        ]
-      },
-      "Verification": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "otp": {
+          "lastUsedTime": {
             "type": "integer",
-            "example": 218316
+            "example": 1642623118
+          },
+          "idleTimeoutInMins": {
+            "type": "integer",
+            "example": 15
+          },
+          "expiredAt": {
+            "type": "integer",
+            "example": 1643623118
           }
         }
       },
-      "Repassword": {
+      "encrypt": {
         "type": "object",
         "properties": {
-          "id": {
+          "sessionToken": {
             "type": "string",
-            "format": "uuid"
+            "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
           },
-          "email": {
+          "slotId": {
+            "type": "integer",
+            "example": 1
+          },
+          "keyId": {
             "type": "string",
-            "example": "tes@example.com"
+            "example": "keuangan1"
+          },
+          "plaintext": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "example": "Plaintext1"
+                },
+                "aad": {
+                  "type": "string",
+                  "example": "aad1"
+                }
+              }
+            }
           }
         }
       },
-      "Newpassword": {
+      "response-encrypt": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "email": {
-            "type": "string",
-            "example": "tes@example.com"
-          },
-          "otp": {
-            "type": "integer",
-            "example": 601999
-          },
-          "newPassword": {
-            "type": "string",
-            "example": "Bom1234!"
+          "result": {
+            "type": "object",
+            "properties": {
+              "keyVersion": {
+                "type": "integer",
+                "example": "3"
+              },
+              "ciphertext": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "example": "j1XAcRImCh3ehdMmyak6n0ZXpVHZ05Q8/tQPqDATDNhIA=="
+                  },
+                  "mac": {
+                    "type": "string",
+                    "example": "8/tQPqDATDNhIA=="
+                  },
+                  "iv": {
+                    "type": "string",
+                    "example": "lfnugylknwfyefbwfp"
+                  }
+                }
+              }
+            }
+            }
           }
         }
       },
-      "Verdata": {
+      "decrypt": {
         "type": "object",
         "properties": {
-          "id": {
+          "sessionToken": {
             "type": "string",
-            "format": "uuid"
+            "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
           },
-          "fullname": {
-            "type": "string",
-            "example": "tes bla"
+          "slotId": {
+            "type": "integer",
+            "example": 1
           },
-          "phone": {
+          "keyId": {
             "type": "string",
-            "example": 8123456789
+            "example": "keuangan1"
           },
-          "address": {
-            "type": "string",
-            "example": "jalan piro iki no.12"
-          },
-          "category_business": {
-            "type": "string",
-            "example": "Hiburan"
-          },
-          "description_business": {
-            "type": "string",
-            "example": "menyediakan banyak kesenangan dan kebahagiaan untuk merelekskan dari hiru pikuk dunia"
-          },
-          "image": {
-            "type": "string",
-            "example": "svg"
-          }
+          "ciphertext": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "example": "j1XAcRImCh3ehdMmyak6n0ZXpVHZ05Q8/tQPqDATDNhIA=="
+                  },
+                  "mac": {
+                    "type": "string",
+                    "example": "8/tQPqDATDNhIA=="
+                  },
+                  "iv": {
+                    "type": "string",
+                    "example": "lfnugylknwfyefbwfp"
+                  }
+                }
+              }
+            }
         }
       },
-      "Client": {
+      "response-decrypt": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "username": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string",
-            "example": "client@example.com"
-          },
-          "password": {
-            "type": "string",
-            "example": "Password@123"
-          },
-          "otp": {
-            "type": "integer",
-            "example": 123456
-          },
-          "status_verification_email": {
-            "type": "boolean",
-            "example": false
-          },
-          "status_verification_data": {
-            "type": "boolean",
-            "example": false
+          "result": {
+            "type": "object",
+            "properties": {
+              "plaintext": {
+              "type": "array",
+              "items":{
+                "type": "string",
+                "example": "Plaintext1"
+              }
+            }
+            }
           }
-        },
-        "required": [
-          "username",
-          "email",
-          "password",
-          "otp"
-        ]
-      },
-      "ClientDetail": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "fullname": {
-            "type": "string",
-            "example": "Client Name"
-          },
-          "phone": {
-            "type": "string",
-            "example": 8123456789
-          },
-          "address": {
-            "type": "string",
-            "example": "Jl. Example No. 123"
-          },
-          "category_business": {
-            "type": "string",
-            "example": "Retail"
-          },
-          "description_business": {
-            "type": "string",
-            "example": "Retail business description here"
-          },
-          "image": {
-            "type": "string",
-            "format": "binary"
-          }
-        },
-        "required": [
-          "fullname",
-          "phone",
-          "address",
-          "category_business",
-          "description_business"
-        ]
-      },
-      "Product": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "type": "string",
-            "example": "Product 1"
-          },
-          "csr_key": {
-            "type": "string"
-          },
-          "postman_pem": {
-            "type": "string"
-          },
-          "slot_id": {
-            "type": "integer"
-          },
-          "password": {
-            "type": "string"
-          },
-          "finance_key": {
-            "type": "string"
-          },
-          "status": {
-            "type": "boolean",
-            "example": false
-          },
-          "call_api": {
-            "type": "integer",
-            "nullable": true
-          },
-          "count_trial": {
-            "type": "integer",
-            "nullable": true
-          }
-        },
-        "required": [
-          "name",
-          "csr_key",
-          "postman_pem",
-          "slot_id",
-          "password",
-          "finance_key"
-        ]
-      },
-      "ContactUs": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "firstName": {
-            "type": "string",
-            "example": "coba"
-          },
-          "lastName": {
-            "type": "string",
-            "example": "dulu"
-          },
-          "emailAddress": {
-            "type": "string",
-            "example": "cobadulu@example.com"
-          },
-          "message": {
-            "type": "string",
-            "example": "salam tes"
-          }
-        },
-        "required": [
-          "firstName",
-          "lastName",
-          "emailAddress",
-          "message"
-        ]
+        }
       }
     }
   }

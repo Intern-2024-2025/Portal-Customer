@@ -60,7 +60,7 @@ const buttonPricing = "Pricing";
   font-size: 70px;
   line-height: 1;
   /* font-weight: 700; */
-  color: #000000;
+  color: #141c2c;
   margin-bottom: 30px;
 }
 

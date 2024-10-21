@@ -15,7 +15,7 @@ const designation = "Facebook, Product Lead";
 // }
 </script>
 <template>
-  <div class="untree_co-section bg-light" id="features-section">
+  <div class="untree_co-section" id="features-section" style="background-color: #f1f5f9;">
     <div class="container">
       <div class="row pricing-title">
         <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
@@ -156,7 +156,7 @@ const designation = "Facebook, Product Lead";
         data-aos="fade-up"
         data-aos-delay="0"
       >
-        <p>Key management involves</p>
+        <p style="font-weight: bold;">Key management involves</p>
         <div class="grid-container">
           <div class="grid-item">
             <img src="../../assets/images/icon/fingerprint.png" />

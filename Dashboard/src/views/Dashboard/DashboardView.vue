@@ -7,12 +7,6 @@ import TableThree from '@/components/Tables/TableThree.vue'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 
 const pageTitle = ref('')
-
-import API from '../../api/auth';
-
-if(API.sessionExpired.value){
-  alert("Session Anda Habis, Anda akan diarahkan login kembali...")
-}
 </script>
 
 <template>

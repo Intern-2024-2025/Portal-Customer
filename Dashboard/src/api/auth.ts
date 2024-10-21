@@ -1,29 +1,6 @@
-import router from '../router/index';
-import { ref } from 'vue';
 import axiosInstance from "./axiosInstance";
 
 class API {
-  static sessionExpired = ref(false);
-
-  static async interceptor(){
-    try {
-      axiosInstance.interceptors.response.use(
-      response => response,
-      error => {
-        if (error.response && error.response.status === 401 && error.response.data.message === 'Token expired') {
-          this.sessionExpired.value = true;
-          
-          setTimeout(() => {
-            router.push('/auth/signin');
-          }, 3000);
-        }
-        return Promise.reject(error);
-      }
-    );
-    } catch (error) {
-      console.log("api auth", error)
-    }
-  }
   static async login(username:any, password:any) {
     try {
       const response = await axiosInstance.post("login", {
@@ -39,6 +16,14 @@ class API {
       const response = await axiosInstance.post("register", {
         username, email, password
       });
+      return response.data;
+    } catch (err:any) {
+      return err.response.data;
+    }
+  }
+  static async fetch() {
+    try {
+      const response = await axiosInstance.get("fetch");
       return response.data;
     } catch (err:any) {
       return err.response.data;
@@ -76,7 +61,5 @@ class API {
     }
   }
 }
-
-API.interceptor()
 
 export default API;

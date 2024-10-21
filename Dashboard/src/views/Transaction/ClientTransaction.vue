@@ -1,17 +1,32 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import BreadcrumbDefault from '@/components/Breadcrumbs/BreadcrumbDefault.vue'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
+import TransactionAPI from '@/api/transaction';
 
-const csrkey = ref([
-  { name: 'Free Package', price: '$0.00', invoiceDate: 'Jan 13, 2025', status: 'Paid' },
-  { name: 'Standard Package', price: '$59.00', invoiceDate: 'Jan 13, 2025', status: 'Paid' },
-  { name: 'Business Package', price: '$99.00', invoiceDate: 'Jan 13, 2025', status: 'Unpaid' },
-  { name: 'Standard Package', price: '$59.00', invoiceDate: 'Jan 13, 2025', status: 'Pending' }
-])
+type Transaction = {
+  id: string;
+  name: string;
+  endpoint: string;
+  create: string;
+  status: boolean;
+}
+const dataTransaction = ref<Transaction[]>([]) 
+const getTransaction = async () => {
+  try{ 
+    const resposne = await TransactionAPI.getTransactionClient()
+    dataTransaction.value = resposne.data
+    console.log(resposne.data)
+  } catch (error) {
+    console.log('get product failed', error)
+  }
+}
 
 const pageTitle = ref('Transaction')
 
+onMounted(() => {
+  getTransaction()
+})
 </script>
 
 <template>
@@ -25,34 +40,33 @@ const pageTitle = ref('Transaction')
         <thead>
           <tr class="bg-gray-2 text-left dark:bg-meta-4">
             <th class="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-              CSR.Key
+              Name Product
             </th>
             <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-              Postman.pem
+              Endpoint
             </th>
-            <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">slotd</th>
-            <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">Password</th>
-            <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">Keyld</th>
+            <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">Status</th>
+            <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">Date</th>
             <th class="py-4 px-4 font-medium text-black dark:text-white">Actions</th>
           </tr>
         </thead>
         <tbody> 
-          <tr v-for="(item, index) in csrkey" :key="index">
+          <tr v-if="dataTransaction.length <=0">
+            <td colspan="8" class="py-10 text-center text-gray-500 bg-white dark:text-white dark:bg-boxdark">Tidak ada data Transaction yang tersedia</td>
+          </tr>
+          <tr v-else v-for="(item, index) in dataTransaction" :key="index">
             <td class="py-5 px-4 pl-9 xl:pl-11">
               <h5 class="font-medium text-black dark:text-white">{{ item.name }}</h5>
-              <p class="text-sm">{{ item.price }}</p>
+              <!-- <p class="text-sm">{{ item.price }}</p> -->
             </td>
             <td class="py-5 px-4">
-              <p class="text-black dark:text-white">{{ item.invoiceDate }}</p>
+              <p class="text-black dark:text-white">{{ item.endpoint }}</p>
             </td>
             <td class="py-5 px-4">
-              <p class="text-black dark:text-white">{{ item.invoiceDate }}</p>
+              <p class="text-black dark:text-white">{{ item.status }}</p>
             </td>
             <td class="py-5 px-4">
-              <p class="text-black dark:text-white">{{ item.invoiceDate }}</p>
-            </td>
-            <td class="py-5 px-4">
-              <p class="text-black dark:text-white">{{ item.invoiceDate }}</p>
+              <p class="text-black dark:text-white">{{ item.create }}</p>
             </td>
             <td class="py-5 px-4">
               <div class="flex items-center space-x-3.5">

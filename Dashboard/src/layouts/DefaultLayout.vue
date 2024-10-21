@@ -7,7 +7,7 @@ import SidebarAreaClient from '@/components/Sidebar/SidebarAreaClient.vue';
 import { computed } from 'vue'
 
 const role = computed(() => localStorage.getItem('role'))
-console.log(role)
+// console.log("default layout" role)
 </script>
 
 <template>

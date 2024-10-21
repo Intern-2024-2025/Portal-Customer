@@ -37,7 +37,9 @@ class AuthController {
           ],
         },
       });
-
+      if(!userClient){
+        return res.status(400).json({ msg: "Akun tidak ditemukan" });
+      }
       let user;
       if (userAdmin) {
         user = userAdmin;
@@ -45,10 +47,9 @@ class AuthController {
         user = userClient;
         user.dataValues.role = "client"
         if(user.dataValues.status_verification_email != true){
-          res.status(400).json({ msg: "Akun tidak ditemukan" });
+          return res.status(400).json({ msg: "Akun tidak ditemukan" });
         }
       }
-
       if (!user) return res.status(400).json({ msg: "Akun tidak ditemukan" });
 
       const match = await bcrypt.compare(req.body.password, user.password);
@@ -60,7 +61,7 @@ class AuthController {
         },
         process.env.ACCESS_TOKEN_SECRET,
         {
-          expiresIn: "5760m",
+          expiresIn: "5678m",
         }
       );
       res.status(200).json({
@@ -103,35 +104,38 @@ class AuthController {
     }
   }
 
-  // static async Fetch(req, res) {
-  //   try {
-  //     const authHeader = req.headers["authorization"];
-  //     const token = authHeader && authHeader.split(" ")[1];
-
-  //     const user = jwt.verify(
-  //       token,
-  //       process.env.REFRESH_TOKEN_SECRET,
-  //       (error, decoded) => {
-  //         if (error) return res.sendStatus(403);
-  //         return decoded;
-  //       }
-  //     );
-  //     const fetch = await User.findOne({
-  //       where: { id: user.id },
-  //       attributes: ["username"],
-  //     }).then((data) => {
-  //       return {
-  //         username: data.username,
-  //         role: user.role,
-  //       };
-  //     });
-  //     return res.status(200).json(fetch);
-  //   } catch (error) {
-  //     res.status(500).json({
-  //       message: error.message,
-  //     });
-  //   }
-  // }
+  static async Fetch(req, res) {
+    try {
+      const token = accesToken(req)
+      let user
+      if(token.role != 'client'){
+        await User.findOne({
+          where: {
+            id: token.id
+          }
+        }).then(data =>{
+          user = {
+            username: data.username
+          }
+        })
+      }else{
+        await Models.Client.findOne({
+          where: {
+            id: token.id
+          }
+        }).then(data=>{
+          user ={
+            username : data.username
+          }
+        })
+      }
+      handleGet(res, user)
+    } catch (error) {
+      res.status(500).json({
+        message: error.message,
+      });
+    }
+  }
 
   static async registerClient(req, res) {
     try {

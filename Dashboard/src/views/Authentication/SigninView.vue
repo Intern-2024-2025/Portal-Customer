@@ -21,8 +21,16 @@ const loginUser = async () => {
     console.log(response)
     if(!response.accessToken){
       alert(response.message)
-    }else{
+    }else if(response.role == 'client'){
+      router.push('/product')
+      setTimeout(() => {
+        window.location.reload();
+      }, 10);
+    }else if( response.role != 'client' ){
       router.push('/')
+      setTimeout(() => {
+        window.location.reload();
+      }, 10);
     }
   } catch (error) {
     console.error('Login gagal:', error);

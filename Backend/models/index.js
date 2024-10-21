@@ -6,6 +6,7 @@ const Client = require("./ClientModels.js")
 const Products = require("./ProductModels.js")
 const ClientDetail = require("./ClientDetailModels.js")
 const Blog = require("./BlogModels.js")
+const Transaction = require("./TransactionModels.js")
 
 const sequelizeInstance = new Sequelize(
   dbConfig.DB,
@@ -32,6 +33,7 @@ db.Client = Client(sequelizeInstance)
 db.Products = Products(sequelizeInstance)
 db.ClientDetail = ClientDetail(sequelizeInstance)
 db.Blog = Blog(sequelizeInstance)
+db.Transaction = Transaction(sequelizeInstance)
 
 // // History Patient - Patient
 // db.Patient.hasMany(db.HistoryPatient, {
@@ -65,6 +67,17 @@ db.Client.hasOne(db.ClientDetail, {
   }
 });
 db.ClientDetail.belongsTo(db.Client, {
+  targetKey:"id",
+})
+
+db.Products.hasOne(db.Transaction, {
+  foreignKey:{
+    name:"productId",
+    type: Sequelize.UUID,
+    allowNull: false
+  }
+});
+db.Transaction.belongsTo(db.Products, {
   targetKey:"id",
 })
 

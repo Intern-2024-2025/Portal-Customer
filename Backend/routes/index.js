@@ -6,11 +6,13 @@ const ProductController = require("../controllers/ProductController.js")
 const ClientController = require("../controllers/ClientController.js")
 const ClientDetailController = require("../controllers/ClientDetailController.js");
 const { IsAdmin, IsClinet } = require("../middlewares/chekRole.js");
+const TransactionController = require("../controllers/TransactionController.js");
+
 
 //Authentication
 router.post("/login", AuthController.Login);
 // router.post("/logout", verifyToken, AuthController.Logout);
-// router.get("/fetch", verifyToken, AuthController.Fetch);
+router.get("/fetch", verifyToken, AuthController.Fetch);
 router.post("/register", AuthController.registerClient)
 router.post("/verification-email", AuthController.verificationEmail)
 router.post("/reset-password", AuthController.ResetPassword);
@@ -40,7 +42,7 @@ router.put("/products/:id", verifyToken, IsAdmin, ProductController.UpdateProduc
 router.delete("/products/:id", verifyToken, IsAdmin, ProductController.DeleteProduct);
 
 //Transaction
-router.get("/transaction", verifyToken, IsClinet, ProductController.getTransaction);
-
-module.exports = router;
+// router.get("/transaction", verifyToken, IsClinet, ProductController.getTransaction);
+router.get("/transaction", verifyToken, IsClinet, TransactionController.getTransactionByClinet)
  
+module.exports = router;
