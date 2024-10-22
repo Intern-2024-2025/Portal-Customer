@@ -74,7 +74,7 @@ const routes = [
   },
   {
     path: '/product',
-    name: 'Product',
+    name: 'product',
     component: ClientProduct,
     meta: {
       requiresAuth: true,
@@ -217,7 +217,11 @@ router.beforeEach((to, from, next) => {
     if (!isAuthenticated) {
       next({ name: 'signin' })
     } else if (to.meta.role && to.meta.role !== userRole) {
+      if(userRole == 'client'){
+        next({ name: 'product' })
+      }else{
         next({ name: 'dashboard' })
+      }
     } else {
       next()
     }
