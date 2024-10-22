@@ -19,8 +19,8 @@ const loginUser = async () => {
     localStorage.setItem('token', response.accessToken);
     localStorage.setItem('role', response.role);
  
-    const fetchData = await API.fetch()
-    localStorage.setItem('username', fetchData.data.username);
+    // const fetchData = await API.fetch()
+    // localStorage.setItem('username', fetchData.data.username);
 
     if(!response.accessToken){
       alert(response.message)
