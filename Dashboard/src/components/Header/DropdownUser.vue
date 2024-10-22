@@ -11,19 +11,7 @@ onClickOutside(target, () => {
   dropdownOpen.value = false
 })
 
-type user = {
-  username: string
-}
-const dataUser = ref<user>()
-
-const getUser = async () => {
-  try{ 
-    const resposne = await API.fetch()
-    dataUser.value = resposne.data
-  } catch (error) {
-    console.log('get user failed', error)
-  }
-}
+const username = localStorage.getItem("username")
 
 const logout = async () =>{
   try {
@@ -34,9 +22,6 @@ const logout = async () =>{
   }
 }
 
-onMounted(() => {
-  getUser()
-})
 </script>
 
 <template>
@@ -47,7 +32,7 @@ onMounted(() => {
       @click.prevent="dropdownOpen = !dropdownOpen"
     >
       <span class="hidden text-right lg:block">
-        <span class="block text-sm font-medium text-black dark:text-white">{{ dataUser?.username }}</span>
+        <span class="block text-sm font-medium text-black dark:text-white">{{ username }}</span>
         <!-- <span class="block text-xs font-medium">UX Designer</span> -->
       </span>
 

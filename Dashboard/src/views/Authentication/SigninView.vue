@@ -18,7 +18,10 @@ const loginUser = async () => {
     const response = await API.login(username.value, password.value);
     localStorage.setItem('token', response.accessToken);
     localStorage.setItem('role', response.role);
-    console.log(response)
+ 
+    const fetchData = await API.fetch()
+    localStorage.setItem('username', fetchData.data.username);
+
     if(!response.accessToken){
       alert(response.message)
     }else if(response.role == 'client'){

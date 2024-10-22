@@ -11,6 +11,7 @@ const {
   handleUpdate,
   handleDelete,
   handleCreateCustom,
+  handlerErrorCustom,
 } = require("../helper/HandlerError.js");
 
 const User = Models.User;
@@ -50,7 +51,7 @@ class AuthController {
       if (!user) return res.status(400).json({ msg: "Akun tidak ditemukan" });
 
       const match = await bcrypt.compare(req.body.password, user.password);
-      if (!match) return res.status(400).json({ msg: "password anda salah" });
+      if (!match) return handlerErrorCustom(res, "email atau username dan password tidak match");
       const accessToken = jwt.sign(
         {
           id: user.id,

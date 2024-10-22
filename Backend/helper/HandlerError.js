@@ -11,6 +11,12 @@ function handlerError(res, error) {
     });
   }
 }
+function handlerErrorCustom(res, error) {
+  return res.status(500).json({
+      code: 500,
+      message: error,
+    });
+}
 function handleCreate(res) {
   res.status(201).json({
     code: 201,
@@ -74,6 +80,7 @@ function handleDelete(res, status) {
 
 module.exports = {
   handlerError,
+  handlerErrorCustom,
   handleCreate,
   handleGet,
   handleUpdate,
