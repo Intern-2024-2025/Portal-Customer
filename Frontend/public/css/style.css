@@ -749,7 +749,7 @@ h4,
   font-size: 70px;
   line-height: 1;
   font-weight: 700;
-  color: #000000;
+  color: #141c2c;
   margin-bottom: 30px;
   /* margin-top: 20px; */
 }
@@ -793,8 +793,9 @@ h4,
 }
 .untree_co-section .heading {
   font-size: 38px;
-  color: #000000;
+  color: ##141c2c;
   margin-top: 30px;
+  font-weight: bold;
 }
 .untree_co-section .heading strong {
   font-weight: 700;

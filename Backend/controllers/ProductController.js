@@ -4,6 +4,7 @@ const {
   handleRead,
   handleUpdate,
   handleDelete,
+  handleGet,
 } = require("../helper/HandlerError.js");
 const Models = require("../models/index.js");
 const Product = Models.Products;
@@ -118,6 +119,18 @@ class ProductController {
     try {
       const token = accesToken(req);
       await Product.findOne({ where: { clientId: token.id } }).then((data) => {
+        if (data) {
+          data.dataValues.csr_key = `${data.dataValues.csr_key.slice(0, 30)}...`;
+          data.dataValues.postman_pem = `${data.dataValues.postman_pem.slice(0, 30)}...`;
+        }
+        // const dataProduct = data.map(result=>{
+        //   return{
+        //     ...result.dataValues,
+        //     csr_key : `${result.dataValues.csr_key.slice(0, 30)}...`,
+        //     postman_pem :  `${result.dataValues.postman_pem.slice(0, 30)}...`
+        //   }
+        // })
+        // console.log(data)
         handleGet(res, data);
       });
     } catch (error) {

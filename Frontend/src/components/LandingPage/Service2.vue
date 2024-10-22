@@ -98,6 +98,10 @@ const total = 4;
 .service-contents p {
   font-weight: normal; /* Mengatur teks menjadi tidak tebal */
 }
+.service-contents h3 {
+  font-weight: bold;
+  color: #141c2c;
+}
 .shadow-service2{
   border-radius: 15px;
 }

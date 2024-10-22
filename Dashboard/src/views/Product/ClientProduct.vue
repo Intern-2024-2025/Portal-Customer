@@ -27,7 +27,7 @@ const getProductClient = async () => {
     console.log('get product failed', error)
   }
 }
-console.log("data", dataProduct)
+// console.log("data", dataProduct)
 onMounted(() => {
   getProductClient()
 })

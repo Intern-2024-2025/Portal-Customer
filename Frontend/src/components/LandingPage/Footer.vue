@@ -40,7 +40,7 @@ const socialItems = [
     <div class="container">
       <div class="row">
         <div class="col-lg-5">
-          <h3>PT Sandhiguna Widya Proteksi</h3>
+          <h3 style="font-weight: bold;">PT Sandhiguna Widya Proteksi</h3>
           <div class="widget">
             <h3>{{ column1Heading }}</h3>
             <p>

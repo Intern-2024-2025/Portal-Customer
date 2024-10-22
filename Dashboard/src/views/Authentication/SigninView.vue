@@ -18,11 +18,22 @@ const loginUser = async () => {
     const response = await API.login(username.value, password.value);
     localStorage.setItem('token', response.accessToken);
     localStorage.setItem('role', response.role);
-    console.log(response)
+ 
+    // const fetchData = await API.fetch()
+    // localStorage.setItem('username', fetchData.data.username);
+
     if(!response.accessToken){
       alert(response.message)
-    }else{
+    }else if(response.role == 'client'){
+      router.push('/product')
+      setTimeout(() => {
+        window.location.reload();
+      }, 10);
+    }else if( response.role != 'client' ){
       router.push('/')
+      setTimeout(() => {
+        window.location.reload();
+      }, 10);
     }
   } catch (error) {
     console.error('Login gagal:', error);

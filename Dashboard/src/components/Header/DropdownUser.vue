@@ -2,7 +2,7 @@
 import API from '@/api/auth';
 import router from '@/router';
 import { onClickOutside } from '@vueuse/core'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const target = ref(null)
 const dropdownOpen = ref(false)
@@ -10,6 +10,21 @@ const dropdownOpen = ref(false)
 onClickOutside(target, () => {
   dropdownOpen.value = false
 })
+
+// const username = localStorage.getItem("username")
+
+const username = ref() 
+
+const fetchUser = async () =>{
+  try {
+    await API.fetch().then(fetchData=>{
+      // localStorage.setItem('username', fetchData.data.username);
+      username.value = fetchData.data.username
+    })
+  } catch (error) {
+    console.log("error")
+  }
+}
 
 const logout = async () =>{
   try {
@@ -19,6 +34,10 @@ const logout = async () =>{
     console.log("error")
   }
 }
+
+onMounted(() => {
+  fetchUser()
+})
 </script>
 
 <template>
@@ -29,8 +48,8 @@ const logout = async () =>{
       @click.prevent="dropdownOpen = !dropdownOpen"
     >
       <span class="hidden text-right lg:block">
-        <span class="block text-sm font-medium text-black dark:text-white">Thomas Anree</span>
-        <span class="block text-xs font-medium">UX Designer</span>
+        <span class="block text-sm font-medium text-black dark:text-white">{{ username }}</span>
+        <!-- <span class="block text-xs font-medium">UX Designer</span> -->
       </span>
 
       <span class="h-12 w-12 rounded-full">
@@ -60,7 +79,7 @@ const logout = async () =>{
       v-show="dropdownOpen"
       class="absolute right-0 mt-4 flex w-62.5 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
     >
-      <ul class="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
+      <!-- <ul class="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
         <li>
           <router-link
             to="/profile"
@@ -132,7 +151,7 @@ const logout = async () =>{
             Account Settings
           </router-link>
         </li>
-      </ul>
+      </ul> -->
       <button
         class="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
         @click="logout"

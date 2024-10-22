@@ -74,9 +74,10 @@ const routes = [
   },
   {
     path: '/product',
-    name: 'Product',
+    name: 'product',
     component: ClientProduct,
     meta: {
+      requiresAuth: true,
       title: 'Client Product'
     }
   },
@@ -85,6 +86,7 @@ const routes = [
     name: 'Transaction',
     component: ClientTransaction,
     meta: {
+      requiresAuth: true,
       title: 'Client Transaction '
     }
   },
@@ -101,6 +103,7 @@ const routes = [
     name: 'List Client',
     component: ListClient,
     meta: {
+      requiresAuth: true,
       title: 'List client'
     }
   },
@@ -109,6 +112,7 @@ const routes = [
     name: 'Submission Trial',
     component: SubmissionTrial,
     meta: {
+      requiresAuth: true,
       title: ' Submission Trial'
     }
   },
@@ -117,6 +121,7 @@ const routes = [
     name: 'Admin Transaction',
     component: AdminTransaction,
     meta: {
+      requiresAuth: true,
       title: 'Admin Transaction'
     }
   },
@@ -189,6 +194,7 @@ const routes = [
     name: 'example-app',
     component: ExampleAppClient,
     meta: {
+      requiresAuth: true,
       title: 'How To Make SGKMS'
     },
   },
@@ -211,7 +217,11 @@ router.beforeEach((to, from, next) => {
     if (!isAuthenticated) {
       next({ name: 'signin' })
     } else if (to.meta.role && to.meta.role !== userRole) {
-        next({ name: 'dashboard' })
+      // if(userRole == 'client'){
+      //   next({ name: 'product' })
+      // }else{
+      // }
+      next({ name: 'dashboard' })
     } else {
       next()
     }

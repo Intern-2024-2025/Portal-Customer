@@ -42,8 +42,8 @@ const toggleMenu = () => {
         <ul
           class="js-clone-nav d-none mt-1 d-lg-inline-block site-menu float-right"
         >
-          <li class="">
-            <router-link to="/" class="" active-class="active"
+          <li>
+            <router-link to="/" active-class="active"
               >Home</router-link
             >
             <!-- <a href="/" class="nav-link">Home</a> -->
@@ -62,9 +62,12 @@ const toggleMenu = () => {
           <li>
             <router-link to="/blog" active-class="active">Blog</router-link>
           </li>
+          <li>
+            <router-link to="/contact" active-class="active">Contact Us</router-link>
+          </li>
           <!-- <li><router-link to="/contact" active-class="active">Contact Us</router-link></li> -->
           <li class="cta-button-rounded">
-            <a class="btn-outline-primary-header" href="/contact">Contact Us</a>
+            <a class="btn-outline-primary-header" href="http://localhost:5173/auth/signup">Sign Up</a>
           </li>
           <!-- <li class="cta-primary">
             <a href="#" :style="[{ backgroundColor: themeColor }]">Register</a>
@@ -94,7 +97,8 @@ const toggleMenu = () => {
           <li><router-link to="/technology" active-class="active">Technology</router-link></li>
           <li><router-link to="/product" active-class="active">Product</router-link></li>
           <li><router-link to="/blog" active-class="active">Blog</router-link></li>
-          <li class="cta-button-rounded"><a class="btn-outline-primary-header" href="/contact">Contact Us</a></li>
+          <li><router-link to="/contact" active-class="active">Contact Us</router-link></li>
+          <li class="cta-button-rounded"><a class="btn-outline-primary-header" href="http://localhost:5173/">Sign Up</a></li>
         </ul>
       </div>
     </div>
