@@ -21,6 +21,7 @@ import AdminTransaction from '@/views/Transaction/AdminTransaction.vue'
 import RegisterVerification from '@/views/List Admin/SubmissionTrial.vue'
 import SubmissionTrial from '@/views/List Admin/SubmissionTrial.vue'
 import ExampleAppClient from '@/views/ExampleApp/ExampleAppClient.vue'
+import ClientVerifView from '@/views/Authentication/ClientVerifView.vue'
 
 const routes = [
   {
@@ -88,6 +89,15 @@ const routes = [
     meta: {
       requiresAuth: true,
       title: 'Client Transaction '
+    }
+  },
+  {
+    path: '/auth/verify-acc',
+    name: 'Verify Client',
+    component: ClientVerifView,
+    meta: {
+      requiresAuth: true,
+      title: 'Verify Client '
     }
   },
   // {
