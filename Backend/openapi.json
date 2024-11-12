@@ -7,13 +7,12 @@
   },
   "servers": [
     {
-      "url": "https://sgkms.sandhiguna.com/"
+      "url": "https://backend.sandhiguna.com/"
     }
   ],
   "paths": {
-    "/login": {
+    "/agent/login": {
       "post": {
-        "summary": "auth access for website",
         "tags": [
           "Auth"
         ],
@@ -38,7 +37,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     },
     "/encrypt": {
@@ -71,7 +75,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     },
     "/decrypt": {
@@ -104,11 +113,23 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     }
   },
   "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
     "schemas": {
       "login": {
         "type": "object",
@@ -234,11 +255,19 @@
             "type": "string",
             "example": "keuangan1"
           },
+          "keyVersion": {
+            "type": "integer",
+            "example": "0"
+          },
           "ciphertext": {
               "type": "array",
               "items": {
                 "type": "object",
                 "properties": {
+                  "add": {
+                    "type": "string",
+                    "example": "aad1"
+                  },
                   "text": {
                     "type": "string",
                     "example": "j1XAcRImCh3ehdMmyak6n0ZXpVHZ05Q8/tQPqDATDNhIA=="
