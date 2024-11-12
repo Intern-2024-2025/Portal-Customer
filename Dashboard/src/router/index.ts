@@ -22,6 +22,7 @@ import RegisterVerification from '@/views/List Admin/SubmissionTrial.vue'
 import SubmissionTrial from '@/views/List Admin/SubmissionTrial.vue'
 import ExampleAppClient from '@/views/ExampleApp/ExampleAppClient.vue'
 import ClientVerifView from '@/views/Authentication/ClientVerifView.vue'
+import DetailTransaction from '@/views/Transaction/DetailTransaction.vue'
 
 const routes = [
   {
@@ -30,6 +31,7 @@ const routes = [
     component: Dashboard,
     meta: {
       requiresAuth: true,
+      role: 'admin', 
       title: 'Dashboard'
     }
   },
@@ -136,6 +138,16 @@ const routes = [
     }
   },
   {
+    path: '/transaction-detail/:productId',
+    name: 'Detail Transaction',
+    component: DetailTransaction,
+    meta: {
+      requiresAuth: true,
+      role: 'admin', 
+      title: 'Detail Transaction'
+    }
+  },
+  {
     path: '/pages/settings',
     name: 'settings',
     component: SettingsView,
@@ -227,11 +239,11 @@ router.beforeEach((to, from, next) => {
     if (!isAuthenticated) {
       next({ name: 'signin' })
     } else if (to.meta.role && to.meta.role !== userRole) {
-      // if(userRole == 'client'){
-      //   next({ name: 'product' })
-      // }else{
-      // }
-      next({ name: 'dashboard' })
+      if(userRole != 'client'){
+        next({ name: 'dashboard' })
+      }else{
+        next({ name: 'product' })
+      }
     } else {
       next()
     }

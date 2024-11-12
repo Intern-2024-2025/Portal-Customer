@@ -1,17 +1,36 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted  } from 'vue'
 import BreadcrumbDefault from '@/components/Breadcrumbs/BreadcrumbDefault.vue'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
+import TransactionAPI from '@/api/transaction';
+import router from '@/router/index'
 
 const isEditMode = ref(false);
 const isDetailMode = ref(false);
 const showModal = ref(false);
 
-// Data client (example)
-const csrKey = ref([
-  { id: 1, name: 'Free Package', price: '$0.00', invoiceDate: 'Jan 13, 2025', status: 'Paid' },
-  { id: 2, name: 'Standard Package', price: '$59.00', invoiceDate: 'Jan 13, 2025', status: 'Paid' },
-]);
+type Transaction = {
+  id: string;
+  fullname: string;
+  username: string;
+  email: string;
+  phone: string;
+  categoryBusiness: string;
+  callApi: number;
+  countTrial: number;
+  idProduct: string;
+}
+const dataTransaction = ref<Transaction[]>([]) 
+
+const getTransaction = async () => {
+  try{ 
+    const resposne = await TransactionAPI.getTransactionAdmin()
+    dataTransaction.value = resposne.data
+    console.log(resposne.data)
+  } catch (error) {
+    console.log('get product failed', error)
+  }
+}
 
 // Client yang diedit
 const newClient = ref({
@@ -24,53 +43,61 @@ const newClient = ref({
 
 const pageTitle = ref('Transaction');
 
-// Fungsi untuk modal
-const openModal = (client?: typeof newClient.value, mode: 'edit' | 'detail' = 'edit') => {
-  if (client) {
-    newClient.value = { ...client };
-    isEditMode.value = mode === 'edit';
-    isDetailMode.value = mode === 'detail';
-  } else {
-    newClient.value = {
-      id: 0,
-      name: '',
-      price: '',
-      invoiceDate: '',
-      status: ''
-    };
-    isEditMode.value = false;
-    isDetailMode.value = false;
-  }
-  showModal.value = true;
+// // Fungsi untuk modal
+// const openModal = (client?: typeof newClient.value, mode: 'edit' | 'detail' = 'edit') => {
+//   if (client) {
+//     newClient.value = { ...client };
+//     isEditMode.value = mode === 'edit';
+//     isDetailMode.value = mode === 'detail';
+//   } else {
+//     newClient.value = {
+//       id: 0,
+//       name: '',
+//       price: '',
+//       invoiceDate: '',
+//       status: ''
+//     };
+//     isEditMode.value = false;
+//     isDetailMode.value = false;
+//   }
+//   showModal.value = true;
+// };
+
+const openModal = (productId: string) => {
+  router.push(`/transaction-detail/${productId}`)
 };
+
 
 // add
-const saveClient = () => {
-  if (newClient.value.name && newClient.value.price) {
-    if (isEditMode.value) {
-      const index = csrKey.value.findIndex(item => item.id === newClient.value.id);
-      if (index !== -1) {
-        csrKey.value[index] = { ...newClient.value };
-      }
-    } else {
-      newClient.value.id = csrKey.value.length + 1; // Buat ID baru
-      csrKey.value.push({ ...newClient.value });
-    }
+// const saveClient = () => {
+//   if (newClient.value.name && newClient.value.price) {
+//     if (isEditMode.value) {
+//       const index = csrKey.value.findIndex(item => item.id === newClient.value.id);
+//       if (index !== -1) {
+//         csrKey.value[index] = { ...newClient.value };
+//       }
+//     } else {
+//       newClient.value.id = csrKey.value.length + 1; // Buat ID baru
+//       csrKey.value.push({ ...newClient.value });
+//     }
 
-    newClient.value = {
-      id: 0,
-      name: '',
-      price: '',
-      invoiceDate: '',
-      status: ''
-    };
+//     newClient.value = {
+//       id: 0,
+//       name: '',
+//       price: '',
+//       invoiceDate: '',
+//       status: ''
+//     };
 
-    showModal.value = false;
-  } else {
-    alert('Please fill out all required fields.');
-  }
-};
+//     showModal.value = false;
+//   } else {
+//     alert('Please fill out all required fields.');
+//   }
+// };
 
+onMounted(() => {
+  getTransaction()
+})
 </script>
 
 <template>
@@ -84,45 +111,53 @@ const saveClient = () => {
         <table class="w-full table-auto">
           <thead>
             <tr class="bg-gray-2 text-left dark:bg-meta-4">
-              <th class="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-                CSR.Key
+              <th class="min-w-[50px] py-4 px-4 font-medium text-black dark:text-white">No</th>
+              <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                Username
               </th>
               <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
-                Postman.pem
+                Phone 
               </th>
-              <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">Slot ID</th>
-              <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">Password</th>
-              <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">Key ID</th>
+              <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">Email</th>
+              <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">Category Business</th>
+              <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">Call API</th>
+              <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">Trial API</th>
               <th class="py-4 px-4 font-medium text-black dark:text-white">Actions</th>
             </tr>
           </thead>
           <tbody> 
-            <tr v-for="(item, index) in csrKey" :key="index">
+            <tr v-for="(item, index) in dataTransaction" :key="index">
+              <td class="py-5 px-4">
+                <p class="text-black dark:text-white">{{ index+1 }}</p>
+              </td>
               <td class="py-5 px-4 pl-9 xl:pl-11">
-                <h5 class="font-medium text-black dark:text-white">{{ item.name }}</h5>
-                <p class="text-sm">{{ item.price }}</p>
+                <h5 class="font-medium text-black dark:text-white">{{ item.username }}</h5>
+                <!-- <p class="text-sm">{{ item.id }}</p> -->
               </td>
               <td class="py-5 px-4">
-                <p class="text-black dark:text-white">{{ item.invoiceDate }}</p>
+                <p class="text-black dark:text-white">{{ item.phone }}</p>
               </td>
               <td class="py-5 px-4">
-                <p class="text-black dark:text-white">{{ item.invoiceDate }}</p>
+                <p class="text-black dark:text-white">{{ item.email }}</p>
               </td>
               <td class="py-5 px-4">
-                <p class="text-black dark:text-white">{{ item.invoiceDate }}</p>
+                <p class="text-black dark:text-white">{{ item.categoryBusiness }}</p>
               </td>
               <td class="py-5 px-4">
-                <p class="text-black dark:text-white">{{ item.invoiceDate }}</p>
+                <p class="text-black dark:text-white">{{ item.callApi }}</p>
+              </td>
+              <td class="py-5 px-4">
+                <p class="text-black dark:text-white">{{ item.countTrial }}</p>
               </td>
               <td class="py-5 px-4">
                 <div class="flex items-center space-x-3.5">
-                  <button @click="openModal(item, 'edit')" class="hover:text-primary" aria-label="Edit Client">
+                  <!-- <button @click="openModal()" class="hover:text-primary" aria-label="Edit Client">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M3 17.25V21h3.75l11.35-11.35-3.75-3.75L3 17.25zM20.71 5.63a1 1 0 0 0 0-1.42l-2.59-2.59a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
                     </svg>
-                  </button>
+                  </button> -->
 
-                  <button @click="openModal(item, 'detail')" class="hover:text-primary" aria-label="View Client Details">
+                  <button @click="openModal(item.idProduct)" class="hover:text-primary" aria-label="View Client Details">
                     <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path
                         d="M8.99981 14.8219C3.43106 14.8219 0.674805 9.50624 0.562305 9.28124C0.47793 9.11249 0.47793 8.88749 0.562305 8.71874C0.674805 8.49374 3.43106 3.20624 8.99981 3.20624C14.5686 3.20624 17.3248 8.49374 17.4373 8.71874C17.5217 8.88749 17.5217 9.11249 17.4373 9.28124C17.3248 9.50624 14.5686 14.8219 8.99981 14.8219ZM1.85605 8.99999C2.4748 10.0406 4.89356 13.5562 8.99981 13.5562C13.1061 13.5562 15.5248 10.0406 16.1436 8.99999C15.5248 7.95936 13.1061 4.44374 8.99981 4.44374C4.89356 4.44374 2.4748 7.95936 1.85605 8.99999Z"
@@ -157,7 +192,7 @@ const saveClient = () => {
           <label class="block mb-2">Status</label>
           <input v-model="newClient.status" class="border p-2 w-full mb-4" />
 
-          <button @click="saveClient" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
+          <button @click="" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
         </div>
 
         <div v-if="isDetailMode">

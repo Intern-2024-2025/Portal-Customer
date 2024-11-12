@@ -4,6 +4,8 @@ import { ref, onMounted } from 'vue'
 import BreadcrumbDefault from '@/components/Breadcrumbs/BreadcrumbDefault.vue'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import ProductAPI from '@/api/product';
+import API from '@/api/auth';
+import router from '@/router/index'
 
 const pageTitle = ref('Product')
 
@@ -27,8 +29,24 @@ const getProductClient = async () => {
     console.log('get product failed', error)
   }
 }
+
+const chekVerification = async () => {
+  try{ 
+    const resposne = await API.fetch()
+    if(resposne.data.verificationData == 'not_verifed'){
+      router.push('/auth/verify-acc')
+    } else {
+      router.push('/product')
+    }
+  } catch (error) {
+    console.log('fetch clint product', error)
+  }
+}
+
+
 // console.log("data", dataProduct)
 onMounted(() => {
+  chekVerification()
   getProductClient()
 })
 
@@ -45,7 +63,7 @@ onMounted(() => {
         <thead>
           <tr class="bg-gray-2 text-left dark:bg-meta-4">
             <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">name</th>
-            <th class="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+            <th class="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white">
               CSR.Key
             </th>
             <th class="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white">
@@ -55,7 +73,7 @@ onMounted(() => {
             <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">Password</th>
             <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">Keyld</th>
             <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">status</th>
-            <th class="py-4 px-4 font-medium text-black dark:text-white">Actions</th>
+            <!-- <th class="py-4 px-4 font-medium text-black dark:text-white">Actions</th> -->
           </tr>
         </thead>
         <tbody>
@@ -85,7 +103,7 @@ onMounted(() => {
               <td class="py-5 px-4">
                 <p class="text-black dark:text-white">{{ dataProduct.status }}</p>
               </td>
-              <td class="py-5 px-4">
+              <!-- <td class="py-5 px-4">
                 <div class="flex items-center space-x-3.5">
                   <button class="hover:text-primary">
                     <svg
@@ -155,7 +173,7 @@ onMounted(() => {
                     </svg>
                   </button>
                 </div>
-              </td>
+              </td> -->
             </tr>
         </tbody>
       </table>

@@ -3,70 +3,34 @@ import { ref, onMounted } from 'vue'
 import BreadcrumbDefault from '@/components/Breadcrumbs/BreadcrumbDefault.vue'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import TransactionAPI from '@/api/transaction';
+import { useRoute } from 'vue-router'
 
-
-// const isDetailMode = ref(false);
-// const showModal = ref(false);
+const route = useRoute()
 
 type Transaction = {
   id: string;
   endpoint: string;
   create: string;
   status: boolean;
-  product: {
-    name: string;
-  }
+  name: string;
+  productId: string;
 }
 const dataTransaction = ref<Transaction[]>([]) 
-const getTransaction = async () => {
+const getTransactionClient = async () => {
   try{ 
-    const resposne = await TransactionAPI.getTransactionClient()
+    const resposne = await TransactionAPI.getTransactionByClient(route.params.productId)
     dataTransaction.value = resposne.data
-    // console.log(resposne.data)
+    // console.log("respon", route.params.productId)
   } catch (error) {
     console.log('get product failed', error)
   }
 }
 
-
-// // Data client (example)
-// const csrKey = ref([
-//   { id: 1, name: 'Free Package', price: '$0.00', invoiceDate: 'Jan 13, 2025', status: 'Paid' },
-//   { id: 2, name: 'Standard Package', price: '$59.00', invoiceDate: 'Jan 13, 2025', status: 'Paid' },
-// ]);
-
-// // Client yang diedit atau dilihat
-// const newClient = ref({
-//   id: 0,
-//   name: '',
-//   price: '',
-//   invoiceDate: '',
-//   status: '',
-// });
+onMounted(() => {
+  getTransactionClient()
+})
 
 const pageTitle = ref('Transaction');
-
-// // Fungsi untuk modal
-// const openModal = (client?: typeof newClient.value, mode: 'edit' | 'detail' = 'edit') => {
-//   if (client) {
-//     newClient.value = { ...client };
-//     isDetailMode.value = mode === 'detail';
-//   } else {
-//     newClient.value = {
-//       id: 0,
-//       name: '',
-//       price: '',
-//       invoiceDate: '',
-//       status: ''
-//     };
-//     isDetailMode.value = false;
-//   }
-//   showModal.value = true;
-// };
-
-onMounted(() => {
-  getTransaction()
-})
 </script>
 
 <template>
@@ -96,7 +60,7 @@ onMounted(() => {
           </tr>
           <tr v-else v-for="(item, index) in dataTransaction" :key="index">
             <td class="py-5 px-4 pl-9 xl:pl-11">
-              <h5 class="font-medium text-black dark:text-white">{{ item.product.name }}</h5>
+              <h5 class="font-medium text-black dark:text-white">{{ item.name }}</h5>
               <!-- <p class="text-sm">{{ item.price }}</p> -->
             </td>
             <td class="py-5 px-4">
