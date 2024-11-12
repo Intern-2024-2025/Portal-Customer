@@ -122,8 +122,10 @@ class AuthController {
             id: token.id
           }
         }).then(data=>{
+          // console.log("data", data)
           user ={
-            username : data.username
+            username : data.username,
+            verificationData: data.status_verification_data
           }
         })
       }

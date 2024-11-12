@@ -31,11 +31,11 @@ const Product = (sequelizeInstance) => {
         validate: {
           notNull: {
             args: true,
-            msg: "Key can't be Null!",
+            msg: "CSR Key can't be Null!",
           },
           notEmpty: {
             args: true,
-            msg: "Key can't be Empty!",
+            msg: "CSR Key can't be Empty!",
           },
         },
       },

@@ -13,33 +13,31 @@ const { accesToken } = require("../helper/chekAccessToken.js");
 class ProductController {
   static async createProduct(req, res) {
     try {
-      const token = accesToken(req);
       const {
         name,
-        csr_key,
-        postman_pem,
-        slot_id,
+        csrKey,
+        postmanPem,
+        slotId,
         password,
-        finance_key,
-        status,
-        call_api,
+        financeKey,
         count_trial,
+        clientId
       } = req.body;
       await Product.create({
         name,
-        csr_key,
-        postman_pem,
-        slot_id,
+        csr_key : csrKey,
+        postman_pem : postmanPem,
+        slot_id: slotId,
         password,
-        finance_key,
-        status,
-        call_api,
-        count_trial,
-        clientId: token.id,
+        finance_key : financeKey,
+        status: true,
+        call_api: 0,
+        count_trial: count_trial || 100,
+        clientId
       });
       await Models.Client.update(
-        { status_verification_data: true },
-        { where: { id: token.id } }
+        { status_verification_data: 'verifed' },
+        { where: { id: clientId } }
       );
       handleCreate(res);
     } catch (error) {

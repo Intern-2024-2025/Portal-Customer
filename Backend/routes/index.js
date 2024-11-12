@@ -7,7 +7,7 @@ const ClientController = require("../controllers/ClientController.js")
 const ClientDetailController = require("../controllers/ClientDetailController.js");
 const { IsAdmin, IsClinet } = require("../middlewares/chekRole.js");
 const TransactionController = require("../controllers/TransactionController.js");
-
+const ExampleApp = require("../controllers/ExampleAppController.js");
 
 //Authentication
 router.post("/login", AuthController.Login);
@@ -21,7 +21,8 @@ router.post("/new-password", AuthController.newPassword);
 router.post("/contact", ContactController.CreateContact)
 
 //Client
-router.get("/clients", verifyToken, ClientController.GetAllClient);
+router.get("/clients", verifyToken, IsAdmin, ClientController.GetAllClient);
+router.get("/client-submisson", verifyToken, IsAdmin, ClientController.GetAllClientSubmisson);
 router.get("/clients/:id", verifyToken, ClientController.GetClientById);
 router.put("/clients/:id", verifyToken, ClientController.UpdateClient);
 router.delete("/clients/:id", verifyToken, ClientController.DeleteClient);
@@ -43,6 +44,14 @@ router.delete("/products/:id", verifyToken, IsAdmin, ProductController.DeletePro
 
 //Transaction
 // router.get("/transaction", verifyToken, IsClinet, ProductController.getTransaction);
-router.get("/transaction", verifyToken, IsClinet, TransactionController.getTransactionByClinet)
- 
+router.get("/transaction", verifyToken, IsClinet, TransactionController.getTransactionByClient)
+router.get("/transaction-admin", verifyToken, IsAdmin, TransactionController.getTransactionByAdmin)
+router.get("/transaction-detail-admin/:productId", verifyToken, IsAdmin, TransactionController.getTransactionByClientAdmin)
+
+//SGKM
+router.post("/agent/login", verifyToken, ExampleApp.LoginSGKMS)
+router.post("/encrypt", verifyToken, ExampleApp.EncryptSGKMS)
+router.post("/decrypt", verifyToken, ExampleApp.DescryptSGKMS)
+
+
 module.exports = router;

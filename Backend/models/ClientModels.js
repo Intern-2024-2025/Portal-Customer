@@ -102,8 +102,23 @@ const Client = (sequelizeInstance) =>{
           defaultValue: false,
         },
         status_verification_data: {
-          type: Sequelize.BOOLEAN,
-          defaultValue: false,
+          type: Sequelize.STRING,
+          allowNull:false,
+          defaultValue: 'not_verifed',
+          validate: {
+            notNull: {
+              args: true,
+              msg: "Status Can't be Null!",
+            },
+            notEmpty: {
+              args: true,
+              msg: "Status Can't be Empty!",
+            },
+            isIn: {
+              args: [['not_verifed', 'process', 'verifed']],
+              msg: "Must be not_verifed, process and verifed"
+            },
+        },
         },
       },
       {
