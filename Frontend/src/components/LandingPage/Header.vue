@@ -67,7 +67,7 @@ const toggleMenu = () => {
           </li>
           <!-- <li><router-link to="/contact" active-class="active">Contact Us</router-link></li> -->
           <li class="cta-button-rounded">
-            <a class="btn-outline-primary-header" href="http://localhost:5173/auth/signup">Sign Up</a>
+            <a class="btn-outline-primary-header" href="https://dashboard.sandhiguna.com/auth/signup">Sign Up</a>
           </li>
           <!-- <li class="cta-primary">
             <a href="#" :style="[{ backgroundColor: themeColor }]">Register</a>
