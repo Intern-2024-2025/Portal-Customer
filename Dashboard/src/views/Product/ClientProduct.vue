@@ -32,8 +32,9 @@ const getProductClient = async () => {
 
 const chekVerification = async () => {
   try{ 
-    const resposne = await API.fetch()
-    if(resposne.data.verificationData == 'not_verifed'){
+    const response = await API.fetch()
+    console.log(response)
+    if(response.data.verificationData == 'not_verifed'){
       router.push('/auth/verify-acc')
     } else {
       router.push('/product')
