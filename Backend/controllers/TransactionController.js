@@ -24,7 +24,7 @@ class TransactionController{
     static async getTransactionByAdmin(req,res){
         try {
             await Models.Client.findAll({
-                where: {status_verification_data : 1},
+                where: {status_verification_data : "verifed"},
                 attributes: ['id','email', 'username'],
                 include: [{ model: Models.ClientDetail, attributes: ['fullname', 'phone', 'category_business'] }, {model: Models.Products, attributes: ['id','call_api', 'count_trial']}],
                 order: [[Models.Products, 'call_api', 'DESC']]
