@@ -264,7 +264,7 @@
               "items": {
                 "type": "object",
                 "properties": {
-                  "add": {
+                  "aad": {
                     "type": "string",
                     "example": "aad1"
                   },
