@@ -11,6 +11,7 @@ async function createTranscation(data){
                 clientId : data.userId
             }
         })
+        // console.log(chekProduct)
         if(!chekProduct){
             return 0
         }
@@ -19,7 +20,7 @@ async function createTranscation(data){
             endpoint: data.endpoint,
             status: data.status,
             create: new Date(),
-            Id: chekProduct.id
+            productId: chekProduct.id
         })
     } catch (error) {
         console.log("create transaction", error)
@@ -33,7 +34,6 @@ class ExampleApp{
             const token = accesToken(req)
             const {slotId, password} = req.body
             const data = await SGKMS.sendLogin(slotId, password);
-
             const transactionStatus = !data.fault;
             const createData = await createTranscation({
                 userId: token.id,
