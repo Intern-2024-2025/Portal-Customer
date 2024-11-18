@@ -22,6 +22,8 @@ import RegisterVerification from '@/views/List Admin/SubmissionTrial.vue'
 import SubmissionTrial from '@/views/List Admin/SubmissionTrial.vue'
 import ExampleAppClient from '@/views/ExampleApp/ExampleAppClient.vue'
 import ClientVerifView from '@/views/Authentication/ClientVerifView.vue'
+import BlogView from '@/views/blog/BlogView.vue'
+import NotFoundView from '@/views/Pages/NotFoundView.vue'
 
 const routes = [
   {
@@ -133,6 +135,24 @@ const routes = [
     meta: {
       requiresAuth: true,
       title: 'Admin Transaction'
+    }
+  },
+  {
+    path: '/blog',
+    name: 'blog view',
+    component: BlogView,
+    meta: {
+      requiresAuth: true,
+      title: 'blog view'
+    }
+  },
+  {
+    path: '/404',
+    name: 'Page 404',
+    component: NotFoundView,
+    meta: {
+      requiresAuth: true,
+      title: 'Page 404'
     }
   },
   {
