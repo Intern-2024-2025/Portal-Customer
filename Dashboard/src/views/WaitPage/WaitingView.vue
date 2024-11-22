@@ -3,7 +3,7 @@ import HeaderArea from '@/components/Header/HeaderArea.vue';
 </script>
 
 <template>
-  <div class="bg-gray-200 min-h-screen flex flex-col">
+  <div class="bg-gray-200 min-h-screen flex flex-col dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
   <HeaderArea/>
 
     <!-- Main Content -->

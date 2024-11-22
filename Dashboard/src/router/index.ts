@@ -23,6 +23,7 @@ import SubmissionTrial from '@/views/List Admin/SubmissionTrial.vue'
 import ExampleAppClient from '@/views/ExampleApp/ExampleAppClient.vue'
 import ClientVerifView from '@/views/Authentication/ClientVerifView.vue'
 import DetailTransaction from '@/views/Transaction/DetailTransaction.vue'
+import WaitingView from '@/views/WaitPage/WaitingView.vue'
 
 const routes = [
   {
@@ -117,6 +118,15 @@ const routes = [
     meta: {
       requiresAuth: true,
       title: 'List client'
+    }
+  },
+  {
+    path: '/Waiting-List',
+    name: 'waiting list',
+    component: WaitingView,
+    meta: {
+      requiresAuth: true,
+      title: 'Waiting List'
     }
   },
   {
