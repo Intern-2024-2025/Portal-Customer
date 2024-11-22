@@ -36,7 +36,9 @@ const chekVerification = async () => {
     console.log(response)
     if(response.data.verificationData == 'not_verifed'){
       router.push('/auth/verify-acc')
-    } else {
+    }else if (response.data.verificationData == 'process'){
+      router.push('/waitinglist')
+    }else {
       router.push('/product')
     }
   } catch (error) {
