@@ -130,7 +130,7 @@ const routes = [
     }
   },
   {
-    path: '/Waiting-List',
+    path: '/waiting-list',
     name: 'waiting list',
     component: WaitingView,
     meta: {
