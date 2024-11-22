@@ -24,6 +24,7 @@ import ExampleAppClient from '@/views/ExampleApp/ExampleAppClient.vue'
 import ClientVerifView from '@/views/Authentication/ClientVerifView.vue'
 import DetailTransaction from '@/views/Transaction/DetailTransaction.vue'
 import WaitingView from '@/views/WaitPage/WaitingView.vue'
+import NotFoundView from '@/views/Pages/NotFoundView.vue'
 
 const routes = [
   {
@@ -42,6 +43,14 @@ const routes = [
     component: CalendarView,
     meta: {
       title: 'Calendar'
+    }
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'Not found page',
+    component: NotFoundView,
+    meta: {
+      title: 'Not Found'
     }
   },
   {

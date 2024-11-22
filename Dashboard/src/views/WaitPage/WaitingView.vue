@@ -3,10 +3,9 @@ import HeaderArea from '@/components/Header/HeaderArea.vue';
 </script>
 
 <template>
-  <div class="bg-gray-200 min-h-screen flex flex-col dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
   <HeaderArea/>
-
-    <!-- Main Content -->
+  <div class="bg-gray-200 min-h-screen flex flex-col dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+      <!-- Main Content -->
     <div class="flex-grow flex items-center justify-center">
       <div class="bg-white shadow-lg rounded-xl p-12 max-w-6xl flex items-center space-x-8">
         <!-- Illustration -->
