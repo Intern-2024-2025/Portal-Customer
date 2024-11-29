@@ -129,7 +129,7 @@ const menuGroups = ref([
       'translate-x-0': sidebarStore.isSidebarOpen,
       '-translate-x-full': !sidebarStore.isSidebarOpen
     }"
-    ref="target"
+    ref="target" 
   > 
   <!-- <BasicChartView/> -->
  
