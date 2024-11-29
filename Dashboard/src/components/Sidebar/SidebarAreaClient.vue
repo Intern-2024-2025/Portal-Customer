@@ -101,11 +101,12 @@ const menuGroups = ref([
     ref="target"
   >
     <!-- SIDEBAR HEADER -->
-    <div class="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-      <router-link to="/">
-        <img src="@/assets/images/logo/logo.svg" alt="Logo" />
-      </router-link>
-
+    <div class="flex item-center justify-center">
+      <div class="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
+        <router-link class="h-[150px] w-[150px]" to="/">
+          <img src="@/assets/images/logo/logo_putih _sandhiguna.png" alt="Logo"/>
+        </router-link>
+      </div>
       <button class="block lg:hidden" @click="sidebarStore.isSidebarOpen = false">
         <svg
           class="fill-current"
@@ -126,7 +127,7 @@ const menuGroups = ref([
 
     <div class="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
       <!-- Sidebar Menu -->
-      <nav class="mt-5 py-4 px-4 lg:mt-9 lg:px-6">
+      <nav class="mt-5 px-4 lg:mt-9 lg:px-6">
         <template v-for="menuGroup in menuGroups" :key="menuGroup.name">
           <div>
             <h3 class="mb-4 ml-4 text-sm font-medium text-bodydark2">{{ menuGroup.name }}</h3>
