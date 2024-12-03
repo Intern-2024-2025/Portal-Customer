@@ -116,17 +116,18 @@ const sendRequest = async () => {
     </div>
   
     <div class="rounded-sm border mt-4 border-stroke bg-white px-5 p-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-        <p class="text-lg font-bold text-gray-700 dark:text-gray-300 mb-2">Response</p>
+         <p class="text-lg font-bold text-gray-700 dark:text-gray-300 mb-2">Response</p>
 
-        <!-- Menampilkan pesan respon jika ada -->
+        <!-- Menampilkan pesan respons jika ada -->
         <div v-if="responseMessage" class="mb-4 text-gray-800 dark:text-gray-200">
         <p>{{ responseMessage }}</p>
         </div>
 
-        <!-- Menampilkan data respons JSON -->
-        <div v-if="responseData" class="bg-gray-100 p-4 rounded-lg shadow-sm">
-        <pre>{{ JSON.stringify(responseData, null, 2) }}</pre> <!-- Menampilkan respons dalam format JSON yang terformat -->
-    </div>
+        <!-- Menampilkan data respons JSON dengan kotak yang scrollable jika konten terlalu panjang -->
+        <div v-if="responseData" class="bg-gray-100 p-4 rounded-lg shadow-sm max-h-96 overflow-auto whitespace-pre-wrap">
+        <!-- Respons JSON diformat dengan JSON.stringify -->
+        <pre class="text-sm text-gray-800 dark:text-gray-200">{{ JSON.stringify(responseData, null, 2) }}</pre>
+        </div>
     </div>
   </DefaultLayout>
 </template>
