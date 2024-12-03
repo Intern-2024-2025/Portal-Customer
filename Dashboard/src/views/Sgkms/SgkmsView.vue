@@ -6,26 +6,25 @@ import InputField from '@/components/Forms/Sgkms/InputField.vue';
 import Dropdown from '@/components/Forms/Sgkms/DropDown.vue';
 import axiosInstance from '@/api/axiosInstance';
 
-// Data dan status
 const pageTitle = ref('SGKMS API');
 const selectedVersion = ref('V1.0');
 const dropdownVisible = ref(false);
 const versions = ref(['V1.0']);
 const selectedEndpoint = ref('');
-const endpoints = ref(['/agent/login/', '/auth/register/', 'Endpoint 3']);  // Tambahkan semua endpoint di sini
+const endpoints = ref(['/agent/login/', '/auth/register/', 'Endpoint 3']); 
 
-// Toggle dropdown visibility
+// Variabel reaktif untuk response message dan data
+const responseData = ref<any>(null);  // Menyimpan respons JSON dari API
+
 const toggleDropdown = () => {
   dropdownVisible.value = !dropdownVisible.value;
 };
 
-// Select a version from dropdown
 const selectVersion = (version: string) => {
   selectedVersion.value = version;
   dropdownVisible.value = false;
 };
 
-// Data untuk masing-masing endpoint dalam struktur yang lebih terorganisir
 const endpointData = {
   '/agent/login/': {
     fields: [
@@ -33,7 +32,7 @@ const endpointData = {
       { name: 'password', label: 'Password', placeholder: 'Insert your Password ...' },
     ],
     data: { slotId: '', password: '' },
-    url: `/${selectedVersion.value}/agent/login`,  // Endpoint relatif
+    url: `/${selectedVersion.value}/agent/login`, 
   },
   '/auth/register/': {
     fields: [
@@ -44,21 +43,15 @@ const endpointData = {
     ],
     data: { nama: '', alamat: '', username: '', phone: '' },
   },
-  // Tambahkan endpoint lainnya di sini sesuai dengan struktur yang sama
 };
 
-// Form data reaktif
 const formData = reactive(endpointData[selectedEndpoint.value]?.data || {});
-
-// Watcher untuk mengubah form sesuai dengan endpoint yang dipilih
 watch(selectedEndpoint, (newEndpoint) => {
   if (newEndpoint && endpointData[newEndpoint]) {
-    // Update formData berdasarkan endpoint yang dipilih
     Object.assign(formData, endpointData[newEndpoint].data);
   }
 });
 
-// Response state
 const responseMessage = ref('');
 const sendRequest = async () => {
   const endpoint = endpointData[selectedEndpoint.value];
@@ -70,7 +63,8 @@ const sendRequest = async () => {
 
   try {
     const response = await axiosInstance.post(`${endpoint.url}?token=${localStorage.getItem("token")}`, formData)
-    console.log(response.data)
+    // console.log(response.data)
+    responseData.value = response.data;
     responseMessage.value = `Success: ${response.data.message || 'Request berhasil'}`;
   } catch (error: any) {
     responseMessage.value = `Error: ${error.response?.data?.message || error.message || 'Terjadi kesalahan'}`;
@@ -83,7 +77,6 @@ const sendRequest = async () => {
     <BreadcrumbDefault :pageTitle="pageTitle" />
   
     <div class="rounded-sm border border-stroke bg-white px-5 p-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-      <!-- Version Dropdown Section -->
       <div class="flex justify-between">
         <Dropdown 
           :items="versions" 
@@ -94,7 +87,6 @@ const sendRequest = async () => {
           @select="selectVersion"
         />
         
-        <!-- Send Request Button -->
         <div>
           <button 
             @click="sendRequest"
@@ -104,7 +96,6 @@ const sendRequest = async () => {
         </div>
       </div>
 
-      <!-- Endpoint Selection -->
       <div class="flex flex-col mt-6">
         <p class="text-xs font-bold text-gray-700 dark:text-gray-300 mb-2">Select Endpoint SGKMS API</p>
         <select v-model="selectedEndpoint" class="col-span-6 bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -113,11 +104,9 @@ const sendRequest = async () => {
         </select>
       </div>
 
-      <!-- Request Section -->
       <div class="flex flex-col mt-6">
         <p class="text-lg font-bold text-gray-700 dark:text-gray-300 mb-2">Request</p>
     
-        <!-- Form Dinamis Berdasarkan Endpoint yang Dipilih -->
         <div v-if="selectedEndpoint">
           <div v-for="field in endpointData[selectedEndpoint]?.fields" :key="field.name">
             <InputField v-model="formData[field.name]" :label="field.label" :placeholder="field.placeholder" />
@@ -126,9 +115,18 @@ const sendRequest = async () => {
       </div>
     </div>
   
-    <!-- Response Section -->
     <div class="rounded-sm border mt-4 border-stroke bg-white px-5 p-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-      <p class="text-lg font-bold text-gray-700 dark:text-gray-300 mb-2">Response</p>
+        <p class="text-lg font-bold text-gray-700 dark:text-gray-300 mb-2">Response</p>
+
+        <!-- Menampilkan pesan respon jika ada -->
+        <div v-if="responseMessage" class="mb-4 text-gray-800 dark:text-gray-200">
+        <p>{{ responseMessage }}</p>
+        </div>
+
+        <!-- Menampilkan data respons JSON -->
+        <div v-if="responseData" class="bg-gray-100 p-4 rounded-lg shadow-sm">
+        <pre>{{ JSON.stringify(responseData, null, 2) }}</pre> <!-- Menampilkan respons dalam format JSON yang terformat -->
+    </div>
     </div>
   </DefaultLayout>
 </template>
