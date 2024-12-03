@@ -1,0 +1,25 @@
+<script setup lang="ts">
+import { defineProps } from 'vue';
+
+const props = defineProps({
+  label: {
+    type: String,
+    required: true
+  },
+  placeholder: {
+    type: String,
+    required: true
+  }
+});
+</script>
+
+<template>
+  <div class="flex flex-col text-gray-700 dark:text-gray-300 mb-2">
+    <p class="text-xs">{{ label }}</p>
+    <input 
+      type="text" 
+      class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+      :placeholder="placeholder" 
+    />
+  </div>
+</template>
