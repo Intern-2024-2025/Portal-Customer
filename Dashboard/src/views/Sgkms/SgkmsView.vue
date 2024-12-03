@@ -12,7 +12,7 @@ const selectedVersion = ref('V1.0');
 const dropdownVisible = ref(false);
 const versions = ref(['V1.0']);
 const selectedEndpoint = ref('');
-const endpoints = ref(['/auth/login/', '/auth/register/', 'Endpoint 3']);  // Tambahkan semua endpoint di sini
+const endpoints = ref(['/agent/login/', '/auth/register/', 'Endpoint 3']);  // Tambahkan semua endpoint di sini
 
 // Toggle dropdown visibility
 const toggleDropdown = () => {
@@ -27,13 +27,13 @@ const selectVersion = (version: string) => {
 
 // Data untuk masing-masing endpoint dalam struktur yang lebih terorganisir
 const endpointData = {
-  '/auth/login/': {
+  '/agent/login/': {
     fields: [
       { name: 'slotId', label: 'Slot Id', placeholder: 'Insert your Slot Id ...' },
       { name: 'password', label: 'Password', placeholder: 'Insert your Password ...' },
     ],
     data: { slotId: '', password: '' },
-    url: `/${selectedVersion.value}/auth/login`,  // Endpoint relatif
+    url: `/${selectedVersion.value}/agent/login`,  // Endpoint relatif
   },
   '/auth/register/': {
     fields: [
