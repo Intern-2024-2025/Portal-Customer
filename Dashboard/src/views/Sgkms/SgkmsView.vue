@@ -12,7 +12,7 @@ const selectedVersion = ref('V1.0');
 const dropdownVisible = ref(false);
 const versions = ref(['V1.0']);
 const selectedEndpoint = ref('');
-const endpoints = ref(['/agent/login/', '/auth/register/', 'Endpoint 3']);  // Tambahkan semua endpoint di sini
+const endpoints = ref(['/agent/login/', '/agent/register/', 'Endpoint 3']);  // Tambahkan semua endpoint di sini
 
 // Toggle dropdown visibility
 const toggleDropdown = () => {
