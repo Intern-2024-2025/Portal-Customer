@@ -81,7 +81,7 @@ onMounted(() => {
         </thead>
         <tbody>
           <tr v-if="!dataProduct">
-            <td colspan="8" class="py-10 text-center text-gray-500 bg-white dark:text-white dark:bg-boxdark">Tidak ada data produk yang tersedia</td>
+            <td colspan="8" class="py-10 text-center text-gray-500 bg-white dark:text-white dark:bg-boxdark">No Product Data Available </td>
           </tr>
             <!-- <tr v-else v-for="(item, index) in dataProduct" :key="index"> -->
             <tr v-else>

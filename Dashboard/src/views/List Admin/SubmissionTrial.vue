@@ -4,6 +4,7 @@ import BreadcrumbDefault from '@/components/Breadcrumbs/BreadcrumbDefault.vue';
 import DefaultLayout from '@/layouts/DefaultLayout.vue';
 import ClientAPI from '@/api/client';
 import ProductAPI from '@/api/product';
+import FilterBar from '@/components/Filter/FilterBar.vue';
 
 const pageTitle = ref('Submission Trial');
 
@@ -101,6 +102,13 @@ onMounted(() => {
   <DefaultLayout>
     <BreadcrumbDefault :pageTitle="pageTitle" />
 
+    <div class = "flex justify-between mb-2"> 
+      <div>
+        <FilterBar/>
+      </div>  
+    </div>
+      
+     
     <!-- Table -->
     <div
       class="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"
@@ -120,7 +128,7 @@ onMounted(() => {
           </thead>
           <tbody>
             <tr v-if="!dataSubmisson?.length">
-              <td colspan="8" class="py-10 text-center text-gray-500 bg-white dark:text-white dark:bg-boxdark">Tidak ada data produk yang tersedia</td>
+              <td colspan="8" class="py-10 text-center text-gray-500 bg-white dark:text-white dark:bg-boxdark">No Submission Data Available</td>
             </tr>
             <tr v-else v-for="(item, index) in dataSubmisson" :key="index">
               <td class="py-5 px-4 pl-9 xl:pl-11">
@@ -171,6 +179,9 @@ onMounted(() => {
             </tr>
           </tbody>
         </table>
+        <div class="flex items-center justify-center" v-if="dataSubmisson?.length">
+          <PaginationStuff/>
+        </div>
       </div>
     </div>
 

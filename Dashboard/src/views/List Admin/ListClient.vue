@@ -3,6 +3,9 @@ import { ref, onMounted } from 'vue';
 import BreadcrumbDefault from '@/components/Breadcrumbs/BreadcrumbDefault.vue';
 import DefaultLayout from '@/layouts/DefaultLayout.vue';
 import ClientAPI from '@/api/client';
+import PaginationStuff from '@/components/Pagination/PaginationStuff.vue';
+import SearchBar from '@/components/Search/SearchBar.vue';
+import FilterBar from '@/components/Filter/FilterBar.vue';
 
 const dataClient = ref<TypeClient[]>()
 const pageTitle = ref('List Client');
@@ -79,6 +82,15 @@ onMounted(() => {
   <DefaultLayout>
     <BreadcrumbDefault :pageTitle="pageTitle" />
 
+    <div class = "flex justify-between "> 
+      <div>
+        <FilterBar/>
+      </div>
+      <div>
+        <SearchBar/>
+      </div>
+     
+    </div>
     <!-- Table -->
     <div
       class="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"
@@ -98,7 +110,7 @@ onMounted(() => {
           </thead>
           <tbody>
             <tr v-if="!dataClient?.length">
-              <td colspan="8" class="py-10 text-center text-gray-500 bg-white dark:text-white dark:bg-boxdark">Tidak ada data produk yang tersedia</td>
+              <td colspan="8" class="py-10 text-center text-gray-500 bg-white dark:text-white dark:bg-boxdark">No Client Data Available</td>
             </tr>
             <tr v-else v-for="(item, index) in dataClient" :key="item.id">
               <td class="py-5 px-4 pl-9 xl:pl-11">
@@ -149,12 +161,16 @@ onMounted(() => {
                   </svg>
                   </button>
                 </div>
-              </td>
+              </td> 
             </tr>
-          </tbody>
+          </tbody> 
         </table>
+        <div class="flex items-center justify-center" v-if="dataClient?.length">
+          <PaginationStuff/>
+        </div>
       </div>
     </div>
+    
 
     <!-- Modal for Adding/Editing/Detailing Client -->
     <div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
