@@ -25,6 +25,7 @@ import ClientVerifView from '@/views/Authentication/ClientVerifView.vue'
 import DetailTransaction from '@/views/Transaction/DetailTransaction.vue'
 import WaitingView from '@/views/WaitPage/WaitingView.vue'
 import NotFoundView from '@/views/Pages/NotFoundView.vue'
+import SgkmsView from '@/views/Sgkms/SgkmsView.vue'
 
 const routes = [
   {
@@ -35,6 +36,15 @@ const routes = [
       requiresAuth: true,
       role: 'admin', 
       title: 'Dashboard'
+    }
+  },
+  {
+    path: '/sgkms',
+    name: 'sgkms',
+    component: SgkmsView,
+    meta: {
+      requiresAuth: true,
+      title: 'SGKMS'
     }
   },
   {
