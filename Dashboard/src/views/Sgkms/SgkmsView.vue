@@ -11,7 +11,7 @@ const selectedVersion = ref('V1.0');
 const dropdownVisible = ref(false);
 const versions = ref(['V1.0']);
 const selectedEndpoint = ref('');
-const endpoints = ref(['/agent/login/', '/auth/register/', 'Endpoint 3']); 
+const endpoints = ref(['/agent/login/','/agent/refreshSession/', '/rng/', '/mac/generate/', '/seal/', '/unseal/','/tokenize/','/detokenize/','/sign','/verify/','/cert/sign/','/cert/verify/','/key/info/','/secret/get/','/external/key/generate','/external/mac/generate/','/external/tokenize','/external/detokenize/','/agent/sign/','/agent/verify-signature/']); 
 
 // Variabel reaktif untuk response message dan data
 const responseData = ref<any>(null);  // Menyimpan respons JSON dari API
@@ -22,26 +22,194 @@ const toggleDropdown = () => {
 
 const selectVersion = (version: string) => {
   selectedVersion.value = version;
-  dropdownVisible.value = false;
+  dropdownVisible.value = false;          
 };
 
 const endpointData = {
   '/agent/login/': {
     fields: [
-      { name: 'slotId', label: 'Slot Id', placeholder: 'Insert your Slot Id ...' },
-      { name: 'password', label: 'Password', placeholder: 'Insert your Password ...' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'the ID of the slot to be used for login' },
+      { name: 'password', label: 'Password', placeholder: 'the password or PIN for the agent in this slot' },
     ],
     data: { slotId: '', password: '' },
     url: `/${selectedVersion.value}/agent/login`, 
   },
-  '/auth/register/': {
+  '/agent/refreshSession/': {
     fields: [
-      { name: 'nama', label: 'Nama', placeholder: 'Insert your Nama ...' },
-      { name: 'alamat', label: 'Alamat', placeholder: 'Insert your Alamat ...' },
-      { name: 'username', label: 'Username', placeholder: 'Insert your Username ...' },
-      { name: 'phone', label: 'Phone', placeholder: 'Insert your Phone ...' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot for which to refresh the session' },
+      { name: 'sessionToken', label: 'Session Token', placeholder: ' The current session token of the agent' },
     ],
-    data: { nama: '', alamat: '', username: '', phone: '' },
+    data: { slotId: '', sessionToken: '' },
+  },
+  '/rng/': {
+    fields: [
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot requesting the random number' },
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'outputLength', label: 'Output Length', placeholder: ' The desired length of the generated random number' },
+    ],
+    data: { slotId: '', sessionToken: '', outputLength: '' },
+  },
+  '/mac/generate/': {
+    fields: [
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'keyId', label: 'Key Id', placeholder: 'The ID of the key used for generating the MAC' },
+      { name: 'hashAlgo', label: 'Hash Algo', placeholder: '(dropdown)The hashing algorithm used for the MAC' },
+      { name: 'macData', label: 'MAC Data', placeholder: 'The data for which the MAC will be generated' },
+    ],
+    data: { slotId: '', sessionToken: '', keyId: '', hashAlgorithm: '', macData: '' },
+  },
+  '/seal/': {
+    fields: [
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot used for encryption' },
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'keyId', label: 'Key Id', placeholder: 'The ID of the key used for sealing the plaintext (AES-256-GCM or RSA algorithm)' },
+      { name: 'plaintext', label: 'Plaintext', placeholder: 'An array of plaintext strings to encrypt' },
+    ],
+    data: { slotId: '', sessionToken: '', keyId: '', plaintext: [] },
+  },
+  '/unseal/': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot used for decryption' },
+      { name: 'ciphertext', label: 'Ciphertext', placeholder: '{{ciphertext_1}}, {{ciphertext_2}} // An array of ciphertext strings to decrypt' },
+    ],
+    data: { sessionToken: '', slotId: '', ciphertext: [] },
+  },
+  '/tokenize/': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the tokenization request' },
+      { name: 'keyId', label: 'Key Id', placeholder: 'The ID of the key used for tokenization' },
+      { name: 'plaintext', label: 'Plaintext', placeholder: 'The plaintext data to be tokenized' },
+      { name: 'formatChar', label: 'Format Char', placeholder: 'Format-preserving characters to maintain original text structure' },
+    ],
+    data: { sessionToken: '', slotId: '', keyId: '', plaintext: '', formatChar: '' },
+  },
+  '/detokenize/': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the detokenization request' },
+      { name: 'keyId', label: 'Key Id', placeholder: 'The ID of the key used for detokenization' },
+      { name: 'ciphertext', label: 'Ciphertext', placeholder: '{{token}}, {{metadata}} // Metadata associated with the tokenization process' },
+    ],
+    data: { sessionToken: '', slotId: '', keyId: '', ciphertext: [] },
+  },
+  '/sign/': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: ' The session token for authentication' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
+      { name: 'keyId', label: 'Key Id', placeholder: 'The ID of the private key used for signing' },
+      { name: 'data', label: 'Data', placeholder: 'The data to be signed' },
+    ],
+    data: { sessionToken: '', slotId: '', keyId: '', data: '' },
+  },
+  '/verify/': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
+      { name: 'keyId', label: 'Key Id', placeholder: 'The ID of the public key used for signature verification' },
+      { name: 'data', label: 'Data', placeholder: 'The original data that was signed' },
+      { name: 'signature', label: 'Signature', placeholder: 'The digital signature in Base64 format to verify' },
+    ],
+    data: { sessionToken: '', slotId: '', keyId: '', data: '', signature: '' },
+  },
+  '/cert/sign/': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot ID', placeholder: 'The ID of the slot associated with the request' },
+      { name: 'validityPeriod', label: 'Validity Period', placeholder: 'The validity period of certificate in days' },
+      { name: 'keyId', label: 'Private Key ID', placeholder: 'The ID of the intermediate or root certificate private key used to sign the CSR (RSA-3072, RSA4096, or ECDSA algorithm)' },
+      { name: 'csr', label: 'CSR', placeholder: 'The Certificate Signing Request in PEM format' },
+    ],
+    data: { sessionToken: '', slotId: '', validityPeriod: '', keyId: '', csr: '' },
+  },
+  '/cert/verify/': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot ID', placeholder: 'The ID of the slot associated with the request' },
+      { name: 'keyId', label: 'Public Key ID', placeholder: 'The ID of the intermediate or root certificate public key used for verification (RSA-3072, RSA4096, or ECDSA algorithm)' },
+      { name: 'certificate', label: 'Certificate', placeholder: 'The digitally signed certificate in PEM format' },
+    ],
+    data: { sessionToken: '', slotId: '', keyId: '', certificate: '' },
+  },
+  '/key/info/': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: '{{session_token}}' },
+      { name: 'slotId', label: 'Slot Id', placeholder: '{{slot_id}}' },
+      { name: 'keyId', label: 'Key Id', placeholder: '{{key_id}}' },
+      { name: 'keyVersion', label: 'Key Version', placeholder: '{{key_version}}' },
+    ],
+    data: { sessionToken: '', slotId: '', keyId: '', keyVersion: '' },
+  },
+  '/secret/get/': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: '{{session_token}}' },
+      { name: 'slotId', label: 'Slot Id', placeholder: '{{slot_id}}' },
+      { name: 'secretId', label: 'Secret Id', placeholder: '{{secret_id}}' },
+    ],
+    data: { sessionToken: '', slotId: '', secretId: '' },
+  },
+  '/external/key/generate': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: '{{session_token}}' },
+      { name: 'slotId', label: 'Slot Id', placeholder: '{{slot_id}}' },
+      { name: 'algo', label: 'Algorithm', placeholder: 'AES' },
+      { name: 'algoLength', label: 'Algorithm Length', placeholder: '256' },
+      { name: 'wrappingKeyId', label: 'Wrapping Key Id', placeholder: '{{wrapping_key_id}}' },
+    ],
+    data: { sessionToken: '', slotId: '', algo: 'AES', algoLength: 256, wrappingKeyId: '' },
+  },
+  '/external/mac/generate/': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: '{{session_token}}' },
+      { name: 'slotId', label: 'Slot Id', placeholder: '{{slot_id}}' },
+      { name: 'wrappingKeyId', label: 'Wrapping Key Id', placeholder: '{{wrapping_key_id}}' },
+      { name: 'wrappedKey', label: 'Wrapped Key', placeholder: '{{wrapped_key}}' },
+      { name: 'hashAlgo', label: 'Hash Algorithm', placeholder: '{{hash_algorithm}}' },
+      { name: 'data', label: 'Data', placeholder: '{{data_to_hash}}' },
+    ],
+    data: { sessionToken: '', slotId: '', wrappingKeyId: '', wrappedKey: '', hashAlgo: '', data: '' },
+  },
+  '/external/tokenize': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: '{{session_token}}' },
+      { name: 'slotId', label: 'Slot Id', placeholder: '{{slot_id}}' },
+      { name: 'wrappingKeyId', label: 'Wrapping Key Id', placeholder: '{{wrapping_key_id}}' },
+      { name: 'wrappedKey', label: 'Wrapped Key', placeholder: '{{wrapped_tokenization_key}}' },
+      { name: 'plaintext', label: 'Plaintext', placeholder: '[{ text: "{{plaintext_1}}", formatChar: "{{format_char}}" }, { text: "{{plaintext_2}}", formatChar: "{{format_char}}" }]' },
+    ],
+    data: { sessionToken: '', slotId: '', wrappingKeyId: '', wrappedKey: '', plaintext: [] },
+  },
+  '/external/detokenize/': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: '{{session_token}}' },
+      { name: 'slotId', label: 'Slot Id', placeholder: '{{slot_id}}' },
+      { name: 'wrappingKeyId', label: 'Wrapping Key Id', placeholder: '{{wrapping_key_id}}' },
+      { name: 'wrappedKey', label: 'Wrapped Key', placeholder: '{{wrapped_tokenization_key}}' },
+      { name: 'ciphertext', label: 'Ciphertext', placeholder: '[{ token: "{{tokenized_data_1}}", metadata: "{{metadata_1}}" }, { token: "{{tokenized_data_2}}", metadata: "{{metadata_2}}" }]' },
+    ],
+    data: { sessionToken: '', slotId: '', wrappingKeyId: '', wrappedKey: '', ciphertext: [] },
+  },
+  '/agent/sign/': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: '{{session_token}}' },
+      { name: 'slotId', label: 'Slot Id', placeholder: '{{slot_id}}' },
+      { name: 'wrappingKeyId', label: 'Wrapping Key Id', placeholder: '{{wrapping_key_id}}' },
+      { name: 'wrappedKey', label: 'Wrapped Key', placeholder: '{{private_key}}' },
+      { name: 'data', label: 'Data', placeholder: '{{data_to_sign}}' },
+    ],
+    data: { sessionToken: '', slotId: '', wrappingKeyId: '', wrappedKey: '', data: '' },
+  },
+  '/agent/verify-signature/': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: '{{session_token}}' },
+      { name: 'slotId', label: 'Slot Id', placeholder: '{{slot_id}}' },
+      { name: 'publicKeyOrCert', label: 'Public Key or Cert', placeholder: '{{public_key}}' },
+      { name: 'signature', label: 'Signature', placeholder: '{{signature}}' },
+      { name: 'data', label: 'Data', placeholder: '{{original_data}}' },
+    ],
+    data: { sessionToken: '', slotId: '', publicKeyOrCert: '', signature: '', data: '' },
   },
 };
 
