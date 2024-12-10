@@ -11,7 +11,7 @@ const selectedVersion = ref('V1.0');
 const dropdownVisible = ref(false);
 const versions = ref(['V1.0']);
 const selectedEndpoint = ref('');
-const endpoints = ref(['login','Refresh Session', 'rng', 'mac generate', 'seal', 'unseal','encrypt symmetric encryption','encrypt Asymmetric Encryption','encrypt Asymmetric Encryption with Session Key','decrypt Symmetric Decryption','decrypt Asymmetric Decryption','decrypt Asymmetric Decryption with Session Key','tokenize','detokenize','sign','verify','cert sign','cert verify','key info','secret get','external key generate','external mac generate','external tokenize','external detokenize','external sign','external verify']); 
+const endpoints = ref(['login','Refresh Session', 'rng', 'mac generate', 'seal', 'unseal','encrypt symmetric encryption','encrypt Asymmetric Encryption','encrypt Asymmetric Encryption with Session Key','decrypt Symmetric Decryption','decrypt Asymmetric Decryption','decrypt Asymmetric Decryption with Session Key','tokenize','detokenize','sign','verify','cert sign','cert verify','key info','secret get','RSA','ECDSA','external key generate','external mac generate','external tokenize','external detokenize','external sign','external verify']); 
 
 // Variabel reaktif untuk response message dan data
 const responseData = ref<any>(null);  // Menyimpan respons JSON dari API
