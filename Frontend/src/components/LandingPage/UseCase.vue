@@ -56,82 +56,114 @@
           digital.</p>
         </h6>
         <div class="oke-wrapper-use-case">
-          <div class="box-use-case justify">
+          <div class="box-use-case justify" v-for="useCase in useCases" :key="useCase.id">
             <div data-aos="fade-up" data-aos-delay="0">
-              <img src="../../../public/images/Home/data-leak.png" />
+              <img :src="useCase.image" />
               <br />
             </div>
-            <h5 class="bold">
-              Data Breach of 34 Million Passport Records (2023)
-            </h5>
+            <h5 class="bold">{{ useCase.title }}</h5>
             <p>
-              A hacktivist named Bjorka stole the passport data of 34 million Indonesian citizens, which included sensitive information like names, passport numbers, and dates of birth. 
-            <br><br>
-            This raised concerns about identity theft and fraud, as the stolen data was sold on the dark web.</p>
-          </div>
-          <div class="box-use-case justify">
-            <div data-aos="fade-up" data-aos-delay="0">
-              <img src="../../../public/images/Home/cyber-attack.png" />
-              <br />
-            </div>
-            <h5 class="bold">Cyberattacks Ahead of the 2024 Elections</h5>
-            <p>With Indonesia's elections approaching, the threat of cyberattacks has increased. Experts warned of potential attacks on voter data, particularly targeting the Permanent Voter List (DPT), containing sensitive personal information. 
-            <br><br>
-            Geopolitical tensions, hacktivism, and misinformation campaigns are also expected to escalate during the election period, posing risks to the integrity of the democratic process.
-          </p>
-          </div>
-          <div class="box-use-case justify">
-            <div data-aos="fade-up" data-aos-delay="0">
-              <img src="../../../public/images/Home/medical-record.png" />
-              <br />
-            </div>
-            <h5 class="bold">Healthcare and Social Security Data Leaks</h5>
-            <p>In previous years, Indonesia experienced significant data breaches, including the leak of personal data from BPJS Kesehatan (the national healthcare agency) in 2021, which affected 279 million individuals. 
-            <br><br>
-            These breaches continue to raise alarms about the security of public institutions.
-            </p>
-          </div>
-          <div class="box-use-case justify">
-            <div data-aos="fade-up" data-aos-delay="0">
-              <img
-                src="../../../public/images/Home/database.png"
-                />
-              <br />
-              <!-- style="width: 300; height: 100px; border-radius: 5px" -->
-            </div>
-            <h5 class="bold">Pusat Data National Ransomware</h5>
-            <p>In June 2024, Indonesia's National Data Center was hit by a major ransomware attack using a variant of the LockBit 3.0 ransomware, known as Brain Cipher. The attack severely impacted over 200 government services, including immigration, passport processing, and visa systems, causing significant disruption at airports and other public services. Hackers demanded a ransom of $8 million, but the Indonesian government refused to pay.
-            <br> <br>
-            The ransomware encrypted critical systems, disabling Windows Defender and deleting essential files, which hindered recovery efforts. However, authorities were able to migrate some essential services, such as immigration, to cloud platforms like Amazon Web Services, helping to restore operations partially.
-            <br><br>
-            This attack highlighted weaknesses in the country's cyber defenses, particularly the lack of adequate backups, which could have mitigated the impact of the ransomware. Investigations are ongoing, involving Indonesia's National Cyber and Crypto Agency (BSSN), and cyber-forensic efforts are in place to assess the full scope of the breach
+              <span v-if="!useCase.expanded">{{ truncatedText(useCase.description) }}</span>
+              <span v-else>{{ useCase.description }}</span>
+              <button @click="toggleExpand(useCase)" class="read-more">
+                {{ useCase.expanded ? "Close" : "Read More ...." }}
+              </button>
             </p>
           </div>
         </div>
+
       </div>
     </div>
   </div>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      useCases: [
+        {
+          id: 1,
+          title: "Data Breach of 34 Million Passport Records (2023)",
+          description:
+            "A hacktivist named Bjorka stole the passport data of 34 million Indonesian citizens, which included sensitive information like names, passport numbers, and dates of birth. This raised concerns about identity theft and fraud, as the stolen data was sold on the dark web.",
+          image: "../../../public/images/Home/data-leak.png",
+          expanded: false,
+        },
+        {
+          id: 2,
+          title: "Cyberattacks Ahead of the 2024 Elections",
+          description:
+            "With Indonesia's elections approaching, the threat of cyberattacks has increased. Experts warned of potential attacks on voter data, particularly targeting the Permanent Voter List (DPT), containing sensitive personal information. Geopolitical tensions, hacktivism, and misinformation campaigns are also expected to escalate during the election period, posing risks to the integrity of the democratic process.",
+          image: "../../../public/images/Home/cyber-attack.png",
+          expanded: false,
+        },
+        {
+          id: 3,
+          title: "Healthcare and Social Security Data Leaks",
+          description:
+            "In previous years, Indonesia experienced significant data breaches, including the leak of personal data from BPJS Kesehatan (the national healthcare agency) in 2021, which affected 279 million individuals.These breaches continue to raise alarms about the security of public institutions. ",
+          image: "../../../public/images/Home/medical-record.png",
+          expanded: false,
+        },
+        {
+          id: 4,
+          title: "Pusat Data National Ransomware",
+          description:
+            "In June 2024, Indonesia's National Data Center was hit by a major ransomware attack using a variant of the LockBit 3.0 ransomware, known as Brain Cipher. The attack severely impacted over 200 government services, including immigration, passport processing, and visa systems, causing significant disruption at airports and other public services. Hackers demanded a ransom of $8 million, but the Indonesian government refused to pay. The ransomware encrypted critical systems, disabling Windows Defender and deleting essential files, which hindered recovery efforts. However, authorities were able to migrate some essential services, such as immigration, to cloud platforms like Amazon Web Services, helping to restore operations partially. This attack highlighted weaknesses in the country's cyber defenses, particularly the lack of adequate backups, which could have mitigated the impact of the ransomware. Investigations are ongoing, involving Indonesia's National Cyber and Crypto Agency (BSSN), and cyber-forensic efforts are in place to assess the full scope of the breach",
+          image: "../../../public/images/Home/database.png",
+          expanded: false,
+        },
+      ],
+    };
+  },
+  methods: {
+    truncatedText(text) {
+      const maxLength = 150; // Panjang maksimal teks sebelum dipotong
+      return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
+    },
+    toggleExpand(useCase) {
+      useCase.expanded = !useCase.expanded;
+    },
+  },
+};
+</script>
+
+
 <style>
 .oke-wrapper-use-case {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Membuat 3 kolom dengan lebar sama */
-  gap: 10px; /* Menambah jarak antar elemen */
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
 }
 
 .box-use-case {
-  text-align: center; /* Posisikan teks di tengah setiap elemen */
+  text-align: center;
   padding: 15px;
   background: white;
   border-radius: 5px;
   color: #141c2c;
 }
+
 .box-use-case img {
   width: 75px;
   height: 75px;
   border-radius: 5px;
 }
+
+.read-more {
+  color: #007bff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9em;
+  margin-top: 10px;
+}
+
+.read-more:hover {
+  text-decoration: underline;
+}
+
 .justify p{
   text-align: justify;
   padding: 20px;

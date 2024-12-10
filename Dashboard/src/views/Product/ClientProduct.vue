@@ -4,6 +4,8 @@ import { ref, onMounted } from 'vue'
 import BreadcrumbDefault from '@/components/Breadcrumbs/BreadcrumbDefault.vue'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import ProductAPI from '@/api/product';
+import API from '@/api/auth';
+import router from '@/router/index'
 
 const pageTitle = ref('Product')
 
@@ -27,8 +29,27 @@ const getProductClient = async () => {
     console.log('get product failed', error)
   }
 }
+
+const chekVerification = async () => {
+  try{ 
+    const response = await API.fetch()
+    console.log(response)
+    if(response.data.verificationData == 'not_verifed'){
+      router.push('/auth/verify-acc')
+    }else if (response.data.verificationData == 'process'){
+      router.push('/waiting-list')
+    }else {
+      router.push('/product')
+    }
+  } catch (error) {
+    console.log('fetch clint product', error)
+  }
+}
+
+
 // console.log("data", dataProduct)
 onMounted(() => {
+  chekVerification()
   getProductClient()
 })
 
@@ -45,7 +66,7 @@ onMounted(() => {
         <thead>
           <tr class="bg-gray-2 text-left dark:bg-meta-4">
             <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">name</th>
-            <th class="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+            <th class="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white">
               CSR.Key
             </th>
             <th class="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white">
@@ -55,12 +76,12 @@ onMounted(() => {
             <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">Password</th>
             <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">Keyld</th>
             <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">status</th>
-            <th class="py-4 px-4 font-medium text-black dark:text-white">Actions</th>
+            <!-- <th class="py-4 px-4 font-medium text-black dark:text-white">Actions</th> -->
           </tr>
         </thead>
         <tbody>
           <tr v-if="!dataProduct">
-            <td colspan="8" class="py-10 text-center text-gray-500 bg-white dark:text-white dark:bg-boxdark">Tidak ada data produk yang tersedia</td>
+            <td colspan="8" class="py-10 text-center text-gray-500 bg-white dark:text-white dark:bg-boxdark">No Product Data Available </td>
           </tr>
             <!-- <tr v-else v-for="(item, index) in dataProduct" :key="index"> -->
             <tr v-else>
@@ -85,14 +106,14 @@ onMounted(() => {
               <td class="py-5 px-4">
                 <p class="text-black dark:text-white">{{ dataProduct.status }}</p>
               </td>
-              <td class="py-5 px-4">
+              <!-- <td class="py-5 px-4">
                 <div class="flex items-center space-x-3.5">
                   <button class="hover:text-primary">
                     <svg
                       class="fill-current"
                       width="18"
                       height="18"
-                      viewBox="0 0 18 18"
+                      viewBox="0 0 18 18"  
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
@@ -155,7 +176,7 @@ onMounted(() => {
                     </svg>
                   </button>
                 </div>
-              </td>
+              </td> -->
             </tr>
         </tbody>
       </table>

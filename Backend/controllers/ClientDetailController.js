@@ -36,11 +36,15 @@ class ClientDetailController {
       });
 
       if (created) {
+        await Models.Client.update({
+          status_verification_data: 'process'
+        }, {where: {id: token.id}})
         handleCreate(res);
       } else {
         handleGet(res, data);
       }
     } catch (error) {
+      console.log(error)
       handlerError(res, error);
     }
   }
@@ -59,9 +63,9 @@ class ClientDetailController {
   }
   static async getClientDetailByIdAdmin(req, res) {
     try {
-      await ClientDetail.findOne({
-        where: { clientId: req.params.id },
-        include: { model: Models.Client },
+      await Models.Client.findOne({
+        where: { id: req.params.id },
+        include: { model: ClientDetail },
       }).then((data) => {
         handleGet(res, data);
       });

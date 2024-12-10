@@ -22,8 +22,10 @@ import RegisterVerification from '@/views/List Admin/SubmissionTrial.vue'
 import SubmissionTrial from '@/views/List Admin/SubmissionTrial.vue'
 import ExampleAppClient from '@/views/ExampleApp/ExampleAppClient.vue'
 import ClientVerifView from '@/views/Authentication/ClientVerifView.vue'
-import BlogView from '@/views/blog/BlogView.vue'
+import DetailTransaction from '@/views/Transaction/DetailTransaction.vue'
+import WaitingView from '@/views/WaitPage/WaitingView.vue'
 import NotFoundView from '@/views/Pages/NotFoundView.vue'
+import SgkmsView from '@/views/Sgkms/SgkmsView.vue'
 
 const routes = [
   {
@@ -32,7 +34,17 @@ const routes = [
     component: Dashboard,
     meta: {
       requiresAuth: true,
+      role: 'admin', 
       title: 'Dashboard'
+    }
+  },
+  {
+    path: '/sgkms',
+    name: 'sgkms',
+    component: SgkmsView,
+    meta: {
+      requiresAuth: true,
+      title: 'SGKMS'
     }
   },
   {
@@ -41,6 +53,14 @@ const routes = [
     component: CalendarView,
     meta: {
       title: 'Calendar'
+    }
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'Not found page',
+    component: NotFoundView,
+    meta: {
+      title: 'Not Found'
     }
   },
   {
@@ -120,6 +140,15 @@ const routes = [
     }
   },
   {
+    path: '/waiting-list',
+    name: 'waiting list',
+    component: WaitingView,
+    meta: {
+      requiresAuth: true,
+      title: 'Waiting List'
+    }
+  },
+  {
     path: '/submission-trial',
     name: 'Submission Trial',
     component: SubmissionTrial,
@@ -138,21 +167,13 @@ const routes = [
     }
   },
   {
-    path: '/blog',
-    name: 'blog view',
-    component: BlogView,
+    path: '/transaction-detail/:productId',
+    name: 'Detail Transaction',
+    component: DetailTransaction,
     meta: {
       requiresAuth: true,
-      title: 'blog view'
-    }
-  },
-  {
-    path: '/404',
-    name: 'Page 404',
-    component: NotFoundView,
-    meta: {
-      requiresAuth: true,
-      title: 'Page 404'
+      role: 'admin', 
+      title: 'Detail Transaction'
     }
   },
   {
@@ -247,11 +268,11 @@ router.beforeEach((to, from, next) => {
     if (!isAuthenticated) {
       next({ name: 'signin' })
     } else if (to.meta.role && to.meta.role !== userRole) {
-      // if(userRole == 'client'){
-      //   next({ name: 'product' })
-      // }else{
-      // }
-      next({ name: 'dashboard' })
+      if(userRole != 'client'){
+        next({ name: 'dashboard' })
+      }else{
+        next({ name: 'product' })
+      }
     } else {
       next()
     }

@@ -129,15 +129,17 @@ const menuGroups = ref([
       'translate-x-0': sidebarStore.isSidebarOpen,
       '-translate-x-full': !sidebarStore.isSidebarOpen
     }"
-    ref="target"
+    ref="target" 
   > 
   <!-- <BasicChartView/> -->
  
-    <div class="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-      <router-link to="/">
-        <img src="@/assets/images/logo/logo.svg" alt="Logo" />
-      </router-link>
-
+    <!-- SIDEBAR HEADER -->
+    <div class="flex item-center justify-center">
+      <div class="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
+        <router-link class="h-[150px] w-[150px]" to="/">
+          <img src="@/assets/images/logo/logo_putih _sandhiguna.png" alt="Logo"/>
+        </router-link>
+      </div>
       <button class="block lg:hidden" @click="sidebarStore.isSidebarOpen = false">
         <svg
           class="fill-current"
@@ -154,6 +156,7 @@ const menuGroups = ref([
         </svg>
       </button>
     </div>
+    <!-- SIDEBAR HEADER -->
 
     <div class="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
       <nav class="mt-5 py-4 px-4 lg:mt-9 lg:px-6">

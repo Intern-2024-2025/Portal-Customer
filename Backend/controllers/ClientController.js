@@ -3,7 +3,6 @@ const Models = require("../models/index.js");
 const Client = Models.Client;
 
 class ClientController {
-
     static async CreateClient(req, res) {
         try {
             const { username, email, password, otp} = req.body;
@@ -26,15 +25,30 @@ class ClientController {
             handlerError(res, error);
         }
     }
+    static async GetAllClientSubmisson(req, res) {
+        try {
+            const data = await Models.ClientDetail.findAll({
+                include: {
+                    model: Client,
+                    where: {
+                        status_verification_data: "process"
+                    }
+                }
+            })
+            handleGet(res, data);
+        } catch (error) {
+            handlerError(res, error);
+        }
+    }
 
     static async GetClientById(req, res) {
         try {
             const { id } = req.params;
-            const Client = await Client.findByPk(id);
-            if (!Client) {
+            const dataClient = await Client.findByPk(id);
+            if (!dataClient) {
                 return res.status(404).json({ message: 'Client not found' });
             }
-            handleGet(res, Client);
+            handleGet(res, dataClient);
         } catch (error) {
             handlerError(res, error);
         }

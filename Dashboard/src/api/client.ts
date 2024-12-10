@@ -1,26 +1,26 @@
 import axiosInstance from "./axiosInstance";
 
 
-class TransactionAPI {
-    static async getTransactionClient() {
+class ClientAPI {
+    static async getClient() {
         try {
-        const response = await axiosInstance.get("transaction");
+        const response = await axiosInstance.get("clients");
         return response.data;
         } catch (err:any) {
         return err.response.data;  
         }
     }
-    static async getTransactionAdmin() {
+    static async getClientDetail(id:any) {
         try {
-        const response = await axiosInstance.get("transaction-admin");
+        const response = await axiosInstance.get(`client-detail/${id}`);
         return response.data;
         } catch (err:any) {
         return err.response.data;  
         }
     }
-    static async getTransactionByClient(productId:any) {
+    static async getSubmisson() {
         try {
-        const response = await axiosInstance.get(`/transaction-detail-admin/${productId}`);
+        const response = await axiosInstance.get("client-submisson");
         return response.data;
         } catch (err:any) {
         return err.response.data;  
@@ -28,4 +28,4 @@ class TransactionAPI {
     }
 }
 
-export default TransactionAPI;
+export default ClientAPI;

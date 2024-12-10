@@ -53,6 +53,14 @@ class API {
       return err.response.data;  
     }
   }
+  static async verificationData(fullname:any, phone: any, address:any, category_business:any, description_business:any, image:any ) {
+    try {
+      const response = await axiosInstance.post("verification-data", {fullname, phone, address, category_business, description_business, image});
+      return response.data;
+    } catch (err:any) {
+      return err.response.data;  
+    }
+  }
   static async logout() {
     try {
       localStorage.clear()
