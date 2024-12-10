@@ -17,7 +17,7 @@ const endpoints = ref(['login','Refresh Session', 'rng', 'mac generate', 'seal',
 const responseData = ref<any>(null);  // Menyimpan respons JSON dari API
 
 const toggleDropdown = () => {
-  dropdownVisible.value = !dropdownVisible.value;
+  dropdownVisible.value = !dropdownVisible.value; 
 };
 
 const selectVersion = (version: string) => {
@@ -313,6 +313,27 @@ const endpointData = {
     data: { sessionToken: '', slotId: '', secretId: '' },
     url: `/${selectedVersion.value}/secret/get`,
   },
+  'RSA': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot ID', placeholder: 'The ID of the slot where the key pair will be generated' },
+      { name: 'algo', label: 'Algorithm', placeholder: 'The algorithm for key pair generation' },
+      { name: 'algoLength', label: 'Key Length', placeholder: 'The length of the key in bits (e.g., 2048, 3072, 4096)' },
+      { name: 'wrappingKeyId', label: 'Wrapping Key ID', placeholder: 'The ID of the wrapping key used to secure the generated keys' },
+    ],
+    data: { sessionToken: '', slotId: '', algo: '', algoLength: '', wrappingKeyId: '' },
+    url: `/${selectedVersion.value}/external/keypair/generate`,
+  },
+  'ECDSA': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot ID', placeholder: 'The ID of the slot where the key pair will be generated' },
+      { name: 'algo', label: 'Algorithm', placeholder: 'The algorithm for key pair generation' },
+      { name: 'wrappingKeyId', label: 'Wrapping Key ID', placeholder: 'The ID of the wrapping key used to secure the generated keys' },
+    ],
+    data: { sessionToken: '', slotId: '', algo: '', wrappingKeyId: '' },
+    url: `/${selectedVersion.value}/external/keypair/generate`,
+    },
   'external key generate': {
     fields: [
       { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
