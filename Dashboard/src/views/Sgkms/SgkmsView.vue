@@ -11,7 +11,7 @@ const selectedVersion = ref('V1.0');
 const dropdownVisible = ref(false);
 const versions = ref(['V1.0']);
 const selectedEndpoint = ref('');
-const endpoints = ref(['Agent Login','Agent Refresh Session', 'RNG', 'Mac Generate','External Mac Verify CMAC HMAC-SHA256','External Mac Verify GMAC-256',
+const endpoints = ref(['Agent Login','Agent Refresh Session', 'RNG', 'Mac Generate', 'Mac Verify CMAC HMAC-SHA256','Mac Verify GMAC-256','External Mac Verify CMAC HMAC-SHA256','External Mac Verify GMAC-256',
 'External Seal Symmetric Key','External Seal Asymmetric Key','External Unseal Symmetric Key','External Unseal Asymmetric Key','External Encrypt Symmetric Encryption',
 'External Encrypt Asymmetric Encryption','External Asymmetric Encryption With Session Key','External Encrypt Symmetric Encryption','External Encrypt Asymmetric Encryption',
 'External Asymmetric Encryption With Session Key','External Decrypt Symmetric Decryption','External Decrypt Asymmetric Decryption','External Decrypt Asymmetric Decryption With Session Key', 
@@ -66,6 +66,54 @@ const endpointData = {
     ],
     data: { slotId: '', sessionToken: '', keyId: '', hashAlgorithm: '', macData: '' },
     url: `/${selectedVersion.value}/mac/generate`,
+  },
+  'Mac Verify CMAC HMAC-SHA256': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' }, 
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
+      { name: 'keyId', label: 'Key Id', placeholder: 'The ID of the key used for MAC verification' },
+      { name: 'hashAlgo', label: 'Hash Algorithm', placeholder: 'The hashing algorithm used for the MAC. Possible values: "CMAC", "HMAC-SHA256' },
+      { name: 'data', label: 'MAC Data', placeholder: 'The data for which the MAC is being verified' },
+      { name: 'mac', label: 'Base64 MAC', placeholder: 'The Base64 URL-safe encoded to verify' },
+    ],
+    data: { sessionToken: '', slotId: '', wrappingKeyId: '', hashAlgo: '', data:'', mac:'' },
+    url: `/${selectedVersion.value}mac/verify`,
+  },
+  'Mac Verify GMAC-256': { 
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
+      { name: 'KeyId', label: 'Key Id', placeholder: 'The ID of the key used for MAC verification' },
+      { name: 'hashAlgo', label: 'GMAC-256', placeholder: 'GMAC-256' },
+      { name: 'data', label: 'Original Data', placeholder: 'The data for which the MAC is being verified' },
+      { name: 'mac', label: 'MAC', placeholder: 'The Base64 URL-safe encoded to verify' },
+      { name: 'iv', label: 'Initialization Vector', placeholder: 'The Initialization vector' },
+    ],
+    data: { sessionToken: '', slotId: '', KeyId: '', hashAlgo: '', data:'', mac:'', iv: ''},
+    url: `/${selectedVersion.value}/mac/verify`,
+  },
+  'External Keypair Generate RSA with Cert': { 
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
+      { name: 'algo', label: 'RSA', placeholder: 'The ID of the key used for MAC verification' },
+      { name: 'algoLength', label: 'Key Length', placeholder: 'The length of the key in bits(e., 2048, 3072, 4096)' },
+      { name: 'wrappingKeyID', label: 'Wrapping Key ID', placeholder: 'The ID of the wrapping key used to secure the generated keys' },
+      { name: 'withCert', label: 'With Cert', placeholder: 'Boolean flag: true if a certificate should be generated' },
+    ],
+    data: { sessionToken: '', slotId: '', algo: '', algoLength: '', wrappingKeyID:'', withCert:''},
+    url: `/${selectedVersion.value}/external/keypair/generate`,
+  },
+  'External Keypair Generate ECDSA with Cert': { 
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
+      { name: 'algo', label: 'Algo', placeholder: 'RSA' },
+      { name: 'wrappingKeyID', label: 'Wrapping Key ID', placeholder: 'The ID of the wrapping key used to secure the generated keys' },
+      { name: 'withCert', label: 'With Cert', placeholder: 'Boolean flag: true if a certificate should be generated' },
+    ],
+    data: { sessionToken: '', slotId: '', algo: '', algoLength: '', wrappingKeyID:'', withCert:''},
+    url: `/${selectedVersion.value}/external/keypair/generate`,
   },
   'External Mac Verify CMAC HMAC-SHA256': {
     fields: [
