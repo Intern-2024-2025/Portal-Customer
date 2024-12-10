@@ -48,10 +48,34 @@ router.get("/transaction", verifyToken, IsClinet, TransactionController.getTrans
 router.get("/transaction-admin", verifyToken, IsAdmin, TransactionController.getTransactionByAdmin)
 router.get("/transaction-detail-admin/:productId", verifyToken, IsAdmin, TransactionController.getTransactionByClientAdmin)
 
-//SGKM
-router.post("/agent/login", verifyToken, ExampleApp.LoginSGKMS)
-router.post("/encrypt", verifyToken, ExampleApp.EncryptSGKMS)
-router.post("/decrypt", verifyToken, ExampleApp.DescryptSGKMS)
+//SGKMS
+router.post("/v1.0/agent/login", verifyToken, ExampleApp.LoginSGKMS)
+router.post("/v1.0/agent/refreshSession", verifyToken, ExampleApp.RefreshSession)
+router.post("/v1.0/rng", verifyToken, ExampleApp.RandomNumber)
+router.post("/v1.0/mac/generate", verifyToken, ExampleApp.GenareteMAC)
+router.post("/v1.0/mac/verify", verifyToken, ExampleApp.VerifyMAC)
+router.post("/v1.0/seal", verifyToken, ExampleApp.Seal)
+router.post("/v1.0/unseal", verifyToken, ExampleApp.Unseal)
+router.post("/v1.0/encrypt", verifyToken, ExampleApp.EncryptSGKMS)
+router.post("/v1.0/decrypt", verifyToken, ExampleApp.DescryptSGKMS)
+router.post("/v1.0/tokenize", verifyToken, ExampleApp.Tokenize)
+router.post("/v1.0/detokenize", verifyToken, ExampleApp.Detokenize)
+router.post("/v1.0/sign", verifyToken, ExampleApp.Sign)
+router.post("/v1.0/verify", verifyToken, ExampleApp.VerifySign)
+router.post("/v1.0/key/info", verifyToken, ExampleApp.KeyInfo)
+router.post("/v1.0/external/key/generate", verifyToken, ExampleApp.ExKeyGenerate)
+router.post("/v1.0/external/keypair/generate", verifyToken, ExampleApp.ExKeyPairGenerate)
+router.post("/v1.0/external/mac/generate", verifyToken, ExampleApp.ExMacGenerate)
+router.post("/v1.0/external/mac/verify", verifyToken, ExampleApp.ExMacVerify)
+router.post("/v1.0/external/seal", verifyToken, ExampleApp.ExSeal)
+router.post("/v1.0/external/unseal", verifyToken, ExampleApp.ExUnseal)
+router.post("/v1.0/external/encrypt", verifyToken, ExampleApp.ExEncrypt)
+router.post("/v1.0/external/decrypt", verifyToken, ExampleApp.ExDecrypt)
+router.post("/v1.0/external/tokenize", verifyToken, ExampleApp.ExTokenize)
+router.post("/v1.0/external/detokenize", verifyToken, ExampleApp.ExDetokenize)
+router.post("/v1.0/external/sign", verifyToken, ExampleApp.ExSign)
+router.post("/v1.0/external/verify", verifyToken, ExampleApp.ExVerify)
+router.post("/v1.0/secret/get", verifyToken, ExampleApp.ExSecretGet)
 
 
 module.exports = router;

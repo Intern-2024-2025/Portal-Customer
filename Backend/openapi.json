@@ -1,127 +1,36 @@
 {
   "openapi": "3.0.0",
-  "info": {
-    "title": "Athena API Documentation",
-    "description": "CRUD API for User, Client, ClientDetail, and Product",
-    "version": "1.0.0"
-  },
   "servers": [
     {
-      "url": "https://backend.sandhiguna.com/"
+      "url": "http://localhost:5003/",
+      "description": "Sandhiguna REST API URL"
     }
   ],
-  "paths": {
-    "/agent/login": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/login"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Login success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/responses-login"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
+  "security": [{
+    "BearerAuth": []
+  }],
+  "info": {
+    "description": "# Overview\n\nThis reference guide is meant for product architects and developers to have a basic understanding and overview of Sandhiguna REST API Service.\n\nThis REST API document is intended for SG-KMS version 1.0.0012-GA.\n\nSandhiguna REST API is a conventional REST Web Service and should only be used if SDK is not available for the programming language being used.\n\nThe client application must connect to SG-KMS with mutual authentication (mTLS) by using certificate issued by CCEV. Certificate is the agent that represent application identity.\n\n\n# Supported Features\n\n* **Supported HTTP Methods**\n\n  Only POST method is supported. \\\n  Other HTTP methods are not supported.\n\n* **Supported Request Parameter Formats**\n  1. **JSON**\n\n      API request parameters can be sent in a single JSON object payload.\n\n      ```\n      # JSON Request Parameters\n      Content-type: application/json\n      {\"hashAlgo\":\"HMAC-SHA256\", \"data\":\"Po87t5Z\"}\n      ```\n\n* **HTTP Status Codes**\n\n  **200 for Success** - a JSON response will be returned as the content. \\\n  **400 for Failure** - a JSON fault response will be returned as the content.\\\n  **Other Codes** - Other HTTP status codes will not be used by REST API.\n\n\n* **Responses**\n\n  **Successful Response** - All successful cases will return a successful response. \\\n  **Failure Fault/Error Response** - Failed cases will return a failed response.\n",
+    "version": "v1.0",
+    "x-logo": {
+      "url": "swagger/sandhiguna-logo.png"
     },
-    "/encrypt": {
-      "post": {
-        "summary": "register account in website",
-        "tags": [
-          "Auth"
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/encrypt"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Register was create",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/response-encrypt"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
-    },
-    "/decrypt": {
-      "post": {
-        "summary": "check OTP message in email",
-        "tags": [
-          "Auth"
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/decrypt"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Verification was successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/response-decrypt"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ]
-      }
-    }
+    "title": "Sandhiguna REST API"
   },
+  "tags": [
+    {
+      "name": "Authentication Service",
+      "description": "Group of authentication APIs such as login, change password, refresh session, etc."
+    },
+    {
+      "name": "Cryptographic Service",
+      "description": "Group of cryptographic APIs such as encrypt, decrypt, seal, unseal, etc."
+    },
+    {
+      "name": "Secret Service",
+      "description": "Group of secret APIs such as get secret, etc."
+    }
+  ],
   "components": {
     "securitySchemes": {
       "BearerAuth": {
@@ -131,82 +40,381 @@
       }
     },
     "schemas": {
-      "login": {
+      "GeneralError": {
         "type": "object",
         "properties": {
-          "slotId": {
-            "type": "integer",
-            "example": 1
-          },
-          "password": {
-            "type": "string",
-            "example": "Example1234!"
-          }
-        },
-        "required": [
-          "slotId",
-          "password"
-        ]
-      },
-      "responses-login": {
-        "type": "object",
-        "properties": {
-          "sessionToken": {
-            "type": "string",
-            "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
-          },
-          "agentDN": {
-            "type": "string",
-            "example": "cn=keuangan1,dc=houseapp,dc=com"
-          },
-          "lastUsedTime": {
-            "type": "integer",
-            "example": 1642623118
-          },
-          "idleTimeoutInMins": {
-            "type": "integer",
-            "example": 15
-          },
-          "expiredAt": {
-            "type": "integer",
-            "example": 1643623118
+          "code": {
+            "type": "number",
+            "description": "List of General Faults/Error Codes:\n* 1000 MAXIMUM_PAYLOAD_SIZE\n* 1001 INVALID_HTTP_REQUEST\n* 1002 METHOD_NOT_ALLOWED\n* 1003 EMPTY_BODY\n* 1004 INVALID_JSON_REQUEST\n* 1005 INVALID_DATA\n* 1006 RESTAPI_INVALID_PATH\n* 1007 INTERNAL_LCEV_ERROR\n* 1008 INVALID_CONTENT_LENGTH\n* 1009 RANDOM_BYTES_LIMIT_EXCEEDED\n* 1010 DATABASE_TAMPERED\n* 1011 INTERNAL_FUNCTION_FAILED\n* 1012 INVALID_DATA_TYPE\n* 1013 MAXIMUM_SINGLE_PAYLOAD_SIZE\n* 1020 KEY_IS_TAMPERED\n* 1021 SYSTEM_SLOT_IS_NOT_ALLOWED\n* 1022 SLOT_ID_IS_OUT_OF_RANGE\n* 1023 INVALID_KEY_PURPOSE\n* 1024 KEY_EXPIRED\n* 1025 KEY_REVOKED\n* 1026 KEY_NOT_FOUND\n* 1027 STORED_CERT_NOT_FOUND\n* 1028 UNRECOGNIZED_KEY_TYPE\n* 1029 INVALID_KEY_TYPE\n* 1040 SLOT_NOT_FOUND\n* 2700 LICENSE_EXPIRED\n* 2701 LICENSE_INSUFFICIENT\n"
           }
         }
       },
-      "encrypt": {
+      "SessionGenerationError": {
         "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "List of Session Faults/Error Codes:\n* 1103 SESSION_TOKEN_GENERATION_FAILED\n"
+          }
+        }
+      },
+      "SessionVerificationError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "List of Session Faults/Error Codes:\n* 1100 INVALID_SESSION_TOKEN\n* 1101 SESSION_EXPIRED\n* 1102 SESSION_TOKEN_GENERATION_FAILED\n* 1120 SLOT_ID_MISMATCH\n"
+          }
+        }
+      },
+      "LoginError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "List of Login Faults/Error Codes:\n* 1200 LOGIN_FAILED\n* 1201 AUTHENTICATION_FAILED\n* 1202 APPLICATION_UNAUTHORIZED\n* 1203 SLOT_LOCKED_FOR_APPLICATION\n"
+          }
+        }
+      },
+      "EncryptError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "List of Encryption Faults/Error Codes:\n* 1300 ENCRYPTION_FAILED\n* 1320 MESSAGE_TOO_LONG\n"
+          }
+        }
+      },
+      "DecryptError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "List of Decryption Faults/Error Codes:\n* 1301 DECRYPTION_FAILED\n* 1330 MISSING_AES_KEY_VERSION\n"
+          }
+        }
+      },
+      "GenerateSignatureError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "List of Generate Signature Faults/Error Codes:\n* 1400 SIGNATURE_GENERATION_FAILED\n"
+          }
+        }
+      },
+      "VerifySignatureError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "List of Verify Digital Signature Faults/Error Codes:\n* 1401 VERIFY_FAILED\n"
+          }
+        }
+      },
+      "SealError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "List of Seal Faults/Error Codes:\n* 1500 SEALING_FAILED\n* 1620 INVALID_KEY_LENGTH\n"
+          }
+        }
+      },
+      "UnsealError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "List of Unseal Faults/Error Codes:\n* 1501 UNSEALING_FAILED\n"
+          }
+        }
+      },
+      "GenerateExternalKeyError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "List of Generate External Faults/Error Codes:\n* 1600 KEY_GENERATION_FAILED\n* 1620 INVALID_KEY_LENGTH\n"
+          }
+        }
+      },
+      "EncryptExternalError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "List of Encrypt External Faults/Error Codes:\n* 1320 MESSAGE_TOO_LONG\n* 1620 INVALID_KEY_LENGTH\n* 1700 EXTERNAL_ENCRYPTION_FAILED\n* 1720 INVALID_EXTERNAL_KEY\n"
+          }
+        }
+      },
+      "DecryptExternalError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "List of Decrypt External Faults/Error Codes:\n* 1701 EXTERNAL_DECRYPTION_FAILED\n* 1720 INVALID_EXTERNAL_KEY\n"
+          }
+        }
+      },
+      "SignExternalError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "List of Sign External Faults/Error Codes:\n* 1720 INVALID_EXTERNAL_KEY\n* 1800 EXTERNAL_SIGN_FAILED\n"
+          }
+        }
+      },
+      "VerifyExternalError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "List of Sign External Faults/Error Codes:\n* 1720 INVALID_EXTERNAL_KEY\n* 1801 EXTERNAL_VERIFY_FAILED\n"
+          }
+        }
+      },
+      "GenerateMACError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "List of Generate MAC Faults/Error Codes:\n* 1900 MAC_GENERATION_FAILED\n* 1920 MAC_ALGO_NOT_FOUND\n"
+          }
+        }
+      },
+      "VerifyMACError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "List of Verify MAC Faults/Error Codes:\n* 1901 MAC_VERIFY_FAILED\n* 1920 MAC_ALGO_NOT_FOUND\n"
+          }
+        }
+      },
+      "ExternalGenerateMACError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "List of Generate MAC Faults/Error Codes:\n* 1720 INVALID_EXTERNAL_KEY\n* 1900 MAC_GENERATION_FAILED\n* 1920 MAC_ALGO_NOT_FOUND\n"
+          }
+        }
+      },
+      "ExternalVerifyMACError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "List of Verify MAC Faults/Error Codes:\n* 1720 INVALID_EXTERNAL_KEY\n* 1901 MAC_VERIFY_FAILED\n* 1920 MAC_ALGO_NOT_FOUND\n"
+          }
+        }
+      },
+      "TokenizeError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "List of Tokenize  Faults/Error Codes:\n* 2000 TOKENIZATION_FAILED\n* 2020 INVALID_KEY_ID\n* 2021 INVALID_TOKEN_FORMAT\n* 2023 INVALID_FORMAT_CHAR\n"
+          }
+        }
+      },
+      "DetokenizeError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "List of Detokenize  Faults/Error Codes:\n* 2001 DETOKENIZATION_FAILED\n* 2020 INVALID_KEY_ID\n* 2022 UNEXPECTED_TOKEN_LENGTH\n"
+          }
+        }
+      },
+      "GetSecretError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "List of Get Secret Faults/Error Codes:\n* 2100 SECRET_ID_NOT_FOUND\n* 2101 SECRET_IS_TAMPERED\n"
+          }
+        }
+      },
+      "TokenizeExternalError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "List of Tokenize External Faults/Error Codes:\n* 1720 INVALID_EXTERNAL_KEY\n* 2021 INVALID_TOKEN_FORMAT\n* 2023 INVALID_FORMAT_CHAR\n* 2200 EXTERNAL_TOKENIZATION_FAILED\n"
+          }
+        }
+      },
+      "DetokenizeExternalError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "List of Detokenize External Faults/Error Codes:\n* 1720 INVALID_EXTERNAL_KEY\n* 2022 UNEXPECTED_TOKEN_LENGTH\n* 2201 EXTERNAL_DETOKENIZATION_FAILED\n"
+          }
+        }
+      },
+      "CertificateSigningError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "List of Detokenize External Faults/Error Codes:\n* 2300 SIGN_CERTIFICATE_FAILED\n* 2320 INVALID_CSR\n* 2321 INVALID_CSR_PERIOD\n"
+          }
+        }
+      },
+      "CertificateVerifyError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "List of Detokenize External Faults/Error Codes:\n* 2301 VERIFY_CERT_FAILED\n* 2322 INVALID_CERTIFICATE\n"
+          }
+        }
+      },
+      "MacGenerateRequestBody": {
+        "type": "object",
+        "required": [
+          "sessionToken",
+          "slotId",
+          "keyId",
+          "hashAlgo",
+          "data"
+        ],
         "properties": {
           "sessionToken": {
             "type": "string",
+            "description": "* Session Token\n",
             "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
           },
           "slotId": {
             "type": "integer",
+            "description": "* Slot ID\n",
             "example": 1
           },
           "keyId": {
             "type": "string",
+            "description": "* Key ID\n",
             "example": "keuangan1"
+          },
+          "hashAlgo": {
+            "type": "string",
+            "description": "* Hash algorihm of MAC\n* Possible values in enum: \"CMAC\", \"GMAC-256\" and \"HMAC-SHA256\"\n",
+            "example": "GMAC-256"
+          },
+          "data": {
+            "type": "string",
+            "description": "* MAC Data.\n* Maximum length is 700 KB.\n",
+            "example": "Data to be hashed"
+          }
+        }
+      },
+      "MacGenerateResponseBody": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "mac": {
+              "type": "string",
+              "description": "Base64 URL-Save encoded message authentication code"
+            },
+            "iv": {
+              "type": "string",
+              "description": "* Initialization Vector\n* This field only appear for GMAC hash algorithm.\n"
+            }
+          }
+        }
+      },
+      "MacVerifyRequestBody": {
+        "type": "object",
+        "required": [
+          "sessionToken",
+          "slotId",
+          "keyId",
+          "hashAlgo",
+          "data",
+          "mac"
+        ],
+        "properties": {
+          "sessionToken": {
+            "type": "string",
+            "description": "* Session Token\n"
+          },
+          "slotId": {
+            "type": "integer",
+            "description": "* Slot ID\n"
+          },
+          "keyId": {
+            "type": "string",
+            "description": "* Key ID\n"
+          },
+          "hashAlgo": {
+            "type": "string",
+            "description": "* Hash algorihm of MAC\n* Possible values in enum: \"CMAC\", \"GMAC-256\" and \"HMAC-SHA256\"\n"
+          },
+          "data": {
+            "type": "string",
+            "description": "* MAC Data.\n"
+          },
+          "mac": {
+            "type": "string",
+            "description": "Base64 URL-Save encoded message authentication code"
+          },
+          "iv": {
+            "type": "string",
+            "description": "* Initialization Vector\n* Only required for GMAC hash algorithm\n"
+          }
+        }
+      },
+      "EncryptRequestBody": {
+        "type": "object",
+        "required": [
+          "sessionToken",
+          "slotId",
+          "keyId",
+          "plaintext"
+        ],
+        "properties": {
+          "sessionToken": {
+            "type": "string",
+            "description": "* Session Token\n"
+          },
+          "slotId": {
+            "type": "integer",
+            "description": "* Slot ID\n"
+          },
+          "keyId": {
+            "type": "string",
+            "description": "* Key ID\n"
+          },
+          "useSessionKey": {
+            "type": "boolean",
+            "description": "* Only applicable for RSA key.\n* If true, data will be encrypted using session key which later encrypted using the RSA key.\n"
           },
           "plaintext": {
             "type": "array",
+            "description": "* The plaintext as an array of text and additional authentication data.\n* Maximum length is 700 KB. If the payload is longer than this then you need to use SDK to do automatic multiple parts encryption.\n",
             "items": {
               "type": "object",
+              "required": [
+                "text"
+              ],
               "properties": {
                 "text": {
                   "type": "string",
-                  "example": "Plaintext1"
+                  "description": "* The plaintext value.\n* For encryption using RSA without session key, the maximum text size is equal to length of modulus (in byte) deduct with length of RSA PKCS1 OAEP padding (66 byte)\n"
                 },
                 "aad": {
                   "type": "string",
-                  "example": "aad1"
+                  "description": "* Additional Authenticated Data must be in ASCII character set.\n* Optional for encryption using AES-256-GCM.\n* This parameter is invalid for encryption using RSA key.\n"
                 }
               }
             }
           }
         }
       },
-      "response-encrypt": {
+      "EncryptResponseBody": {
         "type": "object",
         "properties": {
           "result": {
@@ -214,90 +422,3416 @@
             "properties": {
               "keyVersion": {
                 "type": "integer",
-                "example": "3"
+                "description": "* The version of AES-256-GCM key being used to encrypt the data.\n"
               },
               "ciphertext": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "text": {
-                    "type": "string",
-                    "example": "j1XAcRImCh3ehdMmyak6n0ZXpVHZ05Q8/tQPqDATDNhIA=="
-                  },
-                  "mac": {
-                    "type": "string",
-                    "example": "8/tQPqDATDNhIA=="
-                  },
-                  "iv": {
-                    "type": "string",
-                    "example": "lfnugylknwfyefbwfp"
+                "type": "array",
+                "description": "* The ciphertext cosists of text and cipher params.\n",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "text": {
+                      "type": "string",
+                      "description": "* Base64 URL safe encoded ciphertext.\n"
+                    },
+                    "mac": {
+                      "type": "string",
+                      "description": "* Base64 URL safe encoded mac or authentication tag.\n* Returned for encryption using AES-256-GCM or RSA with session key.\n"
+                    },
+                    "iv": {
+                      "type": "string",
+                      "description": "* Initialization Vector.\n* Returned for encryption using AES-256-GCM or RSA with session key.\n"
+                    },
+                    "wrappedSessionKey": {
+                      "type": "string",
+                      "description": "* Returned if plaintext is encrypted using RSA with session key.\n"
+                    }
                   }
                 }
               }
-            }
             }
           }
         }
       },
-      "decrypt": {
+      "DecryptRequestBody": {
         "type": "object",
+        "required": [
+          "sessionToken",
+          "slotId",
+          "keyId",
+          "ciphertext"
+        ],
         "properties": {
           "sessionToken": {
             "type": "string",
+            "description": "* Session Token\n"
+          },
+          "slotId": {
+            "type": "integer",
+            "description": "* Slot ID\n"
+          },
+          "keyId": {
+            "type": "string",
+            "description": "* Key ID\n"
+          },
+          "ciphertext": {
+            "type": "array",
+            "description": "* An array of ciphertext value and ciphertext params.\n",
+            "items": {
+              "type": "object",
+              "required": [
+                "text"
+              ],
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "description": "* The ciphertext value.\n"
+                },
+                "aad": {
+                  "type": "string",
+                  "description": "* Additional Authenticated Data must be in ASCII character set.\n* Required if aad is supplied for encryption.\n* This parameter is invalid for decryption using RSA key.\n"
+                },
+                "mac": {
+                  "type": "string",
+                  "description": "* Base64 URL safe encoded mac or authentication tag.\n* Required for decryption using AES-256-GCM or RSA with session key.\n"
+                },
+                "iv": {
+                  "type": "string",
+                  "description": "* Initialization Vector\n* Required for decryption using AES-256-GCM or RSA with session key.\n"
+                },
+                "keyVersion": {
+                  "type": "integer",
+                  "description": "* The version of key stored in SG-KMS. The initial version of key is 0. Only applicable for AES-256-GCM key.\n"
+                },
+                "wrappedSessionKey": {
+                  "type": "string",
+                  "description": "* Session key wrapped by an RSA key.\n* Required if the plaintext is encrypted using RSA with session key.\n"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ExternalMacVerifyRequestBody": {
+        "type": "object",
+        "required": [
+          "sessionToken",
+          "slotId",
+          "wrappingKeyId",
+          "wrappedKey",
+          "hashAlgo",
+          "data",
+          "mac"
+        ],
+        "properties": {
+          "sessionToken": {
+            "type": "string",
+            "description": "* Session Token\n"
+          },
+          "slotId": {
+            "type": "integer",
+            "description": "* Slot ID\n"
+          },
+          "wrappingKeyId": {
+            "type": "string",
+            "description": "* Key id to unwrap the wrapped key\n"
+          },
+          "wrappedKey": {
+            "type": "string",
+            "description": "* Wrapped symmetric key in Base64.\n"
+          },
+          "hashAlgo": {
+            "type": "string",
+            "description": "* Hash algorihm of MAC\n* Possible values in enum: \"CMAC\", \"GMAC-256\" and \"HMAC-SHA256\"\n"
+          },
+          "data": {
+            "type": "string",
+            "description": "* MAC Data.\n"
+          },
+          "mac": {
+            "type": "string",
+            "description": "Base64 URL Save Encoded Message Authentication Code"
+          },
+          "iv": {
+            "type": "string",
+            "description": "* Initialization Vector\n* Only required for GMAC hash algorithm\n"
+          }
+        }
+      },
+      "ExternalKeyPairGenerateRequestBody": {
+        "type": "object",
+        "required": [
+          "sessionToken",
+          "slotId",
+          "wrappingKeyId",
+          "algo"
+        ],
+        "properties": {
+          "sessionToken": {
+            "type": "string",
+            "description": "* Session Token\n"
+          },
+          "slotId": {
+            "type": "integer",
+            "description": "* Slot ID\n"
+          },
+          "wrappingKeyId": {
+            "type": "string",
+            "description": "* The ID of existing key in SG-KMS used to wrap the generated asymmetric key.\n* The wrapping key can be an AES key or an RSA key.\n"
+          },
+          "algo": {
+            "type": "string",
+            "description": "* The algorithm of asymmetric key being generated.\n* Possible value: RSA, ECDSA P-256.\n"
+          },
+          "algoLength": {
+            "type": "integer",
+            "description": "* The length of generated asymmetric key in bit, only required for RSA algo.\n* Possible value: 2048, 3072, 4096.\n"
+          }
+        }
+      },
+      "ExternalSealRequestBody": {
+        "type": "object",
+        "required": [
+          "sessionToken",
+          "slotId",
+          "plaintext"
+        ],
+        "properties": {
+          "sessionToken": {
+            "type": "string",
+            "description": "* Session Token.\n"
+          },
+          "slotId": {
+            "type": "integer",
+            "description": "* Slot ID.\n"
+          },
+          "wrappingKeyId": {
+            "type": "string",
+            "description": "* Key ID to unwrap the wrapped key.\n* Required for external AES key.\n"
+          },
+          "wrappedKey": {
+            "type": "string",
+            "description": "* Wrapped AES key in Base64.\n* Required for external AES key.\n"
+          },
+          "publicKeyOrCert": {
+            "type": "string",
+            "description": "* The public key or certificate of external RSA key in PEM format.\n* Required for external RSA key or certificate.\n"
+          },
+          "plaintext": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "* Plaintext.\n* Maximum length is 700 KB.\n"
+          }
+        }
+      },
+      "ExternalEncryptRequestBody": {
+        "type": "object",
+        "required": [
+          "sessionToken",
+          "slotId",
+          "plaintext"
+        ],
+        "properties": {
+          "sessionToken": {
+            "type": "string",
+            "description": "* Session Token\n",
             "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
           },
           "slotId": {
             "type": "integer",
+            "description": "* Slot ID\n",
             "example": 1
           },
-          "keyId": {
+          "wrappingKeyId": {
             "type": "string",
+            "description": "* Key ID to unwrap the wrapped AES key\n* Required for external AES key.\n",
             "example": "keuangan1"
           },
-          "keyVersion": {
-            "type": "integer",
-            "example": "0"
+          "wrappedKey": {
+            "type": "string",
+            "description": "* Wrapped AES key in Base64.\n* Required for external AES key.\n",
+            "example": "UAHIUHAD98l=="
           },
-          "ciphertext": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "aad": {
-                    "type": "string",
-                    "example": "aad1"
-                  },
-                  "text": {
-                    "type": "string",
-                    "example": "j1XAcRImCh3ehdMmyak6n0ZXpVHZ05Q8/tQPqDATDNhIA=="
-                  },
-                  "mac": {
-                    "type": "string",
-                    "example": "8/tQPqDATDNhIA=="
-                  },
-                  "iv": {
-                    "type": "string",
-                    "example": "lfnugylknwfyefbwfp"
-                  }
+          "useSessionKey": {
+            "type": "boolean",
+            "description": "* Plaintext is encrypted using session key which later encrypted using the RSA key if the value is true.\n* Only applicable for RSA key.\n"
+          },
+          "publicKeyOrCert": {
+            "type": "string",
+            "description": "* The public key or certificate of external RSA key in PEM format.\n* Only applicable for RSA key.\n"
+          },
+          "plaintext": {
+            "type": "array",
+            "description": "* The plaintext as an array of text and additional authentication data.\n* Maximum length is 700 KB.\n",
+            "items": {
+              "type": "object",
+              "required": [
+                "text"
+              ],
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "description": "* The plaintext value.\n* For encryption using RSA without session key, the maximum text size is equal to length of modulus (in byte) deduct with length of RSA PKCS1 OAEP padding (66 byte)\n",
+                  "example": "Plaintext1"
+                },
+                "aad": {
+                  "type": "string",
+                  "description": "* Additional Authenticated Data must be in ASCII character set\n* Optional for encryption using AES key.\n* This parameter is invalid for encryption using RSA key.\n",
+                  "example": "aad1"
                 }
               }
             }
+          }
         }
       },
-      "response-decrypt": {
+      "ExternalEncryptResponseBody": {
         "type": "object",
         "properties": {
           "result": {
             "type": "object",
             "properties": {
-              "plaintext": {
-              "type": "array",
-              "items":{
-                "type": "string",
-                "example": "Plaintext1"
+              "ciphertext": {
+                "type": "array",
+                "description": "* The ciphertext cosists of text and cipher params.\n",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "text": {
+                      "type": "string",
+                      "description": "Base64 encoded ciphertext."
+                    },
+                    "mac": {
+                      "type": "string",
+                      "description": "* Base64 encoded mac or authentication tag.\n* Returned for encryption using external AES key or RSA with session key.\n"
+                    },
+                    "iv": {
+                      "type": "string",
+                      "description": "* Initialization Vector.\n* Returned for encryption using external AES key or RSA with session key.\n"
+                    },
+                    "wrappedSessionKey": {
+                      "type": "string",
+                      "description": "* RSA encrypted session key.\n* Returned for encryption using RSA with session key.\n"
+                    }
+                  }
+                }
               }
             }
+          }
+        }
+      },
+      "ExternalDecryptRequestBody": {
+        "type": "object",
+        "required": [
+          "sessionToken",
+          "slotId",
+          "wrappingKeyId",
+          "wrappedKey",
+          "ciphertext"
+        ],
+        "properties": {
+          "sessionToken": {
+            "type": "string",
+            "description": "* Session Token\n"
+          },
+          "slotId": {
+            "type": "integer",
+            "description": "* Slot ID\n",
+            "example": 1
+          },
+          "wrappingKeyId": {
+            "type": "string",
+            "description": "* Key ID to unwrap the wrapped key\n"
+          },
+          "wrappedKey": {
+            "type": "string",
+            "description": "* Wrapped external AES key or RSA private key in Base64.\n"
+          },
+          "ciphertext": {
+            "type": "array",
+            "description": "* The ciphertext cosists of Base64 encoded value and ciphertext params.\n",
+            "items": {
+              "type": "object",
+              "required": [
+                "text"
+              ],
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "description": "* The ciphertext value.\n"
+                },
+                "aad": {
+                  "type": "string",
+                  "description": "* Additional Authenticated Data must be in ASCII character set\n* Required if aad is supplied for encryption.\n* Invalid for decryption using RSA key.\n"
+                },
+                "mac": {
+                  "type": "string",
+                  "description": "* Base64 encoded mac or authentication tag.\n* Required for decryption using extrenal AES key or RSA with session key.\n"
+                },
+                "iv": {
+                  "type": "string",
+                  "description": "* Initialization Vector\n* Required for decryption using extrenal AES key or RSA with session key.\n"
+                },
+                "wrappedSessionKey": {
+                  "type": "string",
+                  "description": "* Session key wrapped by an RSA key.\n* Required if the plaintext is encrypted using RSA with session key.\n"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/v1.0/agent/login": {
+      "post": {
+        "tags": [
+          "Authentication Service"
+        ],
+        "summary": "/v1.0/agent/login",
+        "description": "Login and get session token for calling other API\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "slotId",
+                  "password"
+                ],
+                "properties": {
+                  "slotId": {
+                    "type": "integer",
+                    "description": "Specify which slot id to use",
+                    "example": 1
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password or PIN for the agent in this slot. Agent will be locked on a specific slot after three consecutive failed login attempts, but only in the corresponding LCEV and will not affect other LCEV"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "sessionToken": {
+                          "type": "string",
+                          "description": "Agent's session token",
+                          "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
+                        },
+                        "agentDN": {
+                          "type": "string",
+                          "description": "Agent's certificate distinguished name",
+                          "example": "cn=keuangan1,dc=houseapp,dc=com"
+                        },
+                        "lastUsedTime": {
+                          "type": "integer",
+                          "description": "Session token's last used time in epoch format",
+                          "example": 1642623118
+                        },
+                        "idleTimeoutInMins": {
+                          "type": "integer",
+                          "description": "Session token's idle timeout in minutes",
+                          "example": 15
+                        },
+                        "expiredAt": {
+                          "type": "integer",
+                          "description": "Session token's expired date in epoch format",
+                          "example": 1643623118
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SessionGenerationError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/LoginError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/agent/refreshSession": {
+      "post": {
+        "tags": [
+          "Authentication Service"
+        ],
+        "summary": "/v1.0/agent/refreshSession",
+        "description": "Refresh session token\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "slotId",
+                  "sessionToken"
+                ],
+                "properties": {
+                  "slotId": {
+                    "type": "integer",
+                    "description": "Specify which slot id to use",
+                    "example": 1
+                  },
+                  "sessionToken": {
+                    "type": "string",
+                    "description": "Agent's session token",
+                    "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "sessionToken": {
+                          "type": "string",
+                          "description": "New agent's session token",
+                          "example": "ac16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
+                        },
+                        "agentDN": {
+                          "type": "string",
+                          "description": "Agent's certificate distinguished name",
+                          "example": "cn=keuangan1,dc=houseapp,dc=com"
+                        },
+                        "lastUsedTime": {
+                          "type": "integer",
+                          "description": "Session token's last used time in epoch format",
+                          "example": 1642623118
+                        },
+                        "idleTimeoutInMins": {
+                          "type": "integer",
+                          "description": "Session token's idle timeout in minutes",
+                          "example": 15
+                        },
+                        "expiredAt": {
+                          "type": "integer",
+                          "description": "Session token's expired date in epoch format",
+                          "example": 1643623118
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SessionVerificationError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/rng": {
+      "post": {
+        "tags": [
+          "Cryptographic Service"
+        ],
+        "summary": "/v1.0/rng",
+        "description": "Generate Random Number.\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sessionToken",
+                  "slotId",
+                  "length"
+                ],
+                "properties": {
+                  "sessionToken": {
+                    "type": "string",
+                    "description": "* Session Token\n",
+                    "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
+                  },
+                  "slotId": {
+                    "type": "integer",
+                    "description": "* Slot ID\n",
+                    "example": 1
+                  },
+                  "length": {
+                    "type": "integer",
+                    "description": "* Output Length\n",
+                    "example": 8
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "random": {
+                          "type": "array",
+                          "items": {
+                            "type": "number"
+                          },
+                          "description": "random number",
+                          "example": [
+                            1,
+                            231,
+                            255,
+                            98,
+                            65,
+                            77,
+                            81,
+                            32
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SessionVerificationError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/mac/generate": {
+      "post": {
+        "tags": [
+          "Cryptographic Service"
+        ],
+        "summary": "/v1.0/mac/generate",
+        "description": "Generate Message Authentication Code (MAC) using key stored in SG-KMS. The key version is 0 and key purpose is MACGeneration\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MacGenerateRequestBody"
+              },
+              "examples": {
+                "CMAC/HMAC-SHA256": {
+                  "value": {
+                    "sessionToken": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ==",
+                    "slotId": 1,
+                    "keyId": "keuangan1",
+                    "hashAlgo": "CMAC/HMAC-SHA256",
+                    "data": "Cmac This and Cmac That"
+                  }
+                },
+                "GMAC-256" : {
+                  "value": {
+                    "sessionToken": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ==",
+                    "slotId": 1,
+                    "keyId": "keuangan1",
+                    "hashAlgo": "GMAC-256",
+                    "data": "Cmac This and Cmac That"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MacGenerateResponseBody"
+                },
+                "examples": {
+                  "GMAC-256": {
+                    "value": {
+                      "result": {
+                        "mac": "I2w41YCPqVb4PAV1WCVtUezn1KNwh9",
+                        "iv": "rGYyTlxGhI2w41YCPqV=="
+                      }
+                    }
+                  },
+                  "CMAC/HMAC-SHA256": {
+                    "value": {
+                      "result": {
+                        "mac": "bfe8YRkr0qk2lfIdhTng732rfoejf0"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SessionVerificationError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/GenerateMACError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/mac/verify": {
+      "post": {
+        "tags": [
+          "Cryptographic Service"
+        ],
+        "summary": "/v1.0/mac/verify",
+        "description": "Verify Message Authentication Code (MAC) of a data using key stored in SG-KMS. The key version is 0 and key purpose is MACGeneration\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MacVerifyRequestBody"
+              },
+              "examples": {
+                "GMAC-256": {
+                  "value": {
+                    "sessionToken": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ==",
+                    "slotId": 1,
+                    "keyId": "keuangan1",
+                    "hashAlgo": "GMAC-256",
+                    "data": "Data to be hashed",
+                    "mac": "I2w41YCPqVb4PAV1WCVtUezn1KNwh9",
+                    "iv": "rGYyTlxGhI2w41YCPqV=="
+                  }
+                },
+                "CMAC/HMAC-SHA256": {
+                  "value": {
+                    "sessionToken": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ==",
+                    "slotId": 1,
+                    "keyId": "keuangan1",
+                    "hashAlgo": "CMAC",
+                    "data": "Data to be hashed",
+                    "mac": "bfe8YRkr0qk2lfIdhTng732rfoejf0"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "verified": {
+                          "type": "boolean",
+                          "description": "* MAC Verification Result\n",
+                          "example": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SessionVerificationError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/VerifyMACError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/seal": {
+      "post": {
+        "tags": [
+          "Cryptographic Service"
+        ],
+        "summary": "/v1.0/seal",
+        "description": "Encrypt a plaintext with metadata using AES-256-GCM key or RSA with session key.\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sessionToken",
+                  "slotId",
+                  "keyId",
+                  "plaintext"
+                ],
+                "properties": {
+                  "sessionToken": {
+                    "type": "string",
+                    "description": "* Session Token\n",
+                    "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
+                  },
+                  "slotId": {
+                    "type": "integer",
+                    "description": "* Slot ID\n",
+                    "example": 1
+                  },
+                  "keyId": {
+                    "type": "string",
+                    "description": "* Key ID\n",
+                    "example": "keuangan1"
+                  },
+                  "plaintext": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "* Plaintext\n* Maximum length is 700 KB.\n",
+                    "example": [
+                      "Plaintext1",
+                      "Plaintext2"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "ciphertext": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "The ciphertext is a JSON object Base64 URL safe encoded string containing encrypted metadata and ciphertext.\n",
+                          "example": [
+                            "e206IOKAnGoxWEFjUkltQ2g1ZGhORm1qV2s3aUlXOWpER01oaGxsS1F6eExhb3lOZz3igJ0sIGM6IOKAnGoxWEFjUkltQ2gzZWhkTW15YWs2bjBaWHBWSFowNVE4L3RRUHFEQVRETmhJQT094oCdfQo=",
+                            "eyJtIjoiRnBlcGVoNHM5VEIwUUdJRC9aMG9IMUZIcVYzSExVQ25NMlUyU2o1bGdNOD0iLCJjIjoibWsrNDhrRHQrTFU5amhDR0RaQmhTWkt4K1FQS0h2b1haSkF6cVM1b1FnZzA3WmdhOU56MThRPT0ifQ=="
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SessionVerificationError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SealError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/unseal": {
+      "post": {
+        "tags": [
+          "Cryptographic Service"
+        ],
+        "summary": "/v1.0/unseal",
+        "description": "Decrypt a ciphertext with metadata.\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sessionToken",
+                  "slotId",
+                  "ciphertext"
+                ],
+                "properties": {
+                  "sessionToken": {
+                    "type": "string",
+                    "description": "* Session Token\n",
+                    "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
+                  },
+                  "slotId": {
+                    "type": "integer",
+                    "description": "* Slot ID\n",
+                    "example": 1
+                  },
+                  "ciphertext": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "The ciphertext is a JSON object Base64 URL safe encoded string containing encrypted metadata and ciphertext.\n",
+                    "example": [
+                      "e206IOKAnGoxWEFjUkltQ2g1ZGhORm1qV2s3aUlXOWpER01oaGxsS1F6eExhb3lOZz3igJ0sIGM6IOKAnGoxWEFjUkltQ2gzZWhkTW15YWs2bjBaWHBWSFowNVE4L3RRUHFEQVRETmhJQT094oCdfQo=",
+                      "eyJtIjoiRnBlcGVoNHM5VEIwUUdJRC9aMG9IMUZIcVYzSExVQ25NMlUyU2o1bGdNOD0iLCJjIjoibWsrNDhrRHQrTFU5amhDR0RaQmhTWkt4K1FQS0h2b1haSkF6cVM1b1FnZzA3WmdhOU56MThRPT0ifQ=="
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "plaintext": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "* The plaintext after unsealed.\n",
+                          "example": [
+                            "Plaintext1",
+                            "Plaintext2"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SessionVerificationError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/UnsealError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/encrypt": {
+      "post": {
+        "tags": [
+          "Cryptographic Service"
+        ],
+        "summary": "/v1.0/encrypt",
+        "description": "* Encrypt a plaintext using last key version of AES-256-GCM or RSA key without metadata.\n* Encryption using RSA key can be done directly or with session key.\n* Use session key to encrypt large data using RSA key.\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EncryptRequestBody"
+              },
+              "examples": {
+                "AES-256-GCM": {
+                  "value": {
+                    "sessionToken": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ==",
+                    "slotId": 1,
+                    "keyId": "keuangan1",
+                    "plaintext": [
+                      {
+                        "text": "Plaintext1",
+                        "aad": "aad1"
+                      },
+                      {
+                        "text": "Plaintext2",
+                        "aad": "aad2"
+                      }
+                    ]
+                  }
+                },
+                "RSA with session key": {
+                  "value": {
+                    "sessionToken": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ==",
+                    "slotId": 1,
+                    "keyId": "keuangan2",
+                    "useSessionKey": true,
+                    "plaintext": [
+                      {
+                        "text": "Plaintext1"
+                      },
+                      {
+                        "text": "Plaintext2"
+                      }
+                    ]
+                  }
+                },
+                "RSA without session key": {
+                  "value": {
+                    "sessionToken": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ==",
+                    "slotId": 1,
+                    "keyId": "keuangan3",
+                    "plaintext": [
+                      {
+                        "text": "Plaintext1"
+                      },
+                      {
+                        "text": "Plaintext2"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EncryptResponseBody"
+                },
+                "examples": {
+                  "AES-256-GCM": {
+                    "value": {
+                      "result": {
+                        "keyVersion": 3,
+                        "ciphertext": [
+                          {
+                            "text": "j1XAcRImCh3ehdMmyak6n0ZXpVHZ05Q8/tQPqDATDNhIA==",
+                            "mac": "8/tQPqDATDNhIA==",
+                            "iv": "lfnugylknwfyefbwfp"
+                          },
+                          {
+                            "text": "aHjd86AcRIdnawehdMmyafej77baVHZ05Q8/thdyIfTDN==",
+                            "mac": "ks9gb74/abdjbf==",
+                            "iv": "lfegwefirgureoepwk"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "RSA with session key": {
+                    "value": {
+                      "result": {
+                        "ciphertext": [
+                          {
+                            "text": "ewfN7ebgf4t340rind92ueT1mNDodu3YSm/bDof034fj==",
+                            "mac": "eFio5tjRhP4dui==",
+                            "iv": "assadajajrweoirjew",
+                            "wrappedSessionKey": "baef7HVn7bS9ejbd9==d8dnklwAhd8aGTuiaf7te93nf"
+                          },
+                          {
+                            "text": "vRjnf8743nwF92ew9DJ32nfiFn4ubg84hf85hg/hg34h==",
+                            "mac": "mdJHbip5dbao9P==",
+                            "iv": "saajfhfefeafjjfbkf",
+                            "wrappedSessionKey": "fge7U835Yhdh98Qejid9q3rILiorkAYry6ef4u34fsk9"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "RSA without session key": {
+                    "value": {
+                      "result": {
+                        "ciphertext": [
+                          {
+                            "text": "j1XAcRImCh3ehdMmyak6n0ZXpVHZre7847tqdoqjwr9u23HUjo3roi05Q8/tQPqDATDNhIA=="
+                          },
+                          {
+                            "text": "aHjd86AcRIdnawehdMmyafej77baVHZ05Q8/thdyIfTDN=="
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SessionVerificationError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/EncryptError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/decrypt": {
+      "post": {
+        "tags": [
+          "Cryptographic Service"
+        ],
+        "summary": "/v1.0/decrypt",
+        "description": "* Decrypt a ciphertext using specific key version (AES-256-GCM or RSA) without metadata.\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DecryptRequestBody"
+              },
+              "examples": {
+                "AES-256-GCM": {
+                  "value": {
+                    "sessionToken": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ==",
+                    "slotId": 1,
+                    "keyId": "keuangan1",
+                    "ciphertext": [
+                      {
+                        "text": "j1XAcRImCh3ehdMmyak6n0ZXpVHZ05Q8/tQPqDATDNhIA==",
+                        "aad": "aad1",
+                        "mac": "8/tQPqDATDNhIA==",
+                        "iv": "lfnugylknwfyefbwfp",
+                        "keyVersion": 3
+                      },
+                      {
+                        "text": "aHjd86AcRIdnawehdMmyafej77baVHZ05Q8/thdyIfTDN==",
+                        "aad": "aad2",
+                        "mac": "ks9gb74/abdjbf==",
+                        "iv": "lfegwefirgureoepwk",
+                        "keyVersion": 4
+                      }
+                    ]
+                  }
+                },
+                "RSA with session key": {
+                  "value": {
+                    "sessionToken": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ==",
+                    "slotId": 1,
+                    "keyId": "keuangan2",
+                    "ciphertext": [
+                      {
+                        "text": "ewfN7ebgf4t340rind92ueT1mNDodu3YSm/bDof034fj==",
+                        "mac": "eFio5tjRhP4dui==",
+                        "iv": "assadajajrweoirjew",
+                        "wrappedSessionKey": "baef7HVn7bS9ejbd9==d8dnklwAhd8aGTuiaf7te93nf"
+                      },
+                      {
+                        "text": "vRjnf8743nwF92ew9DJ32nfiFn4ubg84hf85hg/hg34h==",
+                        "mac": "mdJHbip5dbao9P==",
+                        "iv": "saajfhfefeafjjfbkf",
+                        "wrappedSessionKey": "fge7U835Yhdh98Qejid9q3rILiorkAYry6ef4u34fsk9"
+                      }
+                    ]
+                  }
+                },
+                "RSA without session key": {
+                  "value": {
+                    "sessionToken": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ==",
+                    "slotId": 1,
+                    "keyId": "keuangan3",
+                    "ciphertext": [
+                      {
+                        "text": "j1XAcRImCh3ehdMmyak6n0ZXpVHZre7847tqdoqjwr9u23HUjo3roi05Q8/tQPqDATDNhIA=="
+                      },
+                      {
+                        "text": "aHjd86AcRIdnawehdMmyafej77baVHZ05Q8/thdyIfTDN=="
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "plaintext": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "* The plaintext after decrypted.\n",
+                          "example": [
+                            "Plaintext1",
+                            "Plaintext2"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SessionVerificationError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/DecryptError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/tokenize": {
+      "post": {
+        "tags": [
+          "Cryptographic Service"
+        ],
+        "summary": "/v1.0/tokenize",
+        "description": "Tokenize a plaintext using last key version of AES-256-GCM key with encryption purpose by preserving its format and length.\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sessionToken",
+                  "slotId",
+                  "keyId"
+                ],
+                "properties": {
+                  "sessionToken": {
+                    "type": "string",
+                    "description": "* Session Token\n",
+                    "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
+                  },
+                  "slotId": {
+                    "type": "integer",
+                    "description": "* Slot ID\n",
+                    "example": 1
+                  },
+                  "keyId": {
+                    "type": "string",
+                    "description": "* Key ID\n",
+                    "example": "keuangan1"
+                  },
+                  "plaintext": {
+                    "type": "array",
+                    "description": "* The plaintext as an array of text being tokenized.\n* Maximum length is 700 KB.\n",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "text",
+                        "formatChar"
+                      ],
+                      "properties": {
+                        "text": {
+                          "type": "string",
+                          "description": "* The plaintext value.\n",
+                          "example": "4281 5790 7311 2819"
+                        },
+                        "formatChar": {
+                          "type": "string",
+                          "description": "The formatChar of data being tokenized.\n* $ for tokenized information, must be specified at least one.\n* % for preserved information.\n\nExample:\n  If the primary account number \"4281 5790 7311 2819\" and the first/last parts are\n  tokenized then the formatChar will be \"$$$$%%%%%%%%%%%$$$$\".\n\n  The length of formatChar must be equals to the plaintext.\n",
+                          "example": "$$$$%%%%%%%%%%%$$$$"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "ciphertext": {
+                          "type": "array",
+                          "description": "* The tokenized text cosists of token and metadata.\n",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "token": {
+                                "type": "string",
+                                "description": "* Generated token.\n",
+                                "example": "A(Z= 5790 7311 QA-I"
+                              },
+                              "metadata": {
+                                "type": "string",
+                                "description": "* Base64 URL safe encoded ciphertext metadata.\n",
+                                "example": "8/tQPqDATDNhIA=="
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SessionVerificationError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/TokenizeError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/detokenize": {
+      "post": {
+        "tags": [
+          "Cryptographic Service"
+        ],
+        "summary": "/v1.0/detokenize",
+        "description": "Detokenize a ciphertext (token) using specific version of AES-256-GCM key with encryption purpose.\nThe version of the key is preserved in the metadata.\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sessionToken",
+                  "slotId",
+                  "keyId",
+                  "ciphertext"
+                ],
+                "properties": {
+                  "sessionToken": {
+                    "type": "string",
+                    "description": "* Session Token\n",
+                    "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
+                  },
+                  "slotId": {
+                    "type": "integer",
+                    "description": "* Slot ID\n",
+                    "example": 1
+                  },
+                  "keyId": {
+                    "type": "string",
+                    "description": "* Key ID\n",
+                    "example": "keuangan1"
+                  },
+                  "ciphertext": {
+                    "type": "array",
+                    "description": "* The ciphertext as an array of token and its metadata as a result of tokenization process.\n",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "token",
+                        "metadata"
+                      ],
+                      "properties": {
+                        "token": {
+                          "type": "string",
+                          "description": "* The token value.\n",
+                          "example": "A(Z= 5790 7311 QA-I"
+                        },
+                        "metadata": {
+                          "type": "string",
+                          "description": "* Base64 URL safe encoded ciphertext metadata.\n",
+                          "example": "8/tQPqDATDNhIA=="
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "plaintext": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "* The original plaintext.\n",
+                          "example": [
+                            "4281 5790 7311 2819"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SessionVerificationError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/DetokenizeError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/sign": {
+      "post": {
+        "tags": [
+          "Cryptographic Service"
+        ],
+        "summary": "/v1.0/sign",
+        "description": "Sign a data using asymmetric key with signing purpose and return a digital signature.\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sessionToken",
+                  "slotId",
+                  "keyId",
+                  "data"
+                ],
+                "properties": {
+                  "sessionToken": {
+                    "type": "string",
+                    "description": "* Session Token\n",
+                    "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
+                  },
+                  "slotId": {
+                    "type": "integer",
+                    "description": "* Slot ID\n",
+                    "example": 1
+                  },
+                  "keyId": {
+                    "type": "string",
+                    "description": "* Private Key ID stored in SG-KMS\n",
+                    "example": "keuangan2"
+                  },
+                  "data": {
+                    "type": "string",
+                    "description": "* The data to be signed.\n* Maximum length is 700 KB.\n",
+                    "example": "Data to be signed"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "signature": {
+                          "type": "string",
+                          "description": "* The digital signature in Base64.\n",
+                          "example": "LKAJDIAOJS=="
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SessionVerificationError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/GenerateSignatureError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/verify": {
+      "post": {
+        "tags": [
+          "Cryptographic Service"
+        ],
+        "summary": "/v1.0/verify",
+        "description": "Verify a digital signature.\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sessionToken",
+                  "slotId",
+                  "keyId",
+                  "data",
+                  "signature"
+                ],
+                "properties": {
+                  "sessionToken": {
+                    "type": "string",
+                    "description": "* Session Token\n",
+                    "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
+                  },
+                  "slotId": {
+                    "type": "integer",
+                    "description": "* Slot ID\n",
+                    "example": 1
+                  },
+                  "keyId": {
+                    "type": "string",
+                    "description": "* ID of public key stored in SG-KMS\n",
+                    "example": "keuangan1"
+                  },
+                  "data": {
+                    "type": "string",
+                    "description": "* The original data.\n",
+                    "example": "Data to be signed"
+                  },
+                  "signature": {
+                    "type": "string",
+                    "description": "* The digital signature in Base64.\n",
+                    "example": "lkasjdlkasjd=="
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "verified": {
+                          "type": "boolean",
+                          "description": "* Signature Verification Result\n",
+                          "example": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SessionVerificationError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/VerifySignatureError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/key/info": {
+      "post": {
+        "tags": [
+          "Cryptographic Service"
+        ],
+        "summary": "/v1.0/key/info",
+        "description": "* Retrieve key info from SG-KMS.\n* The key is added via sgcli command line, the key is centrally stored and protected in SG-KMS.\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sessionToken",
+                  "slotId",
+                  "keyId",
+                  "keyVersion"
+                ],
+                "properties": {
+                  "sessionToken": {
+                    "type": "string",
+                    "description": "* Session Token\n",
+                    "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
+                  },
+                  "slotId": {
+                    "type": "integer",
+                    "description": "* Slot ID\n",
+                    "example": 1
+                  },
+                  "keyId": {
+                    "type": "string",
+                    "description": "* The ID of a key stored in SG-KMS\n",
+                    "example": "01-Finance"
+                  },
+                  "keyVersion": {
+                    "type": "integer",
+                    "description": "* The version of a key stored in SG-KMS. The initial version of key is 0. The version is optional for RSA key.\n",
+                    "example": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "slotId": {
+                          "type": "integer",
+                          "description": "* Slot ID.\n",
+                          "example": 1
+                        },
+                        "keyId": {
+                          "type": "string",
+                          "description": "* The ID of the key.\n",
+                          "example": "01-Finance"
+                        },
+                        "keyLabel": {
+                          "type": "string",
+                          "description": "* The label of the key.\n",
+                          "example": "Finance"
+                        },
+                        "keyAlgo": {
+                          "type": "string",
+                          "description": "* The algo of the key.\n",
+                          "example": "AESSecretKey"
+                        },
+                        "keyLength": {
+                          "type": "integer",
+                          "description": "* The length of the key.\n* Valid for AES-256-GCM and RSA key.\n",
+                          "example": 256
+                        },
+                        "keyPurpose": {
+                          "type": "string",
+                          "description": "* The purpose of the key.\n",
+                          "example": "Encryption"
+                        },
+                        "keyVersion": {
+                          "type": "integer",
+                          "description": "* The version of AES-256-GCM key. The initial version of key is 0.\n",
+                          "example": 1
+                        },
+                        "isExtractable": {
+                          "type": "string",
+                          "description": "* The attribute extractable of the key.\n* There are three possible value:\n  1. YES\n  2. NO\n  3. UNSET\n",
+                          "example": "YES"
+                        },
+                        "isRotatable": {
+                          "type": "string",
+                          "description": "* The attribute rotatable of the key.\n* There are three possible value:\n  1. AutomaticRotatable\n  2. ManualRotatable\n  3. NotRotatable\n",
+                          "example": "Automatic Rotatable"
+                        },
+                        "publicKey": {
+                          "type": "string",
+                          "description": "* The public key of the aymmetric key.\n",
+                          "example": "-----BEGIN PUBLIC KEY----- MIIBigKCAYEAtTgJkzcjC4n1zLnnQ0VaXt4PCCjqHgya1w6OBvvg3RKunIp7CZSi gDD8M9Rf+LwdZ3FDZH8YKoepqPJD2FgiP7SICmRRRXIj/KNRgfk8vkqBAlAidUPk iPDsyPUrWHfzhoM+2W97QGG52jheJIVFNHxGlk/2TTSEh8BdZurcopGP7H2hOUp+ 7mVgpdYMdm29kFXC9qkKZ7qxR4qIAPW2587Woxc6mEwGSJED4LR1vpvJUtYJEON6 cW3ttcYTVebtphvjFSugWR3uJyO4r52JCJfENYSJYqSAyx2+1fu1TRXT0viZnKwf KIA2UZohG8kZELWj7LnSbBGWaZGgQnDzicBt8DnifDCRyeQFhWl/BelNChXhsVHh MpUJ+bSK7q2ByLuYk74TfSaVniJrVbulvhVEzaxTPD/Ve+uhifCjyhKP4Ta/V1Ag 8E6rxivoxMG+e17SQXkGgOwNw7EwvThZn/KVc3bIGOpwnJdrVPeTfl5gtcPQlbQA ev6pZbnmyRRjAgMBAAE= -----END PUBLIC KEY-----"
+                        },
+                        "certificate": {
+                          "type": "string",
+                          "description": "* The certificate associated with the key.\n",
+                          "example": "-----BEGIN CERTIFICATE----- MIIEcjCCAtoCAQAwDQYJKoZIhvcNAQELBQAwaTEcMBoGA1UEAwwTbGNldi5zYW5k aGlndW5hLmNvbTELMAkGA1UEBhMCSUQxFzAVBgNVBAgMDktlcHVsYXVhbiBSaWF1 MQ4wDAYDVQQHDAVCYXRhbTETMBEGA1UECgwKU2FuZGhpZ3VuYTAeFw0yMjA5MjAw ODExMTVaFw0yMzA5MjAwODExMTVaMIGUMQswCQYDVQQGEwJJRDEOMAwGA1UECAwF S2VwcmkxDjAMBgNVBAcMBUJhdGFtMRMwEQYDVQQKDApTYW5kaGlndW5hMQwwCgYD VQQLDANFbmcxHTAbBgNVBAMMFHRlc3QyLnNhbmRoaWd1bmEuY29tMSMwIQYJKoZI hvcNAQkBFhR0ZXN0MkBzYW5kaGlndW5hLmNvbTCCAaIwDQYJKoZIhvcNAQEBBQAD ggGPADCCAYoCggGBAMhpEdvZewayMOzoQmsRpOzNHFmy4v+BFMtXWk03tNXo2dk0 pFnU7IMlqsaKnRUhKo26Nxs82k3NgCz1FLwyoL4uCGoF6W0fJ7VtrbtW0yJZjYXd GHb7lPeXeu3j7HtIqQehdFQisdzs3DNeTbRF4spdPIHQoX7OF9LCYbzdaQMCeuJb ojk5ScMr2omGxbG/pm5TNbO6hdQk2jYO79PlovZKZRG6NpZ7bXi7jwKFoCQUZT/e lK+YDsa4Vi9hGsEv6aYPuwdiUulQppIbIagiv+A9TcDuPjgerS2IJAktCHt7HqDR m8wJ1irP3qQcV3KfIgADchbnPFxehZMht1iwZLNHWMnWwIRwcptl39VMiNQxheiK OW15yxHEcWikrwB4I5Z/ph88CDNJskC1pJYNcmfEzq7jealTIFQrfAjN3bxo7qe+ KR0JQ55f8HF6AhMcvYkZ5FHIACYQJP9WvLQgq9dMVmiDnVf7owIuWnS/lqc65+Z7 +PJBGnaqtQopDz0N+QIDAQABMA0GCSqGSIb3DQEBCwUAA4IBgQBxj/0bs3i+SXmY o0EMqjrSVQi4l6CHL1B1TByG2Hq8t7XkJ8BjSlrYBPQpPvMvTN1IlWWvs9JBoco4 r8TxEP78+rC/J3NU0URfseN7pGhXg30714s8ew7ly+ZtfNERM1SIXqhXGdKcY8fj Uq21QbtvhtdOCJDv+XImHjVHwinc4U5i0ebIpVb+uJFDkkVjmM0tDFctlhFv3es+ MqOjwA2dshptu5QAtISpFtNxqLQISudGiIQ6g2FYyWy/PPwDzT+IU4wLArF2ZfJY rbhOaG64CEfhlY7+EYYcqS3laqXhRlHI3kqbes4PAvOe/JqHz52RcUb3vIiLieIu oVbFnCnFUpstGT1gt5URlv73jXUHPye0AW+v/6/3HeR0HoNljXtD1phtn01bFEpe x6CcNQVVw/vxQ7MlsUiFWfJPhFz6oafmUEKCubI8XCmHJ/upksJ3CK/HukPLURLN yFacfjAN6L5mUq52o74OxLVKqJ5J2XpgSEfnnclijzKkWKYZnx0= -----END CERTIFICATE-----"
+                        },
+                        "creationDate": {
+                          "type": "integer",
+                          "description": "* Creation date of the key in epoch format.\n",
+                          "example": 1666833972
+                        },
+                        "expiryDate": {
+                          "type": "integer",
+                          "description": "* Expiry date of the key in epoch format.\n",
+                          "example": 1669512391
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SessionVerificationError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/secret/get": {
+      "post": {
+        "tags": [
+          "Secret Service"
+        ],
+        "summary": "/v1.0/secret/get",
+        "description": "* Retrieve the secret from SG-KMS such as password and connection string.\n* The secret is added via sgcli command line, the secret is centrally stored and protected in SG-KMS.\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sessionToken",
+                  "slotId",
+                  "secretId"
+                ],
+                "properties": {
+                  "sessionToken": {
+                    "type": "string",
+                    "description": "* Session Token\n",
+                    "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
+                  },
+                  "slotId": {
+                    "type": "integer",
+                    "description": "* Slot ID\n",
+                    "example": 1
+                  },
+                  "secretId": {
+                    "type": "string",
+                    "description": "* The ID of a secret stored in SG-KMS\n",
+                    "example": "PasswordDBKeuangan1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "secretId": {
+                          "type": "string",
+                          "description": "The ID of a secret stored in SG-KMS.\n",
+                          "example": "PasswordDBKeuangan1"
+                        },
+                        "secretLabel": {
+                          "type": "string",
+                          "description": "The description of a secret stored in SG-KMS.\n",
+                          "example": "Password to access keuangan database"
+                        },
+                        "secretData": {
+                          "type": "string",
+                          "description": "The clear secret data.\n",
+                          "example": "la(084KYan%"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SessionVerificationError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/GetSecretError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/external/key/generate": {
+      "post": {
+        "tags": [
+          "Cryptographic Service"
+        ],
+        "summary": "/v1.0/external/key/generate",
+        "description": "Generate an AES-256-GCM key and protect it with an AES-256-GCM wrapping key generated inside SG-KMS.\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sessionToken",
+                  "slotId",
+                  "wrappingKeyId",
+                  "algo",
+                  "algoLength"
+                ],
+                "properties": {
+                  "sessionToken": {
+                    "type": "string",
+                    "description": "* Session Token\n",
+                    "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
+                  },
+                  "slotId": {
+                    "type": "integer",
+                    "description": "* Slot ID\n",
+                    "example": 1
+                  },
+                  "wrappingKeyId": {
+                    "type": "string",
+                    "description": "* The ID of existing AES-256-GCM key in SG-KMS used to wrap the generated symmetric key.\n* The wrapping key must be an AES key.\n",
+                    "example": "WrappingKeyID"
+                  },
+                  "algo": {
+                    "type": "string",
+                    "description": "* The algorithm of symmetric key being generated.\n* Possible value: AES.\n",
+                    "example": "AES"
+                  },
+                  "algoLength": {
+                    "type": "integer",
+                    "description": "* The length of generated symmetric key in bit.\n* Possible value: 256.\n",
+                    "example": 256
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "wrappedKey": {
+                          "type": "string",
+                          "description": "The AES key wrapped (encrypted) by another key.\n",
+                          "example": "e206IOKAnGoxWEFjUkltQ2g1ZGhORm1qV2s3aUlXOWpER01oaGxsS1F6eExhb3lOZz3igJ0sIGM6IOKAnGoxWEFjUkltQ2gzZWhkTW15YWs2bjBaWHBWSFowNVE4L3RRUHFEQVRETmhJQT094oCdfQo="
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SessionVerificationError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/GenerateExternalKeyError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/external/keypair/generate": {
+      "post": {
+        "tags": [
+          "Cryptographic Service"
+        ],
+        "summary": "/v1.0/external/keypair/generate",
+        "description": "Generate a key pair and protect the private key with a wrapping key. The wrapping key can be an AES-256-GCM key or RSA key.\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalKeyPairGenerateRequestBody"
+              },
+              "examples": {
+                "RSA with certificate": {
+                  "value": {
+                    "sessionToken": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ==",
+                    "slotId": 1,
+                    "wrappingKeyId": "keuangan1",
+                    "algo": "RSA",
+                    "algoLength": 3072,
+                    "withCert": true
+                  }
+                },
+                "RSA without certificate": {
+                  "value": {
+                    "sessionToken": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ==",
+                    "slotId": 1,
+                    "wrappingKeyId": "keuangan1",
+                    "algo": "RSA",
+                    "algoLength": 3072
+                  }
+                },
+                "ECDSA with certificate": {
+                  "value": {
+                    "sessionToken": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ==",
+                    "slotId": 1,
+                    "wrappingKeyId": "keuangan1",
+                    "algo": "ECDSA P-256",
+                    "withCert": true
+                  }
+                },
+                "ECDSA without certificate": {
+                  "value": {
+                    "sessionToken": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ==",
+                    "slotId": 1,
+                    "wrappingKeyId": "keuangan1",
+                    "algo": "ECDSA P-256"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "wrappedPrivateKey": {
+                          "type": "string",
+                          "description": "* The private key wrapped (encrypted) by a wrapping key that never leaves SG-KMS.\n* The private key wrapped (encrypted) with PKCS11 standard if RSA wrapping key is used.\n",
+                          "example": "e206IOKAnGoxWEFjUkltQ2g1ZGhORm1qV2s3aUlXOWpER01oaGxsS1F6eExhb3lOZz3igJ0sIGM6IOKAnGoxWEFjUkltQ2gzZWhkTW15YWs2bjBaWHBWSFowNVE4L3RRUHFEQVRETmhJQT094oCdfQo="
+                        },
+                        "publicKeyOrCert": {
+                          "type": "string",
+                          "description": "The public key or certificate in PEM format.\n",
+                          "example": "-----BEGIN PUBLIC KEY----- MIIBigKCAYEAtTgJkzcjC4n1zLnnQ0VaXt4PCCjqHgya1w6OBvvg3RKunIp7CZSi gDD8M9Rf+LwdZ3FDZH8YKoepqPJD2FgiP7SICmRRRXIj/KNRgfk8vkqBAlAidUPk iPDsyPUrWHfzhoM+2W97QGG52jheJIVFNHxGlk/2TTSEh8BdZurcopGP7H2hOUp+ 7mVgpdYMdm29kFXC9qkKZ7qxR4qIAPW2587Woxc6mEwGSJED4LR1vpvJUtYJEON6 cW3ttcYTVebtphvjFSugWR3uJyO4r52JCJfENYSJYqSAyx2+1fu1TRXT0viZnKwf KIA2UZohG8kZELWj7LnSbBGWaZGgQnDzicBt8DnifDCRyeQFhWl/BelNChXhsVHh MpUJ+bSK7q2ByLuYk74TfSaVniJrVbulvhVEzaxTPD/Ve+uhifCjyhKP4Ta/V1Ag 8E6rxivoxMG+e17SQXkGgOwNw7EwvThZn/KVc3bIGOpwnJdrVPeTfl5gtcPQlbQA ev6pZbnmyRRjAgMBAAE= -----END PUBLIC KEY-----"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SessionVerificationError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/GenerateExternalKeyError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/external/mac/generate": {
+      "post": {
+        "tags": [
+          "Cryptographic Service"
+        ],
+        "summary": "/v1.0/external/mac/generate",
+        "description": "* Generate a MAC with externally stored AES key that was generated and wrapped by SG-KMS.\n* The key was generated by calling /v1.0/external/key/generate.\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sessionToken",
+                  "slotId",
+                  "wrappingKeyId",
+                  "wrappedKey",
+                  "hashAlgo",
+                  "data"
+                ],
+                "properties": {
+                  "sessionToken": {
+                    "type": "string",
+                    "description": "* Session Token\n",
+                    "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
+                  },
+                  "slotId": {
+                    "type": "integer",
+                    "description": "* Slot ID\n",
+                    "example": 1
+                  },
+                  "wrappingKeyId": {
+                    "type": "string",
+                    "description": "* Key id to unwrap the wrapped key\n",
+                    "example": "keuangan1"
+                  },
+                  "wrappedKey": {
+                    "type": "string",
+                    "description": "* Wrapped symmetric key in Base64.\n",
+                    "example": "UAHIUHAD98l=="
+                  },
+                  "hashAlgo": {
+                    "type": "string",
+                    "description": "* Hash algorihm of MAC\n* Possible values in enum: \"CMAC\", \"GMAC-256\" and \"HMAC-SHA256\"\n",
+                    "example": "GMAC-256"
+                  },
+                  "data": {
+                    "type": "string",
+                    "description": "* MAC Data.\n* Maximum length is 700 KB.\n",
+                    "example": "Data to be hashed"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MacGenerateResponseBody"
+                },
+                "examples": {
+                  "GMAC-256": {
+                    "value": {
+                      "result": {
+                        "mac": "I2w41YCPqVb4PAV1WCVtUezn1KNwh9",
+                        "iv": "rGYyTlxGhI2w41YCPqV=="
+                      }
+                    }
+                  },
+                  "CMAC/HMAC-SHA256": {
+                    "value": {
+                      "result": {
+                        "mac": "bfe8YRkr0qk2lfIdhTng732rfoejf0"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SessionVerificationError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/ExternalGenerateMACError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/external/mac/verify": {
+      "post": {
+        "tags": [
+          "Cryptographic Service"
+        ],
+        "summary": "/v1.0/external/mac/verify",
+        "description": "Verify Message Authentication Code (MAC) of a data using externally stored key that was generated and wrapped by SG-KMS.\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalMacVerifyRequestBody"
+              },
+              "examples": {
+                "GMAC-256": {
+                  "value": {
+                    "sessionToken": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ==",
+                    "slotId": 1,
+                    "wrappingKeyId": "keuangan1",
+                    "wrappedKey": "Usdgtry5AHhfghIUgj6UG5ghTfgfdht1HAD98l==",
+                    "hashAlgo": "GMAC-256",
+                    "data": "Data to be hashed",
+                    "mac": "I2w41YCPqVb4PAV1WCVtUezn1KNwh9",
+                    "iv": "rGYyTlxGhI2w41YCPqV=="
+                  }
+                },
+                "CMAC/HMAC-SHA256": {
+                  "value": {
+                    "sessionToken": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ==",
+                    "slotId": 1,
+                    "wrappingKeyId": "keuangan1",
+                    "wrappedKey": "Usdgtry5AHhfghIUgj6UG5ghTfgfdht1HAD98l==",
+                    "hashAlgo": "CMAC",
+                    "data": "Data to be hashed",
+                    "mac": "bfe8YRkr0qk2lfIdhTng732rfoejf0"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "verified": {
+                          "type": "boolean",
+                          "description": "* MAC Verification Result\n",
+                          "example": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SessionVerificationError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/ExternalVerifyMACError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/external/seal": {
+      "post": {
+        "tags": [
+          "Cryptographic Service"
+        ],
+        "summary": "/v1.0/external/seal",
+        "description": "* Encrypt a plaintext with metadata using externally stored AES key or RSA public key.\n* The key is generated and wrapped by SG-KMS by calling /v1.0/external/key/generate or /v1.0/external/keypair/generate.\n* For seal using external AES key, wrappingKeyId and wrappedKey must be supplied and publicKeyOrCert must be empty.\n* For seal using external RSA key, publicKeyOrCert must be supplied, wrappingKeyId and wrappedKey must be empty.\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalSealRequestBody"
+              },
+              "examples": {
+                "AES-256-GCM": {
+                  "value": {
+                    "sessionToken": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ==",
+                    "slotId": 1,
+                    "wrappingKeyId": "keuangan1",
+                    "wrappedKey": "fge7U835Yhdh98Qejid9q3rILiorkAYry6ef4u34fsk9",
+                    "plaintext": [
+                      "Plaintext1",
+                      "Plaintext2"
+                    ]
+                  }
+                },
+                "RSA": {
+                  "value": {
+                    "sessionToken": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ==",
+                    "slotId": 1,
+                    "publicKeyOrCert": "-----BEGIN PUBLIC KEY----- MIIBigKCAYEAtTgJkzcjC4n1zLnnQ0VaXt4PCCjqHgya1w6OBvvg3RKunIp7CZSi gDD8M9Rf+LwdZ3FDZH8YKoepqPJD2FgiP7SICmRRRXIj/KNRgfk8vkqBAlAidUPk iPDsyPUrWHfzhoM+2W97QGG52jheJIVFNHxGlk/2TTSEh8BdZurcopGP7H2hOUp+ 7mVgpdYMdm29kFXC9qkKZ7qxR4qIAPW2587Woxc6mEwGSJED4LR1vpvJUtYJEON6 cW3ttcYTVebtphvjFSugWR3uJyO4r52JCJfENYSJYqSAyx2+1fu1TRXT0viZnKwf KIA2UZohG8kZELWj7LnSbBGWaZGgQnDzicBt8DnifDCRyeQFhWl/BelNChXhsVHh MpUJ+bSK7q2ByLuYk74TfSaVniJrVbulvhVEzaxTPD/Ve+uhifCjyhKP4Ta/V1Ag 8E6rxivoxMG+e17SQXkGgOwNw7EwvThZn/KVc3bIGOpwnJdrVPeTfl5gtcPQlbQA ev6pZbnmyRRjAgMBAAE= -----END PUBLIC KEY-----",
+                    "plaintext": [
+                      "Plaintext1",
+                      "Plaintext2"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "ciphertext": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "The ciphertext is a JSON object Base64 URL safe encoded string containing encrypted metadata and ciphertext.\n",
+                          "example": [
+                            "e206IOKAnGoxWEFjUkltQ2g1ZGhORm1qV2s3aUlXOWpER01oaGxsS1F6eExhb3lOZz3igJ0sIGM6IOKAnGoxWEFjUkltQ2gzZWhkTW15YWs2bjBaWHBWSFowNVE4L3RRUHFEQVRETmhJQT094oCdfQo=",
+                            "eyJtIjoiRnBlcGVoNHM5VEIwUUdJRC9aMG9IMUZIcVYzSExVQ25NMlUyU2o1bGdNOD0iLCJjIjoibWsrNDhrRHQrTFU5amhDR0RaQmhTWkt4K1FQS0h2b1haSkF6cVM1b1FnZzA3WmdhOU56MThRPT0ifQ=="
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SessionVerificationError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SealError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/external/unseal": {
+      "post": {
+        "tags": [
+          "Cryptographic Service"
+        ],
+        "summary": "/v1.0/external/unseal",
+        "description": "* Decrypt a ciphertext with metadata using externally stored AES or RSA key that was generated and wrapped by SG-KMS.\n* The key was generated by calling /v1.0/external/key/generate or /v1.0/external/keypair/generate.\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sessionToken",
+                  "slotId",
+                  "wrappingKeyId",
+                  "wrappedKey",
+                  "ciphertext"
+                ],
+                "properties": {
+                  "sessionToken": {
+                    "type": "string",
+                    "description": "* Session Token\n",
+                    "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
+                  },
+                  "slotId": {
+                    "type": "integer",
+                    "description": "* Slot ID\n",
+                    "example": 1
+                  },
+                  "wrappingKeyId": {
+                    "type": "string",
+                    "description": "* Key ID to unwrap the wrapped key\n",
+                    "example": "keuangan1"
+                  },
+                  "wrappedKey": {
+                    "type": "string",
+                    "description": "* Wrapped AES key or RSA private key in Base64.\n",
+                    "example": "fge7U835Yhdh98Qejid9q3rILiorkAYry6ef4u34fsk9"
+                  },
+                  "ciphertext": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "The ciphertext is a JSON object Base64 URL safe encoded string containing encrypted metadata and ciphertext.\n",
+                    "example": [
+                      "e206IOKAnGoxWEFjUkltQ2g1ZGhORm1qV2s3aUlXOWpER01oaGxsS1F6eExhb3lOZz3igJ0sIGM6IOKAnGoxWEFjUkltQ2gzZWhkTW15YWs2bjBaWHBWSFowNVE4L3RRUHFEQVRETmhJQT094oCdfQo=",
+                      "eyJtIjoiRnBlcGVoNHM5VEIwUUdJRC9aMG9IMUZIcVYzSExVQ25NMlUyU2o1bGdNOD0iLCJjIjoibWsrNDhrRHQrTFU5amhDR0RaQmhTWkt4K1FQS0h2b1haSkF6cVM1b1FnZzA3WmdhOU56MThRPT0ifQ=="
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "plaintext": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "* The plaintext after unsealed.\n",
+                          "example": [
+                            "Plaintext1",
+                            "Plaintext2"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SessionVerificationError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/UnsealError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/external/encrypt": {
+      "post": {
+        "tags": [
+          "Cryptographic Service"
+        ],
+        "summary": "/v1.0/external/encrypt",
+        "description": "* Encrypt a plaintext with externally stored AES key that was generated and wrapped by SG-KMS by calling /v1.0/external/key/generate.\n* Encrypt a plaintext with externally stored RSA key that was generated and wrapped by SG-KMS by calling /v1.0/external/keypair/generate or generated externally.\n* Plaintext encrypted with externally generated RSA key can only be decrypted in the system where the private key exist.\n* For encryption using external AES key, wrappingKeyId and wrappedKey must be supplied and publicKeyOrCert must be empty.\n* For encryption using external RSA key, publicKeyOrCert must be supplied, wrappingKeyId and wrappedKey must be empty.\n* Use session key to encrypt large data using external RSA key.\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalEncryptRequestBody"
+              },
+              "examples": {
+                "AES-256-GCM": {
+                  "value": {
+                    "sessionToken": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ==",
+                    "slotId": 1,
+                    "wrappingKeyId": "keuangan1",
+                    "wrappedKey": "UAHIdhiahebUHAD2n8bjd1IHGGalheaubfa98l==",
+                    "plaintext": [
+                      {
+                        "text": "Plaintext1",
+                        "aad": "aad1"
+                      },
+                      {
+                        "text": "Plaintext2",
+                        "aad": "aad2"
+                      }
+                    ]
+                  }
+                },
+                "RSA with session key": {
+                  "value": {
+                    "sessionToken": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ==",
+                    "slotId": 1,
+                    "useSessionKey": true,
+                    "publicKeyOrCert": "-----BEGIN PUBLIC KEY----- MIIBigKCAYEAtTgJkzcjC4n1zLnnQ0VaXt4PCCjqHgya1w6OBvvg3RKunIp7CZSi gDD8M9Rf+LwdZ3FDZH8YKoepqPJD2FgiP7SICmRRRXIj/KNRgfk8vkqBAlAidUPk iPDsyPUrWHfzhoM+2W97QGG52jheJIVFNHxGlk/2TTSEh8BdZurcopGP7H2hOUp+ 7mVgpdYMdm29kFXC9qkKZ7qxR4qIAPW2587Woxc6mEwGSJED4LR1vpvJUtYJEON6 cW3ttcYTVebtphvjFSugWR3uJyO4r52JCJfENYSJYqSAyx2+1fu1TRXT0viZnKwf KIA2UZohG8kZELWj7LnSbBGWaZGgQnDzicBt8DnifDCRyeQFhWl/BelNChXhsVHh MpUJ+bSK7q2ByLuYk74TfSaVniJrVbulvhVEzaxTPD/Ve+uhifCjyhKP4Ta/V1Ag 8E6rxivoxMG+e17SQXkGgOwNw7EwvThZn/KVc3bIGOpwnJdrVPeTfl5gtcPQlbQA ev6pZbnmyRRjAgMBAAE= -----END PUBLIC KEY-----",
+                    "plaintext": [
+                      {
+                        "text": "Plaintext1"
+                      },
+                      {
+                        "text": "Plaintext2"
+                      }
+                    ]
+                  }
+                },
+                "RSA without session key": {
+                  "value": {
+                    "sessionToken": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ==",
+                    "slotId": 1,
+                    "publicKeyOrCert": "-----BEGIN PUBLIC KEY----- MIIBigKCAYEAtTgJkzcjC4n1zLnnQ0VaXt4PCCjqHgya1w6OBvvg3RKunIp7CZSi gDD8M9Rf+LwdZ3FDZH8YKoepqPJD2FgiP7SICmRRRXIj/KNRgfk8vkqBAlAidUPk iPDsyPUrWHfzhoM+2W97QGG52jheJIVFNHxGlk/2TTSEh8BdZurcopGP7H2hOUp+ 7mVgpdYMdm29kFXC9qkKZ7qxR4qIAPW2587Woxc6mEwGSJED4LR1vpvJUtYJEON6 cW3ttcYTVebtphvjFSugWR3uJyO4r52JCJfENYSJYqSAyx2+1fu1TRXT0viZnKwf KIA2UZohG8kZELWj7LnSbBGWaZGgQnDzicBt8DnifDCRyeQFhWl/BelNChXhsVHh MpUJ+bSK7q2ByLuYk74TfSaVniJrVbulvhVEzaxTPD/Ve+uhifCjyhKP4Ta/V1Ag 8E6rxivoxMG+e17SQXkGgOwNw7EwvThZn/KVc3bIGOpwnJdrVPeTfl5gtcPQlbQA ev6pZbnmyRRjAgMBAAE= -----END PUBLIC KEY-----",
+                    "plaintext": [
+                      {
+                        "text": "Plaintext1"
+                      },
+                      {
+                        "text": "Plaintext2"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalEncryptResponseBody"
+                },
+                "examples": {
+                  "AES-256-GCM": {
+                    "value": {
+                      "result": {
+                        "ciphertext": [
+                          {
+                            "text": "j1XAcRImCh3ehdMmyak6n0ZXpVHZ05Q8/tQPqDATDNhIA==",
+                            "mac": "8/tQPqDATDNhIA==",
+                            "iv": "lfnugylknwfyefbwfp"
+                          },
+                          {
+                            "text": "aHjd86AcRIdnawehdMmyafej77baVHZ05Q8/thdyIfTDN==",
+                            "mac": "ks9gb74/abdjbf==",
+                            "iv": "lfegwefirgureoepwk"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "RSA with session key": {
+                    "value": {
+                      "result": {
+                        "ciphertext": [
+                          {
+                            "text": "ewfN7ebgf4t340rind92ueT1mNDodu3YSm/bDof034fj==",
+                            "mac": "eFio5tjRhP4dui==",
+                            "iv": "assadajajrweoirjew",
+                            "wrappedSessionKey": "baef7HVn7bS9ejbd9==d8dnklwAhd8aGTuiaf7te93nf"
+                          },
+                          {
+                            "text": "vRjnf8743nwF92ew9DJ32nfiFn4ubg84hf85hg/hg34h==",
+                            "mac": "mdJHbip5dbao9P==",
+                            "iv": "saajfhfefeafjjfbkf",
+                            "wrappedSessionKey": "fge7U835Yhdh98Qejid9q3rILiorkAYry6ef4u34fsk9"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "RSA without session key": {
+                    "value": {
+                      "result": {
+                        "ciphertext": [
+                          {
+                            "text": "j1XAcRImCh3ehdMmyak6n0ZXpVHZre7847tqdoqjwr9u23HUjo3roi05Q8/tQPqDATDNhIA=="
+                          },
+                          {
+                            "text": "aHjd86AcRIdnawehdMmyafej77baVHZ05Q8/thdyIfTDN=="
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SessionVerificationError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/EncryptExternalError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/external/decrypt": {
+      "post": {
+        "tags": [
+          "Cryptographic Service"
+        ],
+        "summary": "/v1.0/external/decrypt",
+        "description": "* Decrypt a ciphertext with externally stored key that was generated and wrapped by SG-KMS.\n* This key was generated by calling /v1.0/external/key/generate or /v1.0/external/keypair/generate.\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalDecryptRequestBody"
+              },
+              "examples": {
+                "AES-256-GCM": {
+                  "value": {
+                    "sessionToken": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ==",
+                    "slotId": 1,
+                    "wrappingKeyId": "keuangan1",
+                    "wrappedKey": "UAHIdhiahebUHAD2n8bjd1IHGGalheaubfa98l==",
+                    "ciphertext": [
+                      {
+                        "text": "j1XAcRImCh3ehdMmyak6n0ZXpVHZ05Q8/tQPqDATDNhIA==",
+                        "aad": "aad1",
+                        "mac": "8/tQPqDATDNhIA==",
+                        "iv": "lfnugylknwfyefbwfp"
+                      },
+                      {
+                        "text": "aHjd86AcRIdnawehdMmyafej77baVHZ05Q8/thdyIfTDN==",
+                        "aad": "aad2",
+                        "mac": "ks9gb74/abdjbf==",
+                        "iv": "lfegwefirgureoepwk"
+                      }
+                    ]
+                  }
+                },
+                "RSA with session key": {
+                  "value": {
+                    "sessionToken": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ==",
+                    "slotId": 1,
+                    "wrappingKeyId": "keuangan1",
+                    "wrappedKey": "sgjner9YpiPlbgh758gfqdIQ2iebgmYdw4f293jYT2ir9",
+                    "ciphertext": [
+                      {
+                        "text": "ewfN7ebgf4t340rind92ueT1mNDodu3YSm/bDof034fj==",
+                        "mac": "eFio5tjRhP4dui==",
+                        "iv": "assadajajrweoirjew",
+                        "wrappedSessionKey": "baef7HVn7bS9ejbd9==d8dnklwAhd8aGTuiaf7te93nf"
+                      },
+                      {
+                        "text": "vRjnf8743nwF92ew9DJ32nfiFn4ubg84hf85hg/hg34h==",
+                        "mac": "mdJHbip5dbao9P==",
+                        "iv": "saajfhfefeafjjfbkf",
+                        "wrappedSessionKey": "fge7U835Yhdh98Qejid9q3rILiorkAYry6ef4u34fsk9"
+                      }
+                    ]
+                  }
+                },
+                "RSA without session key": {
+                  "value": {
+                    "sessionToken": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ==",
+                    "slotId": 1,
+                    "wrappingKeyId": "keuangan1",
+                    "wrappedKey": "sgjner9YpiPlbgh758gfqdIQ2iebgmYdw4f293jYT2ir9",
+                    "ciphertext": [
+                      {
+                        "text": "j1XAcRImCh3ehdMmyak6n0ZXpVHZre7847tqdoqjwr9u23HUjo3roi05Q8/tQPqDATDNhIA=="
+                      },
+                      {
+                        "text": "aHjd86AcRIdnawehdMmyafej77baVHZ05Q8/thdyIfTDN=="
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "plaintext": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "* The plaintext after decrypted.\n",
+                          "example": [
+                            "Plaintext1",
+                            "Plaintext2"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/DecryptExternalError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/external/tokenize": {
+      "post": {
+        "tags": [
+          "Cryptographic Service"
+        ],
+        "summary": "/v1.0/external/tokenize",
+        "description": "* Tokenize a plaintext with externally stored AES key by preserving its format and length.\n* This key was generated and wrapped with SG-KMS by calling /v1.0/external/key/generate.\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sessionToken",
+                  "slotId",
+                  "wrappingKeyId",
+                  "wrappedKey",
+                  "plaintext"
+                ],
+                "properties": {
+                  "sessionToken": {
+                    "type": "string",
+                    "description": "* Session Token\n",
+                    "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
+                  },
+                  "slotId": {
+                    "type": "integer",
+                    "description": "* Slot ID\n",
+                    "example": 1
+                  },
+                  "wrappingKeyId": {
+                    "type": "string",
+                    "description": "* Key ID to unwrap the wrapped key\n",
+                    "example": "keuangan1"
+                  },
+                  "wrappedKey": {
+                    "type": "string",
+                    "description": "* Wrapped AES key in Base64.\n",
+                    "example": "UAHIUHAD98l=="
+                  },
+                  "plaintext": {
+                    "type": "array",
+                    "description": "* The plaintext as an array of text being tokenized.\n* Maximum length is 700 KB.\n",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "text",
+                        "formatChar"
+                      ],
+                      "properties": {
+                        "text": {
+                          "type": "string",
+                          "description": "* The plaintext value.\n",
+                          "example": "4281 5790 7311 2819"
+                        },
+                        "formatChar": {
+                          "type": "string",
+                          "description": "The formatChar of data being tokenized.\n* $ for tokenized information, must be specified at least one.\n* % for preserved information.\n\nExample:\n  If the data is primary account number \"4281 5790 7311 2819\" and the first/last parts are\n  tokenized then the formatChar will be \"$$$$%%%%%%%%%%%$$$$\".\n\n  The length of formatChar must be greater or equals to the plaintext.\n",
+                          "example": "$$$$%%%%%%%%%%%$$$$"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "ciphertext": {
+                          "type": "array",
+                          "description": "* The tokenized text cosists of text and metadata.\n",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "token": {
+                                "type": "string",
+                                "description": "* Tokenized text.\n",
+                                "example": "A(Z= 5790 7311 QA-I"
+                              },
+                              "metadata": {
+                                "type": "string",
+                                "description": "* Base64 URL safe encoded ciphertext metadata.\n",
+                                "example": "8/tQPqDATDNhIA=="
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SessionVerificationError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/TokenizeExternalError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/external/detokenize": {
+      "post": {
+        "tags": [
+          "Cryptographic Service"
+        ],
+        "summary": "/v1.0/external/detokenize",
+        "description": "* Detokenize a ciphertext with externally stored AES key by preserving its format and length.\n* This key was generated and wrapped with SG-KMS by calling /v1.0/external/key/generate.\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sessionToken",
+                  "slotId",
+                  "wrappingKeyId",
+                  "wrappedKey",
+                  "ciphertext"
+                ],
+                "properties": {
+                  "sessionToken": {
+                    "type": "string",
+                    "description": "* Session Token\n",
+                    "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
+                  },
+                  "slotId": {
+                    "type": "integer",
+                    "description": "* Slot ID\n",
+                    "example": 1
+                  },
+                  "wrappingKeyId": {
+                    "type": "string",
+                    "description": "* Key ID to unwrap the wrapped key\n",
+                    "example": "keuangan1"
+                  },
+                  "wrappedKey": {
+                    "type": "string",
+                    "description": "* Wrapped AES key in Base64.\n",
+                    "example": "UAHIUHAD98l=="
+                  },
+                  "ciphertext": {
+                    "type": "array",
+                    "description": "* The ciphertext as an array of text being detokenized.\n",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "token",
+                        "metadata"
+                      ],
+                      "properties": {
+                        "token": {
+                          "type": "string",
+                          "description": "* The token value.\n",
+                          "example": "A(Z= 5790 7311 QA-I"
+                        },
+                        "metadata": {
+                          "type": "string",
+                          "description": "* Base64 URL safe encoded ciphertext metadata.\n",
+                          "example": "8/tQPqDATDNhIA=="
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "plaintext": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "* The original plaintext.\n",
+                          "example": [
+                            "4281 5790 7311 2819"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SessionVerificationError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/DetokenizeExternalError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/external/sign": {
+      "post": {
+        "tags": [
+          "Cryptographic Service"
+        ],
+        "summary": "/v1.0/external/sign",
+        "description": "* Sign a data with with externally stored asymmetric key that was generated and wrapped by SG-KMS and return a digital signature.\n* This key was generated by calling /v1.0/external/keypair/generate.\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sessionToken",
+                  "slotId",
+                  "wrappingKeyId",
+                  "wrappedKey",
+                  "data"
+                ],
+                "properties": {
+                  "sessionToken": {
+                    "type": "string",
+                    "description": "* Session Token\n",
+                    "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
+                  },
+                  "slotId": {
+                    "type": "integer",
+                    "description": "* Slot ID\n",
+                    "example": 1
+                  },
+                  "wrappingKeyId": {
+                    "type": "string",
+                    "description": "* Key ID to unwrap the externally stored private key\n",
+                    "example": "keuangan1"
+                  },
+                  "wrappedKey": {
+                    "type": "string",
+                    "description": "* Externally stored private key wrapped by SG-KMS\n",
+                    "example": "lkasjdoijsadlaskdlaskd=="
+                  },
+                  "data": {
+                    "type": "string",
+                    "description": "* The data to be signed.\n* Maximum length is 700 KB.\n",
+                    "example": "Data to be signed"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "signature": {
+                          "type": "string",
+                          "description": "* The digital signature in Base64.\n",
+                          "example": "LKAJDIAOJS=="
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SessionVerificationError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SignExternalError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1.0/external/verify": {
+      "post": {
+        "tags": [
+          "Cryptographic Service"
+        ],
+        "summary": "/v1.0/external/verify",
+        "description": "* Verify a signature with externally stored asymmetric key that was generated and wrapped by SG-KMS.\n* The key was generated by calling /v1.0/external/keypair/generate or gemerated externally.\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "sessionToken",
+                  "slotId",
+                  "publicKeyOrCert",
+                  "data",
+                  "signature"
+                ],
+                "properties": {
+                  "sessionToken": {
+                    "type": "string",
+                    "description": "* Session Token\n",
+                    "example": "lg16YIn5TVCEYZtgFaIm6MxV+3kMneSjm6zRL96xUBbrGYyTlxGhI2w41YCPqVb4PAV1WCVtUezn1KNwh9yKHzOxrYAOO+24zaV27dKZSLcwMC83Y4UeSjKrSIv9xUaKA++krx1//o4QEW/wHTq7ve/HnZA47zmCfxY7zxbFEIhM5SADqlh/rxUdkQ=="
+                  },
+                  "slotId": {
+                    "type": "integer",
+                    "description": "* Slot ID\n",
+                    "example": 1
+                  },
+                  "publicKeyOrCert": {
+                    "type": "string",
+                    "description": "* Externally stored public key or certificate to verify the digital signature.\n",
+                    "example": "-----BEGIN PUBLIC KEY----- MIIBigKCAYEAtTgJkzcjC4n1zLnnQ0VaXt4PCCjqHgya1w6OBvvg3RKunIp7CZSi gDD8M9Rf+LwdZ3FDZH8YKoepqPJD2FgiP7SICmRRRXIj/KNRgfk8vkqBAlAidUPk iPDsyPUrWHfzhoM+2W97QGG52jheJIVFNHxGlk/2TTSEh8BdZurcopGP7H2hOUp+ 7mVgpdYMdm29kFXC9qkKZ7qxR4qIAPW2587Woxc6mEwGSJED4LR1vpvJUtYJEON6 cW3ttcYTVebtphvjFSugWR3uJyO4r52JCJfENYSJYqSAyx2+1fu1TRXT0viZnKwf KIA2UZohG8kZELWj7LnSbBGWaZGgQnDzicBt8DnifDCRyeQFhWl/BelNChXhsVHh MpUJ+bSK7q2ByLuYk74TfSaVniJrVbulvhVEzaxTPD/Ve+uhifCjyhKP4Ta/V1Ag 8E6rxivoxMG+e17SQXkGgOwNw7EwvThZn/KVc3bIGOpwnJdrVPeTfl5gtcPQlbQA ev6pZbnmyRRjAgMBAAE= -----END PUBLIC KEY-----"
+                  },
+                  "data": {
+                    "type": "string",
+                    "description": "* The original data.\n",
+                    "example": "Data to be signed"
+                  },
+                  "signature": {
+                    "type": "string",
+                    "description": "* The digital signature in Base64.\n",
+                    "example": "lkasjdlkasjd=="
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "verified": {
+                          "type": "boolean",
+                          "description": "Signature Verification Result.\n",
+                          "example": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Fail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/GeneralError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SessionVerificationError"
+                        },
+                        {
+                          "$ref": "#/components/schemas/VerifyExternalError"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
             }
           }
         }
