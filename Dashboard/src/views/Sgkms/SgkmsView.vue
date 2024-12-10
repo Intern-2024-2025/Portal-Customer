@@ -403,7 +403,7 @@ const sendRequest = async () => {
   formData.length = parseInt(formData.length, 10)
   formData.validityPeriod = parseInt(formData.validityPeriod, 10)
   formData.keyVersion = parseInt(formData.keyVersion, 10)
-  return console.log(formData, endpoint.url)
+  // return console.log(formData, endpoint.url)
 
   try {
     const response = await axiosInstance.post(`${endpoint.url}?token=${localStorage.getItem("token")}`, formData)
@@ -446,6 +446,16 @@ const sendRequest = async () => {
           <option disabled value="">Select Endpoint ...</option>
           <option v-for="endpoint in endpoints" :key="endpoint" :value="endpoint">{{ endpoint }}</option>
         </select>
+        <div v-if="selectedEndpoint" class="mt-4">
+          <p class="text-xs font-bold text-gray-700 dark:text-gray-300 mb-2">Endpoint</p>
+          <div :class="{
+            'pointer-events-none opacity-50': isDisabled,
+            'pointer-events-auto opacity-100': !isDisabled
+          }"
+          class="col-span-6 bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <h2>{{ endpointData[selectedEndpoint].url }}</h2>
+          </div>
+        </div>
       </div>
 
       <div class="flex flex-col mt-6">
