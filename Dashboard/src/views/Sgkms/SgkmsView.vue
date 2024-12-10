@@ -11,13 +11,22 @@ const selectedVersion = ref('V1.0');
 const dropdownVisible = ref(false);
 const versions = ref(['V1.0']);
 const selectedEndpoint = ref('');
-const endpoints = ref(['login','Refresh Session', 'rng', 'mac generate', 'seal', 'unseal','encrypt symmetric encryption','encrypt Asymmetric Encryption','encrypt Asymmetric Encryption with Session Key','decrypt Symmetric Decryption','decrypt Asymmetric Decryption','decrypt Asymmetric Decryption with Session Key','tokenize','detokenize','sign','verify','cert sign','cert verify','key info','secret get','RSA','ECDSA','external key generate','external mac generate','external tokenize','external detokenize','external sign','external verify']); 
+
+const endpoints = ref(['Agent Login','Agent Refresh Session', 'RNG', 'Mac Generate', 'Mac Verify CMAC HMAC-SHA256','Mac Verify GMAC-256','External Mac Verify CMAC HMAC-SHA256','External Mac Verify GMAC-256',
+'External Seal Symmetric Key','External Seal Asymmetric Key','External Unseal Symmetric Key','External Unseal Asymmetric Key','External Encrypt Symmetric Encryption',
+'External Encrypt Asymmetric Encryption','External Asymmetric Encryption With Session Key','External Encrypt Symmetric Encryption','External Encrypt Asymmetric Encryption',
+'External Asymmetric Encryption With Session Key','External Decrypt Symmetric Decryption','External Decrypt Asymmetric Decryption','External Decrypt Asymmetric Decryption With Session Key', 
+'Seal', 'Unseal','Tokenize','Detokenize','Sign','Verify','Cert Sign','Cert Verify','Key Info','Secret Get','External Key Generate', 'External Seal Symmetric Key',
+'External Mac Generate','External Tokenize','External Detokenize','External Sign','External Verify']); 
+
+//const endpoints = ref(['login','Refresh Session', 'rng', 'mac generate', 'seal', 'unseal','encrypt symmetric encryption','encrypt Asymmetric Encryption','encrypt Asymmetric Encryption with Session Key','decrypt Symmetric Decryption','decrypt Asymmetric Decryption','decrypt Asymmetric Decryption with Session Key','tokenize','detokenize','sign','verify','cert sign','cert verify','key info','secret get','RSA','ECDSA','external key generate','external mac generate','external tokenize','external detokenize','external sign','external verify']); 
+
 
 // Variabel reaktif untuk response message dan data
 const responseData = ref<any>(null);  // Menyimpan respons JSON dari API
 
 const toggleDropdown = () => {
-  dropdownVisible.value = !dropdownVisible.value; 
+  dropdownVisible.value = !dropdownVisible.value;
 };
 
 const selectVersion = (version: string) => {
@@ -26,7 +35,7 @@ const selectVersion = (version: string) => {
 };
 
 const endpointData = {
-  'login': {
+  'Agent Login': {
     fields: [
       { name: 'slotId', label: 'Slot Id', placeholder: 'the ID of the slot to be used for login' },
       { name: 'password', label: 'Password', placeholder: 'the password or PIN for the agent in this slot' },
@@ -34,7 +43,7 @@ const endpointData = {
     data: { slotId: null, password: '' },
     url: `/${selectedVersion.value}/agent/login`, 
   },
-  'Refresh Session': {
+  'Agent Refresh Session': {
     fields: [
       { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot for which to refresh the session' },
       { name: 'sessionToken', label: 'Session Token', placeholder: ' The current session token of the agent' },
@@ -42,7 +51,7 @@ const endpointData = {
     data: { slotId: '', sessionToken: '' },
     url: `/${selectedVersion.value}/agent/refreshSession`,
   },
-  'rng': {
+  'RNG': {
     fields: [
       { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot requesting the random number' },
       { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
@@ -51,7 +60,7 @@ const endpointData = {
     data: { slotId: '', sessionToken: '', length: '' },
     url: `/${selectedVersion.value}/rng`,
   },
-  'mac generate': {
+  'Mac Generate': {
     fields: [
       { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
       { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
@@ -62,6 +71,201 @@ const endpointData = {
     data: { slotId: '', sessionToken: '', keyId: '', hashAlgorithm: '', macData: '' },
     url: `/${selectedVersion.value}/mac/generate`,
   },
+  'Mac Verify CMAC HMAC-SHA256': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' }, 
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
+      { name: 'keyId', label: 'Key Id', placeholder: 'The ID of the key used for MAC verification' },
+      { name: 'hashAlgo', label: 'Hash Algorithm', placeholder: 'The hashing algorithm used for the MAC. Possible values: "CMAC", "HMAC-SHA256' },
+      { name: 'data', label: 'MAC Data', placeholder: 'The data for which the MAC is being verified' },
+      { name: 'mac', label: 'Base64 MAC', placeholder: 'The Base64 URL-safe encoded to verify' },
+    ],
+    data: { sessionToken: '', slotId: '', wrappingKeyId: '', hashAlgo: '', data:'', mac:'' },
+    url: `/${selectedVersion.value}mac/verify`,
+  },
+  'Mac Verify GMAC-256': { 
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
+      { name: 'KeyId', label: 'Key Id', placeholder: 'The ID of the key used for MAC verification' },
+      { name: 'hashAlgo', label: 'GMAC-256', placeholder: 'GMAC-256' },
+      { name: 'data', label: 'Original Data', placeholder: 'The data for which the MAC is being verified' },
+      { name: 'mac', label: 'MAC', placeholder: 'The Base64 URL-safe encoded to verify' },
+      { name: 'iv', label: 'Initialization Vector', placeholder: 'The Initialization vector' },
+    ],
+    data: { sessionToken: '', slotId: '', KeyId: '', hashAlgo: '', data:'', mac:'', iv: ''},
+    url: `/${selectedVersion.value}/mac/verify`,
+  },
+  'External Keypair Generate RSA with Cert': { 
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
+      { name: 'algo', label: 'RSA', placeholder: 'The ID of the key used for MAC verification' },
+      { name: 'algoLength', label: 'Key Length', placeholder: 'The length of the key in bits(e., 2048, 3072, 4096)' },
+      { name: 'wrappingKeyID', label: 'Wrapping Key ID', placeholder: 'The ID of the wrapping key used to secure the generated keys' },
+      { name: 'withCert', label: 'With Cert', placeholder: 'Boolean flag: true if a certificate should be generated' },
+    ],
+    data: { sessionToken: '', slotId: '', algo: '', algoLength: '', wrappingKeyID:'', withCert:''},
+    url: `/${selectedVersion.value}/external/keypair/generate`,
+  },
+  'External Keypair Generate ECDSA with Cert': { 
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
+      { name: 'algo', label: 'Algo', placeholder: 'RSA' },
+      { name: 'wrappingKeyID', label: 'Wrapping Key ID', placeholder: 'The ID of the wrapping key used to secure the generated keys' },
+      { name: 'withCert', label: 'With Cert', placeholder: 'Boolean flag: true if a certificate should be generated' },
+    ],
+    data: { sessionToken: '', slotId: '', algo: '', algoLength: '', wrappingKeyID:'', withCert:''},
+    url: `/${selectedVersion.value}/external/keypair/generate`,
+  },
+  'External Mac Verify CMAC HMAC-SHA256': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' }, 
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
+      { name: 'wrappingKeyId', label: 'Wrapping Key Id', placeholder: 'The ID of the wrapping key used to secure the generated keys' },
+      { name: 'wrappedKey', label: 'Wrapped Key', placeholder: 'The key used for MAC Verification' },
+      { name: 'hashAlgo', label: 'Hash Algorithm', placeholder: 'The hashing algorithm used for the MAC. Possible values: "CMAC", "HMAC-SHA256' },
+      { name: 'data', label: 'Original Data', placeholder: 'The plaintext data for which the MAC will be verified' },
+      { name: 'mac', label: 'MAC', placeholder: 'The MAC to verify' },
+    ],
+    data: { sessionToken: '', slotId: '', wrappingKeyId: '', wrappedKey: '', hashAlgo: '', data:'', mac:'' },
+    url: `/${selectedVersion.value}external/mac/verify`,
+  },
+  'External Mac Verify GMAC-256': { 
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
+      { name: 'wrappingKeyId', label: 'Wrapping Key Id', placeholder: 'The ID of the wrapping key used to secure the generated the keys' },
+      { name: 'wrappedKey', label: 'Wrapped Key', placeholder: 'The key used for MAC Verification' },
+      { name: 'hashAlgo', label: 'GMAC-256', placeholder: 'GMAC-256' },
+      { name: 'data', label: 'Original Data', placeholder: 'The plaintext data for which the MAC is being verified' },
+      { name: 'mac', label: 'MAC', placeholder: 'The MAC to verify' },
+      { name: 'iv', label: 'Initialization Vector (iv)', placeholder: 'Initialization vector(IV)' },
+    ],
+    data: { sessionToken: '', slotId: '', wrappingKeyId: '', wrappedKey: '', hashAlgo: '', data:'', mac:'', iv: ''},
+    url: `/${selectedVersion.value}external/mac/verify`,
+  },
+  'External Seal Symmetric Key': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the sealing request' },
+      { name: 'wrappingKeyId', label: 'Wrapping Key Id', placeholder: 'The ID of the wrapping key used' },
+      { name: 'wrappedKey', label: 'Wrapped Symmetric Key', placeholder: 'The symmetric key used for sealing' },
+      { name: 'texttoseal1', label: 'Plaintext Text to Seal 1', placeholder: 'Array of plaintext data to be sealed' },
+      { name: 'texttoseal2', label: 'Plaintext Text to Seal 2', placeholder: 'Array of plaintext data to be sealed' },
+    ],
+    data: { sessionToken: '', slotId: '', wrappingKeyId: '', wrappedKey: '', texttoseal1: '', texttoseal2: '' },
+    url: `/${selectedVersion.value}/external/seal`,
+  },
+  'External Seal Asymmetric Key': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the sealing request' },
+      { name: 'publicKeyOrCert', label: 'Public Key', placeholder: 'The public key or certificate used for sealing' },
+      { name: 'texttoseal1', label: 'Plaintext Text to Seal 1', placeholder: 'Array of plaintext data to be sealed' },
+      { name: 'texttoseal2', label: 'Plaintext Text to Seal 2', placeholder: 'Array of plaintext data to be sealed' },
+    ],
+    data: { sessionToken: '', slotId: '', publicKeyOrCert: '', texttoseal1: '', texttoseal2: '' },
+    url: `/${selectedVersion.value}/external/seal`,
+  },
+  'External Unseal Symmetric Key': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the unsealing request' },
+      { name: 'wrappingKeyId', label: 'Wrapping Key Id', placeholder: 'The ID of the wrapping key used' },
+      { name: 'wrappedKey', label: 'Wrapped Symmetric Key', placeholder: 'The symmetric key used for unsealing' },
+      { name: 'sealeddata1', label: 'Ciphertext Sealed Data 1', placeholder: 'The sealed data to be unsealed' },
+      { name: 'sealeddata2', label: 'Ciphertext Sealed Data 2', placeholder: 'The sealed data to be unsealed' },
+    ],
+    data: { sessionToken: '', slotId: '', wrappingKeyId: '', wrappedKey: '', sealeddata1: '',sealeddata2: '' },
+    url: `/${selectedVersion.value}/external/unseal`,
+  },
+  'External Unseal Asymmetric Key': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the unsealing request' },
+      { name: 'wrappingKeyId', label: 'Wrapping Key Id', placeholder: 'The ID of the wrapping key used' },
+      { name: 'wrappedKey', label: 'Wrapped Symmetric Key', placeholder: 'The private key used for unsealing' },
+      { name: 'sealeddata1', label: 'Ciphertext Sealed Data 1', placeholder: 'The sealed data to be unsealed' },
+      { name: 'sealeddata2', label: 'Ciphertext Sealed Data 2', placeholder: 'The sealed data to be unsealed' },
+    ],
+    data: { sessionToken: '', slotId: '', wrappingKeyId: '', sealeddata1: '',sealeddata2: '' },
+    url: `/${selectedVersion.value}/external/unseal`,
+  },
+  'External Encrypt Symmetric Encryption': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
+      { name: 'wrappingKeyId', label: 'Wrapping Key Id', placeholder: 'The ID of the wrapping key used for encryption' },
+      { name: 'wrappedKey', label: 'Wrapped Key', placeholder: 'The symmetric key(e.g.,AES)used for encryption' },
+      { name: 'text', label: 'Plaintext Text', placeholder: 'The plaintext data to be encrypted' },
+      { name: 'aad', label: 'Plaintext aad', placeholder: 'Optional: Additional Authentication Data(AAD) for AES-GCM' },
+    ],
+    data: { sessionToken: '', slotId: '', wrappingKeyId: '', wrappedKey: '', text: '', aad: '' },
+    url: `/${selectedVersion.value}/external/encrypt`,
+  },
+  'External Encrypt Asymmetric Encryption': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
+      { name: 'publicKeyOrCert', label: 'Public Key', placeholder: 'The public key or certificate used for encryption' },
+      { name: 'text', label: 'Plaintext text', placeholder: 'The plaintext data to be encrypted' },
+    ],
+    data: { sessionToken: '', slotId: '', publicKeyOrCert: '', text: '' },
+    url: `/${selectedVersion.value}/external/encrypt`,
+  },
+  'External Asymmetric Encryption With Session Key': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
+      { name: 'publicKeyOrCert', label: 'Public Key', placeholder: 'The public key or certificate used for encryption' },
+      { name: 'useSessionKey', label: 'True or False', placeholder: 'Optional: Use session key for RSA encryption' },
+      { name: 'text', label: 'Plaintext text', placeholder: 'The plaintext data to be encrypted' },
+    ],
+    data: {sessionToken: '', slotId: '', publicKeyOrCert: '', useSessionKey: '', text: '' },
+    url: `/${selectedVersion.value}/external/encrypt`,
+  },
+  'External Decrypt Symmetric Decryption': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
+      { name: 'wrappingKeyId', label: 'Wrapping Key Id', placeholder: 'The ID of the wrapping key used for decryption' },
+      { name: 'wrappedKey', label: 'Wrapped Key', placeholder: 'The symmetric key used for decryption' },
+      { name: 'text', label: 'Ciphertext text', placeholder: 'The encrypted data(Base64-encoded)' },
+      { name: 'aad', label: 'Ciphertext aad', placeholder: 'Additional Authentication Data used during encryption(optional)' },
+      { name: 'mac', label: 'Ciphertext mac', placeholder: 'Message Authentication Code(MAC) for integrity verification' },
+      { name: 'iv', label: 'Ciphertext iv', placeholder: 'Initialization Vectot(IV) used during encryption' },
+    ],
+    data: { sessionToken: '', slotId: '', wrappingKeyId: '', text: '', aad: '', mac: '', iv: ''},
+    url: `/${selectedVersion.value}/external/decrypt`,
+  },
+  'External Decrypt Asymmetric Decryption': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
+      { name: 'wrappingKeyId', label: 'Wrapping Key Id', placeholder: 'The ID of the wrapping key used for decryption' },
+      { name: 'wrappedKey', label: 'Wrapped Key', placeholder: 'The symmetric key used for decryption' },
+      { name: 'text', label: 'Ciphertext text', placeholder: 'The encrypted data(Base64-encoded)' },
+    ],
+    data: { sessionToken: '', slotId: '', wrappingKeyId: '', text: '' },
+    url: `/${selectedVersion.value}/external/decrypt`,
+  },
+  'External Decrypt Asymmetric Decryption With Session Key': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
+      { name: 'wrappingKeyId', label: 'Wrapping Key Id', placeholder: 'The ID of the wrapping key used for decryption' },
+      { name: 'wrappedKey', label: 'Wrapped Key', placeholder: 'The symmetric key used for decryption' },
+      { name: 'text', label: 'Ciphertext text', placeholder: 'The encrypted data(Base64-encoded)' },
+      { name: 'mac', label: 'Ciphertext mac', placeholder: 'Message Authentication Code(MAC) for integrity verification' },
+      { name: 'iv', label: 'Ciphertext iv', placeholder: 'Initialization Vectot(IV) used during encryption' },
+      { name: 'wrappedSessionKey', label: 'Ciphertext Wrapped Session Key', placeholder: 'The wrapped session key obtained during the encryption process' },
+    ],
+    data: { sessionToken: '', slotId: '', wrappingKeyId: '', text: '', mac: '', iv: '', wrappedSessionKey: ''},
+    url: `/${selectedVersion.value}/external/decrypt`,
+  },
+  //'Seal': {
   // '/mac/verify/CMAC/HMAC-SHA256': {
   //   fields: [
   //     { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
@@ -139,7 +343,7 @@ const endpointData = {
     data: { slotId: '', sessionToken: '', keyId: '', plaintext: [] },
     url: `/${selectedVersion.value}/seal`,
   },
-  'unseal': {
+  'Unseal': {
     fields: [
       { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
       { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot used for decryption' },
@@ -148,6 +352,28 @@ const endpointData = {
     data: { sessionToken: '', slotId: '', ciphertext: [] },
     url: `/${selectedVersion.value}/unseal`,
   },
+  'Tokenize': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the tokenization request' },
+      { name: 'keyId', label: 'Key Id', placeholder: 'The ID of the key used for tokenization' },
+      { name: 'plaintext', label: 'Plaintext', placeholder: 'The plaintext data to be tokenized' },
+      { name: 'formatChar', label: 'Format Char', placeholder: 'Format-preserving characters to maintain original text structure' },
+    ],
+    data: { sessionToken: '', slotId: '', keyId: '', plaintext: '', formatChar: '' },
+    url: `/${selectedVersion.value}/tokenize`,
+  },
+  'Detokenize': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the detokenization request' },
+      { name: 'keyId', label: 'Key Id', placeholder: 'The ID of the key used for detokenization' },
+      { name: 'ciphertext', label: 'Ciphertext', placeholder: '{{token}}, {{metadata}} // Metadata associated with the tokenization process' },
+    ],
+    data: { sessionToken: '', slotId: '', keyId: '', ciphertext: [] },
+    url: `/${selectedVersion.value}/detokenize`,
+  },
+  //'Sign': {
   'encrypt symmetric encryption': {
     fields: [
       { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
@@ -262,7 +488,7 @@ const endpointData = {
     data: { sessionToken: '', slotId: '', keyId: '', data: '' },
     url: `/${selectedVersion.value}/sign`,
   },
-  'verify': {
+  'Verify': {
     fields: [
       { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
       { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
@@ -273,7 +499,7 @@ const endpointData = {
     data: { sessionToken: '', slotId: '', keyId: '', data: '', signature: '' },
     url: `/${selectedVersion.value}/verify`,
   },
-  'cert sign': {
+  'Cert Sign': {
     fields: [
       { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
       { name: 'slotId', label: 'Slot ID', placeholder: 'The ID of the slot associated with the request' },
@@ -292,9 +518,9 @@ const endpointData = {
       { name: 'certificate', label: 'Certificate', placeholder: 'The digitally signed certificate in PEM format' },
     ],
     data: { sessionToken: '', slotId: '', keyId: '', certificate: '' },
-    url: `/${selectedVersion.value}/cert/verify`,
+    url: `/${selectedVersion.value}Cert /verify`,
   },
-  'key info': {
+  'Key Info': {
     fields: [
       { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
       { name: 'slotId', label: 'Slot ID', placeholder: 'The ID of the slot associated with the key info request' },
@@ -304,15 +530,35 @@ const endpointData = {
     data: { sessionToken: '', slotId: '', keyId: '', keyVersion: '' },
     url: `/${selectedVersion.value}/key/info`,
   },
-  'secret get': {
+  'Secret Get': {
     fields: [
-      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
-      { name: 'slotId', label: 'Slot ID', placeholder: 'The ID of the slot from which to retrieve the secret' },
-      { name: 'secretId', label: 'Secret ID', placeholder: 'The ID of the secret to be retrieved' },
+      { name: 'sessionToken', label: 'Session Token', placeholder: '{{session_token}}' },
+      { name: 'slotId', label: 'Slot Id', placeholder: '{{slot_id}}' },
+      { name: 'secretId', label: 'Secret Id', placeholder: '{{secret_id}}' },
     ],
     data: { sessionToken: '', slotId: '', secretId: '' },
     url: `/${selectedVersion.value}/secret/get`,
   },
+  'External Key Generate': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: '{{session_token}}' },
+      { name: 'slotId', label: 'Slot Id', placeholder: '{{slot_id}}' },
+      { name: 'algo', label: 'Algorithm', placeholder: 'AES' },
+      { name: 'algoLength', label: 'Algorithm Length', placeholder: '256' },
+      { name: 'wrappingKeyId', label: 'Wrapping Key Id', placeholder: '{{wrapping_key_id}}' },
+    ],
+    data: { sessionToken: '', slotId: '', algo: 'AES', algoLength: 256, wrappingKeyId: '' },
+    url: `/${selectedVersion.value}External Key Generate`,
+  },
+  //'External Mac Generate': {
+  //  fields: [
+     // { name: 'sessionToken', label: 'Session Token', placeholder: '{{session_token}}' },
+     // { name: 'slotId', label: 'Slot Id', placeholder: '{{slot_id}}' },
+     // { name: 'wrappingKeyId', label: 'Wrapping Key Id', placeholder: '{{wrapping_key_id}}' },
+     // { name: 'wrappedKey', label: 'Wrapped Key', placeholder: '{{wrapped_key}}' },
+      //{ name: 'hashAlgo', label: 'Hash Algorithm', placeholder: '{{hash_algorithm}}' },
+     // { name: 'data', label: 'Data', placeholder: '{{data_to_hash}}' },
+
   'RSA': {
     fields: [
       { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
@@ -357,46 +603,46 @@ const endpointData = {
     data: { sessionToken: '', slotId: '', wrappingKeyId: '', wrappedKey: '', hashAlgo: '', data: '' },
     url: `/${selectedVersion.value}/external/mac/generate`,
   },
-  'external tokenize': {
+  'External Tokenize': {
     fields: [
-      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
-      { name: 'slotId', label: 'Slot ID', placeholder: 'The ID of the slot associated with the tokenization request' },
-      { name: 'wrappingKeyId', label: 'Wrapping Key ID', placeholder: 'The ID of the wrapping key used' },
-      { name: 'wrappedKey', label: 'Wrapped Key', placeholder: 'The key used for tokenization' },
-      { name: 'plaintext', label: 'Plaintext Data', placeholder: '[ { "text": "{{plaintext_1}}", "formatChar": "{{format_char}}" }, { "text": "{{plaintext_2}}", "formatChar": "{{format_char}}" } ] // The plaintext data to be tokenized' },
+      { name: 'sessionToken', label: 'Session Token', placeholder: '{{session_token}}' },
+      { name: 'slotId', label: 'Slot Id', placeholder: '{{slot_id}}' },
+      { name: 'wrappingKeyId', label: 'Wrapping Key Id', placeholder: '{{wrapping_key_id}}' },
+      { name: 'wrappedKey', label: 'Wrapped Key', placeholder: '{{wrapped_tokenization_key}}' },
+      { name: 'plaintext', label: 'Plaintext', placeholder: '[{ text: "{{plaintext_1}}", formatChar: "{{format_char}}" }, { text: "{{plaintext_2}}", formatChar: "{{format_char}}" }]' },
     ],
     data: { sessionToken: '', slotId: '', wrappingKeyId: '', wrappedKey: '', plaintext: [] },
     url: `/${selectedVersion.value}/external/tokenize`,
   },
-  'external detokenize': {
+  'External Detokenize': {
     fields: [
-      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
-      { name: 'slotId', label: 'Slot ID', placeholder: 'The ID of the slot associated with the detokenization request' },
-      { name: 'wrappingKeyId', label: 'Wrapping Key ID', placeholder: 'The ID of the wrapping key used' },
-      { name: 'wrappedKey', label: 'Wrapped Key', placeholder: 'The key used for detokenization' },
-      { name: 'ciphertext', label: 'Ciphertext', placeholder: '[ { "token": "{{tokenized_data_1}}", "metadata": "{{metadata_1}}" }, { "token": "{{tokenized_data_2}}", "metadata": "{{metadata_2}}" } ] // The tokenized data to be detokenized' },
+      { name: 'sessionToken', label: 'Session Token', placeholder: '{{session_token}}' },
+      { name: 'slotId', label: 'Slot Id', placeholder: '{{slot_id}}' },
+      { name: 'wrappingKeyId', label: 'Wrapping Key Id', placeholder: '{{wrapping_key_id}}' },
+      { name: 'wrappedKey', label: 'Wrapped Key', placeholder: '{{wrapped_tokenization_key}}' },
+      { name: 'ciphertext', label: 'Ciphertext', placeholder: '[{ token: "{{tokenized_data_1}}", metadata: "{{metadata_1}}" }, { token: "{{tokenized_data_2}}", metadata: "{{metadata_2}}" }]' },
     ],
     data: { sessionToken: '', slotId: '', wrappingKeyId: '', wrappedKey: '', ciphertext: [] },
     url: `/${selectedVersion.value}/external/detokenize`,
   },
-  'external sign': {
+  'External Sign': {
     fields: [
-    { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
-      { name: 'slotId', label: 'Slot ID', placeholder: 'The ID of the slot associated with the signing request' },
-      { name: 'wrappingKeyId', label: 'Wrapping Key ID', placeholder: 'The ID of the wrapping key used to protect the private key' },
-      { name: 'wrappedKey', label: 'Private Key', placeholder: 'The private key used for signing' },
-      { name: 'data', label: 'Data to Sign', placeholder: 'The plaintext data to be signed' },
+      { name: 'sessionToken', label: 'Session Token', placeholder: '{{session_token}}' },
+      { name: 'slotId', label: 'Slot Id', placeholder: '{{slot_id}}' },
+      { name: 'wrappingKeyId', label: 'Wrapping Key Id', placeholder: '{{wrapping_key_id}}' },
+      { name: 'wrappedKey', label: 'Wrapped Key', placeholder: '{{private_key}}' },
+      { name: 'data', label: 'Data', placeholder: '{{data_to_sign}}' },
     ],
     data: { sessionToken: '', slotId: '', wrappingKeyId: '', wrappedKey: '', data: '' },
     url: `/${selectedVersion.value}/agent/sign`,
   },
-  'external verify': {
+  'External Verify': {
     fields: [
-    { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
-      { name: 'slotId', label: 'Slot ID', placeholder: 'The ID of the slot associated with the verification request' },
-      { name: 'publicKeyOrCert', label: 'Public Key or Certificate', placeholder: 'The public key or certificate used for verification' },
-      { name: 'signature', label: 'Signature', placeholder: 'The digital signature to be verified' },
-      { name: 'data', label: 'Original Data', placeholder: 'The original plaintext data that was signed' },
+      { name: 'sessionToken', label: 'Session Token', placeholder: '{{session_token}}' },
+      { name: 'slotId', label: 'Slot Id', placeholder: '{{slot_id}}' },
+      { name: 'publicKeyOrCert', label: 'Public Key or Cert', placeholder: '{{public_key}}' },
+      { name: 'signature', label: 'Signature', placeholder: '{{signature}}' },
+      { name: 'data', label: 'Data', placeholder: '{{original_data}}' },
     ],
     data: { sessionToken: '', slotId: '', publicKeyOrCert: '', signature: '', data: '' },
     url: `/${selectedVersion.value}/agent/verify-signature`,
