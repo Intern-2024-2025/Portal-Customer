@@ -30,7 +30,7 @@ class SGKMS {
       const response = await axiosInstance.post(endpoint, payload);
       return response.data;
     } catch (err) {
-      console.error("error login:", err.response.data);
+      // console.error("message error:", err.response.data);
       return err.response.data; 
     }
   }

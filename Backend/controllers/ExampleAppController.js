@@ -423,10 +423,14 @@ class ExampleApp{
         try {
             const token = accesToken(req)
             const payload = (({sessionToken, slotId, wrappingKeyId, wrappedKey, publicKeyOrCert, plaintext})=>({
-                sessionToken, slotId, wrappedKey, plaintext,
+                sessionToken, slotId, plaintext,
                 ...(publicKeyOrCert && { publicKeyOrCert }),
+                ...(wrappedKey && { wrappedKey }),
                 ...(wrappingKeyId && { wrappingKeyId }),
             }))(req.body)
+            if(payload.publicKeyOrCert){
+                payload.publicKeyOrCert = payload.publicKeyOrCert.replace(/\\n/g, '\n');
+            }
             const data = await SGKMS.engineApiSGKMS("/v1.0/external/seal", payload)
             await createTranscation(res, {
                 userId: token.id,
@@ -471,6 +475,9 @@ class ExampleApp{
                 ...(publicKeyOrCert && { publicKeyOrCert }),
                 ...(wrappedKey && { wrappedKey }),
             }))(req.body)
+            if(payload.publicKeyOrCert){
+                payload.publicKeyOrCert = payload.publicKeyOrCert.replace(/\\n/g, '\n');
+            }
             const data = await SGKMS.engineApiSGKMS("/v1.0/external/encrypt", payload)
             await createTranscation(res, {
                 userId: token.id,
@@ -571,6 +578,9 @@ class ExampleApp{
             const payload = (({sessionToken, slotId, publicKeyOrCert, data, signature})=>({
                 sessionToken, slotId, publicKeyOrCert, data, signature
             }))(req.body)
+            if(payload.publicKeyOrCert){
+                payload.publicKeyOrCert = payload.publicKeyOrCert.replace(/\\n/g, '\n');
+            }
             const data = await SGKMS.engineApiSGKMS("/v1.0/external/verify", payload)
             await createTranscation(res, {
                 userId: token.id,

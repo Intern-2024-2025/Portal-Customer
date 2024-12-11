@@ -314,7 +314,7 @@ const endpointData = {
     fields: [
       { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
       { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
-      { name: 'algo', label: 'RSA', placeholder: 'The ID of the key used for MAC verification' },
+      { name: 'algo', label: 'Algo', placeholder: 'The ID of the key used for MAC verification' },
       { name: 'algoLength', label: 'Key Length', placeholder: 'The length of the key in bits(e., 2048, 3072, 4096)' },
       { name: 'wrappingKeyId', label: 'Wrapping Key ID', placeholder: 'The ID of the wrapping key used to secure the generated keys' },
       { name: 'withCert', label: 'With Cert', placeholder: 'Boolean flag: true if a certificate should be generated' },
@@ -589,7 +589,7 @@ const sendRequest = async () => {
   formData.keyVersion = parseInt(formData.keyVersion, 10)
   formData.useSessionKey = formData.useSessionKey === "true" ? true : formData.useSessionKey === "false" ? false : undefined
   formData.withCert = formData.withCert === "true" ? true : formData.withCert === "false" ? false : undefined
-
+  
   // console.log(endpoint === `/${selectedVersion.value}/seal`)
   if(selectedEndpoint.value === 'Seal' || selectedEndpoint.value === 'External Seal Symmetric Key' || selectedEndpoint.value === 'External Seal Asymmetric Key'){
     formData.plaintext = [
@@ -681,16 +681,14 @@ const sendRequest = async () => {
       }
     ]
   }
-  
   // return console.log(formData)
 
   try {
     const response = await axiosInstance.post(`${endpoint}?token=${localStorage.getItem("token")}`, formData)
-    console.log(response)
     responseData.value = response.data;
     responseMessage.value = `Success: ${response.data.message || 'Request berhasil'}`;
   } catch (error: any) {
-    responseMessage.value = `Error: ${error.response?.data?.message || error.message || 'Terjadi kesalahan'}`;
+    responseMessage.value = `Error: ${error.response.data.message.fault.code} `;
   }
 };
 </script>
