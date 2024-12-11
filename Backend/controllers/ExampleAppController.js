@@ -133,8 +133,9 @@ class ExampleApp{
     static async VerifyMAC(req,res){
         try {
             const token = accesToken(req)
-            const payload = (({sessionToken, slotId, keyId, hashAlgo, data, mac}) => ({
-                sessionToken, slotId, keyId, hashAlgo, data, mac
+            const payload = (({sessionToken, slotId, keyId, hashAlgo, data, mac, iv}) => ({
+                sessionToken, slotId, keyId, hashAlgo, data, mac,
+                ...(iv && { iv }),
             }))(req.body)
             const data = await SGKMS.engineApiSGKMS("/v1.0/mac/verify", payload)
             await createTranscation(res, {
@@ -218,7 +219,8 @@ class ExampleApp{
         try {
             const token = accesToken(req)
             const payload = (({sessionToken, slotId, keyId, keyVersion, ciphertext})=>({
-                sessionToken, slotId, keyId, keyVersion, ciphertext
+                sessionToken, slotId, keyId, ciphertext,
+                ...(keyVersion && { keyVersion }),
             }))(req.body)
             const data = await SGKMS.engineApiSGKMS("/v1.0/decrypt", payload)
             await createTranscation(res, {
@@ -358,7 +360,9 @@ class ExampleApp{
         try {
             const token = accesToken(req)
             const payload = (({sessionToken, slotId, wrappingKeyId, algo, algoLength, withCert}) => ({
-                sessionToken, slotId, wrappingKeyId, algo, algoLength, withCert
+                sessionToken, slotId, wrappingKeyId, algo, 
+                ...(algoLength && { algoLength }),
+                ...(withCert && { withCert }),
             }))(req.body)
             const data = await SGKMS.engineApiSGKMS("/v1.0/external/keypair/generate", payload)
             await createTranscation(res, {
@@ -398,7 +402,8 @@ class ExampleApp{
         try {
             const token = accesToken(req)
             const payload = (({sessionToken, slotId, wrappingKeyId, wrappedKey, hashAlgo, data, mac, iv})=>({
-                sessionToken, slotId, wrappingKeyId, wrappedKey, hashAlgo, data, mac, iv
+                sessionToken, slotId, wrappingKeyId, wrappedKey, hashAlgo, data, mac, 
+                ...(iv && { iv }),
             }))(req.body)
             const data = await SGKMS.engineApiSGKMS("/v1.0/external/mac/verify", payload)
             await createTranscation(res, {
@@ -418,7 +423,9 @@ class ExampleApp{
         try {
             const token = accesToken(req)
             const payload = (({sessionToken, slotId, wrappingKeyId, wrappedKey, publicKeyOrCert, plaintext})=>({
-                sessionToken, slotId, wrappingKeyId, wrappedKey, publicKeyOrCert, plaintext
+                sessionToken, slotId, wrappedKey, plaintext,
+                ...(publicKeyOrCert && { publicKeyOrCert }),
+                ...(wrappingKeyId && { wrappingKeyId }),
             }))(req.body)
             const data = await SGKMS.engineApiSGKMS("/v1.0/external/seal", payload)
             await createTranscation(res, {
@@ -458,7 +465,11 @@ class ExampleApp{
         try {
             const token = accesToken(req)
             const payload = (({sessionToken, slotId, wrappingKeyId, wrappedKey, useSessionKey, publicKeyOrCert, plaintext})=>({
-                sessionToken, slotId, wrappingKeyId, wrappedKey, useSessionKey, publicKeyOrCert, plaintext
+                sessionToken, slotId, plaintext,
+                ...(useSessionKey && { useSessionKey }),
+                ...(wrappingKeyId && { wrappingKeyId }),
+                ...(publicKeyOrCert && { publicKeyOrCert }),
+                ...(wrappedKey && { wrappedKey }),
             }))(req.body)
             const data = await SGKMS.engineApiSGKMS("/v1.0/external/encrypt", payload)
             await createTranscation(res, {

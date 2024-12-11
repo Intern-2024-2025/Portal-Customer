@@ -4,6 +4,7 @@ import BreadcrumbDefault from '@/components/Breadcrumbs/BreadcrumbDefault.vue'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import TransactionAPI from '@/api/transaction';
 import { useRoute } from 'vue-router'
+import PaginationStuff from '@/components/Pagination/PaginationStuff.vue';
 
 const route = useRoute()
 
@@ -19,8 +20,8 @@ const dataTransaction = ref<Transaction[]>([])
 const getTransactionClient = async () => {
   try{ 
     const resposne = await TransactionAPI.getTransactionByClient(route.params.productId)
-    dataTransaction.value = resposne.data
-    // console.log("respon", route.params.productId)
+    dataTransaction.value = resposne.data.data
+    console.log("respon", resposne.data.data)
   } catch (error) {
     console.log('get product failed', error)
   }
@@ -34,8 +35,33 @@ const pageTitle = ref('Transaction');
 </script>
 
 <template>
-   <DefaultLayout>
-      <BreadcrumbDefault :pageTitle="pageTitle" />
+  <DefaultLayout>
+    <BreadcrumbDefault :pageTitle="pageTitle" />
+
+  <div class="flex justify-between items-end mb-4 gap-4">
+    <div class="rounded-lg border border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark w-1/2">
+      <div class="flex items-center gap-4">
+        <img src="../../assets/images/transaction/success.svg" alt="successful" class="w-12 h-12">
+        <div>
+          <h4 class="mt-5 mb-2 font-medium">Sum Successful Transaction</h4>
+          <h3 id="totalMasuk" class="mb-2 text-title-md font-bold text-black dark:text-white">0</h3>
+          <p class="flex items-center gap-1 text-sm font-medium">Transactions</p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="rounded-lg border border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark w-1/2">
+      <div class="flex items-center gap-4">
+        <img src="../../assets/images/transaction/Failed.svg" alt="failed" class="flex w-12 h-12">
+        <div>
+          <h4 class="mt-5 mb-2 font-medium">Sum Failed Transaction</h4>
+          <h3 id="totalKeluar" class="mb-2 text-title-md font-bold text-black dark:text-white">0</h3>
+          <p class="flex items-center gap-1 text-sm font-medium">Transactions</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div
     class="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"
   >
@@ -98,6 +124,9 @@ const pageTitle = ref('Transaction');
             </tr>
           </tbody>
         </table>
+        <div class="flex items-center justify-center" v-if="dataTransaction?.length">
+          <PaginationStuff/>
+        </div>
       </div>
     </div>
     <!-- <div v-if="showModal" class="fixed inset-0 flex items-center justify-center z-50">

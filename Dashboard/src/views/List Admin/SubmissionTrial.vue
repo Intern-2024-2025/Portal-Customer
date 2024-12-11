@@ -4,7 +4,9 @@ import BreadcrumbDefault from '@/components/Breadcrumbs/BreadcrumbDefault.vue';
 import DefaultLayout from '@/layouts/DefaultLayout.vue';
 import ClientAPI from '@/api/client';
 import ProductAPI from '@/api/product';
-import FilterBar from '@/components/Filter/FilterBar.vue';
+import FilterBar from '@/components/FIlterSearch/FilterBar.vue';
+import FilteSearch from '@/components/FIlterSearch/FilteSearch.vue';
+import PaginationStuff from '@/components/Pagination/PaginationStuff.vue';
 
 const pageTitle = ref('Submission Trial');
 
@@ -102,13 +104,8 @@ onMounted(() => {
   <DefaultLayout>
     <BreadcrumbDefault :pageTitle="pageTitle" />
 
-    <div class = "flex justify-between mb-2"> 
-      <div>
-        <FilterBar/>
-      </div>  
-    </div>
-      
-     
+    <FilteSearch/>
+
     <!-- Table -->
     <div
       class="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"

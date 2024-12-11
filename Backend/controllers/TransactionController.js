@@ -2,20 +2,39 @@ const { accesToken } = require("../helper/chekAccessToken.js");
 const Models = require("../models/index.js");
 const { handleGet, handlerError } = require("../helper/HandlerError.js");
 const Transaction = Models.Transaction
+const {searchWhere} = require('../helper/Search.js')
+const {paginator} = require('../helper/Pagination.js')
 
 class TransactionController{
     static async getTransactionByClient(req,res){
         try {
             const token = accesToken(req)
+            const {page, filterCreate} = req.query
             await Transaction.findAll({
                 include: {
                     model: Models.Products,
                     where: {
                         client_id: token.id
                     }
-                }
-            }).then(data=>{
-                handleGet(res,data)
+                },
+                order: [['create', filterCreate || 'DESC']],
+            }).then(async result=>{
+                const countStatus =  result.reduce(
+                    (acc, item) => {
+                        acc[item.status ? 'true' : 'false'] += 1;
+                        return acc;
+                    },
+                    { true: 0, false: 0 }
+                );
+                const data = paginator(result, page || 1, 10)
+                handleGet(res, {
+                    countStatus,
+                    pagination: {
+                        currentPages: data.currentPages,
+                        totalPages: data.totalPages
+                    },
+                    data: data.data
+                })
             })
         } catch (error) {
             handlerError(res,error)
@@ -32,7 +51,7 @@ class TransactionController{
                 const response = data.map(result=>{
                     const {id ,email, username} =result.dataValues
                     const { fullname, phone, category_business: categoryBusiness } = result.dataValues.client_detail
-
+                    
                     let product = {
                         call_api: 0,
                         count_trial: 100,
@@ -66,11 +85,23 @@ class TransactionController{
     }
     static async getTransactionByClientAdmin(req,res){
         try {
+            const {search, page, status, filterCreate, startDate, endDate} = req.query
+            
+            let whereTransaction = {
+                productId: req.params.productId
+            }
+            if(status){
+                whereTransaction.status = status
+            }
+            if (search) {
+                whereClause = searchWhere(search, "name", "status");
+            }
 
+            // console.log(whereTransaction)
+            // return
             await Transaction.findAll({
-                where: {
-                    productId: req.params.productId
-                },
+                where: whereTransaction,
+                order: [['create', filterCreate || 'DESC']],
                 include: {model: Models.Products}
             }).then(data=>{
                 const result = data.map(a=>{
@@ -85,7 +116,7 @@ class TransactionController{
                         productId
                     }
                 })
-                handleGet(res,result)
+                handleGet(res, paginator(result, page || 1, 10))
             })
         } catch (error) {
             handlerError(res,error)

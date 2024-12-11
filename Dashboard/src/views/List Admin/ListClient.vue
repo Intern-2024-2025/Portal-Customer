@@ -4,8 +4,7 @@ import BreadcrumbDefault from '@/components/Breadcrumbs/BreadcrumbDefault.vue';
 import DefaultLayout from '@/layouts/DefaultLayout.vue';
 import ClientAPI from '@/api/client';
 import PaginationStuff from '@/components/Pagination/PaginationStuff.vue';
-import SearchBar from '@/components/Search/SearchBar.vue';
-import FilterBar from '@/components/Filter/FilterBar.vue';
+import FilteSearch from '@/components/FIlterSearch/FilteSearch.vue';
 
 const dataClient = ref<TypeClient[]>()
 const pageTitle = ref('List Client');
@@ -82,15 +81,8 @@ onMounted(() => {
   <DefaultLayout>
     <BreadcrumbDefault :pageTitle="pageTitle" />
 
-    <div class = "flex justify-between "> 
-      <div>
-        <FilterBar/>
-      </div>
-      <div>
-        <SearchBar/>
-      </div>
-     
-    </div>
+    <FilteSearch/>
+    
     <!-- Table -->
     <div
       class="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"

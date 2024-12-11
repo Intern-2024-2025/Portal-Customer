@@ -13,15 +13,24 @@ const versions = ref(['V1.0']);
 const selectedEndpoint = ref('');
 const isDisabled = ref(false)
 
-const endpoints = ref(['Login','Refresh Session', 'Random Number', 'Mac Generate', 'Mac Verify CMAC/HMAC-SHA256','Mac Verify GMAC-256',
-'Seal', 'Unseal','Symmetric Encryption','Asymmetric Encryption','Asymmetric Encryption with Session Key', 'Symmetric Decryption','Asymmetric Decryption','Asymmetric Decryption with Session Key',
-'Tokenize','Detokenize','Sign','Verify','Cert Sign','Cert Verify','Key Info','Secret Get', 'External Keypair Generate RSA', 'External Keypair Generate ECDSA', 'External Keypair Generate RSA with Cert',
-'External Keypair Generate ECDSA with Cert','External Key Generate','External Mac Generate', 'External Mac Verify CMAC/HMAC-SHA256', 'External Mac Verify GMAC-256','External Seal Symmetric Key',
-'External Seal Asymmetric Key','External Unseal Symmetric Key','External Unseal Asymmetric Key','External Encrypt Symmetric Encryption','External Encrypt Asymmetric Encryption',
-'External Encrypt Asymmetric Encryption With Session Key','External Decrypt Symmetric Decryption','External Decrypt Asymmetric Decryption','External Decrypt Asymmetric Decryption With Session Key'
+const endpoints = ref(['Login','Refresh Session', 'Random Number', 'Mac Generate', 'Mac Verify CMAC/HMAC-SHA256','Mac Verify GMAC-256','Seal', 'Unseal','Symmetric Encryption','Asymmetric Encryption',
+'Asymmetric Encryption with Session Key', 'Symmetric Decryption','Asymmetric Decryption','Asymmetric Decryption with Session Key','Tokenize','Detokenize','Sign','Verify','Cert Sign','Cert Verify','Key Info',
+'Secret Get', 'External Keypair Generate RSA', 'External Keypair Generate ECDSA', 'External Keypair Generate RSA with Cert','External Keypair Generate ECDSA with Cert','External Key Generate','External Mac Generate', 
+'External Mac Verify CMAC/HMAC-SHA256', 'External Mac Verify GMAC-256','External Seal Symmetric Key','External Seal Asymmetric Key','External Unseal Symmetric Key','External Unseal Asymmetric Key',
+'External Encrypt Symmetric Encryption','External Encrypt Asymmetric Encryption','External Encrypt Asymmetric Encryption With Session Key','External Decrypt Symmetric Decryption',
+'External Decrypt Asymmetric Decryption','External Decrypt Asymmetric Decryption With Session Key','External Tokenize', 'External Detokenize', 'External Sign', 'External Verify'
 ]); 
 
 const responseData = ref<any>(null);  // Menyimpan respons JSON dari API
+const copyToClipboard = () => {
+  if (responseData.value) {
+    const textToCopy = JSON.stringify(responseData.value, null, 2);
+    navigator.clipboard.writeText(textToCopy)
+      .then(() => alert('Data berhasil disalin ke clipboard'))
+      .catch(err => alert('Gagal menyalin data: ' + err));
+  }
+};
+
 
 const toggleDropdown = () => {
   dropdownVisible.value = !dropdownVisible.value;
@@ -284,11 +293,11 @@ const endpointData = {
     fields: [
       { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
       { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
-      { name: 'algo', label: 'RSA', placeholder: 'The ID of the key used for MAC verification' },
+      { name: 'algo', label: 'Algo', placeholder: 'The ID of the key used for MAC verification' },
       { name: 'algoLength', label: 'Key Length', placeholder: 'The length of the key in bits(e., 2048, 3072, 4096)' },
-      { name: 'wrappingKeyID', label: 'Wrapping Key ID', placeholder: 'The ID of the wrapping key used to secure the generated keys' }
+      { name: 'wrappingKeyId', label: 'Wrapping Key ID', placeholder: 'The ID of the wrapping key used to secure the generated keys' }
     ],
-    data: { sessionToken: '', slotId: '', algo: '', algoLength: '', wrappingKeyID:'', withCert:''},
+    data: { sessionToken: '', slotId: '', algo: 'RSA', algoLength: '', wrappingKeyID:'', withCert:''},
     url: `/${selectedVersion.value}/external/keypair/generate`,
   },
   'External Keypair Generate ECDSA': { 
@@ -296,7 +305,7 @@ const endpointData = {
       { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
       { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
       { name: 'algo', label: 'Algo', placeholder: 'RSA' },
-      { name: 'wrappingKeyID', label: 'Wrapping Key ID', placeholder: 'The ID of the wrapping key used to secure the generated keys' }
+      { name: 'wrappingKeyId', label: 'Wrapping Key ID', placeholder: 'The ID of the wrapping key used to secure the generated keys' }
     ],
     data: { sessionToken: '', slotId: '', algo: '', algoLength: '', wrappingKeyID:'', withCert:''},
     url: `/${selectedVersion.value}/external/keypair/generate`,
@@ -307,7 +316,7 @@ const endpointData = {
       { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
       { name: 'algo', label: 'RSA', placeholder: 'The ID of the key used for MAC verification' },
       { name: 'algoLength', label: 'Key Length', placeholder: 'The length of the key in bits(e., 2048, 3072, 4096)' },
-      { name: 'wrappingKeyID', label: 'Wrapping Key ID', placeholder: 'The ID of the wrapping key used to secure the generated keys' },
+      { name: 'wrappingKeyId', label: 'Wrapping Key ID', placeholder: 'The ID of the wrapping key used to secure the generated keys' },
       { name: 'withCert', label: 'With Cert', placeholder: 'Boolean flag: true if a certificate should be generated' },
     ],
     data: { sessionToken: '', slotId: '', algo: '', algoLength: '', wrappingKeyID:'', withCert:''},
@@ -318,7 +327,7 @@ const endpointData = {
       { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
       { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
       { name: 'algo', label: 'Algo', placeholder: 'RSA' },
-      { name: 'wrappingKeyID', label: 'Wrapping Key ID', placeholder: 'The ID of the wrapping key used to secure the generated keys' },
+      { name: 'wrappingKeyId', label: 'Wrapping Key ID', placeholder: 'The ID of the wrapping key used to secure the generated keys' },
       { name: 'withCert', label: 'With Cert', placeholder: 'Boolean flag: true if a certificate should be generated' },
     ],
     data: { sessionToken: '', slotId: '', algo: '', algoLength: '', wrappingKeyID:'', withCert:''},
@@ -506,7 +515,7 @@ const endpointData = {
     data: { sessionToken: '', slotId: '', wrappingKeyId: '', text: '', mac: '', iv: '', wrappedSessionKey: ''},
     url: `/${selectedVersion.value}/external/decrypt`,
   },
-  'external tokenize': {
+  'External Tokenize': {
     fields: [
       { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
       { name: 'slotId', label: 'Slot ID', placeholder: 'The ID of the slot associated with the tokenization request' },
@@ -520,7 +529,7 @@ const endpointData = {
     data: { sessionToken: '', slotId: '', wrappingKeyId: '', wrappedKey: '', text1:'',formatChar1:'',text2:'',formatChar2:'' },
     url: `/${selectedVersion.value}/external/tokenize`,
   },
-  'external detokenize': {
+  'External Detokenize': {
     fields: [
       { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
       { name: 'slotId', label: 'Slot ID', placeholder: 'The ID of the slot associated with the detokenization request' },
@@ -534,6 +543,28 @@ const endpointData = {
     data: { sessionToken: '', slotId: '', wrappingKeyId: '', wrappedKey: '', token1:'',metadata1:'',token2:'',metadata2:'' },
     url: `/${selectedVersion.value}/external/detokenize`,
   },
+  'External Sign': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: ' The session token for authentication' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the signing request' },
+      { name: 'wrappingkeyId', label: 'Wrapping Key Id', placeholder: 'The ID of the wrapping key used to protect the private key' },
+      { name: 'wrappedKey', label: 'Private Key', placeholder: 'The private key used for signing' },
+      { name: 'data', label: 'Data to Sign', placeholder: 'The plaintext data to be signed' },
+    ],
+    data: { sessionToken: '', slotId: '', wrappingkeyId: '',wrappedKey: '', data: '' },
+    url: `/${selectedVersion.value}/external/sign`,
+  },
+  'External Verify': {
+    fields: [
+      { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
+      { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the verification request' },
+      { name: 'PublicKeyOrCert', label: 'Public Key', placeholder: 'The public key or certificate for verification' },
+      { name: 'signature', label: 'Signature', placeholder: 'The digital signature to be verified' },
+      { name: 'data', label: 'Original Data', placeholder: 'The original plaintext data that was signed' },
+    ],
+    data: { sessionToken: '', slotId: '', PublicKeyOrCert: '', signature: '', data: '' },
+    url: `/${selectedVersion.value}/external/verify`,
+  },
 };
 
 const formData = reactive(endpointData[selectedEndpoint.value]?.data || {});
@@ -542,7 +573,6 @@ watch(selectedEndpoint, (newEndpoint) => {
     Object.assign(formData, endpointData[newEndpoint].data);
   }
 });
-
 const responseMessage = ref('');
 const sendRequest = async () => {
   const endpoint = endpointData[selectedEndpoint.value].url;
@@ -557,7 +587,8 @@ const sendRequest = async () => {
   formData.length = parseInt(formData.length, 10)
   formData.validityPeriod = parseInt(formData.validityPeriod, 10)
   formData.keyVersion = parseInt(formData.keyVersion, 10)
-  
+  formData.useSessionKey = formData.useSessionKey === "true" ? true : formData.useSessionKey === "false" ? false : undefined
+
   // console.log(endpoint === `/${selectedVersion.value}/seal`)
   if(selectedEndpoint.value === 'Seal' || selectedEndpoint.value === 'External Seal Symmetric Key' || selectedEndpoint.value === 'External Seal Asymmetric Key'){
     formData.plaintext = [
@@ -650,7 +681,7 @@ const sendRequest = async () => {
     ]
   }
   
-  return console.log(formData.ciphertext[0], endpoint)
+  return console.log(formData)
 
   try {
     const response = await axiosInstance.post(`${endpoint}?token=${localStorage.getItem("token")}`, formData)
@@ -699,7 +730,7 @@ const sendRequest = async () => {
             'pointer-events-none opacity-50': isDisabled,
             'pointer-events-auto opacity-100': !isDisabled
           }"
-          class="col-span-6 bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          class="col-span-6 bg-gray-200 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <h2>{{ endpointData[selectedEndpoint].url }}</h2>
           </div>
         </div>
@@ -716,19 +747,33 @@ const sendRequest = async () => {
       </div>
     </div>
   
-    <div class="rounded-sm border mt-4 border-stroke bg-white px-5 p-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-         <p class="text-lg font-bold text-gray-700 dark:text-gray-300 mb-2">Response</p>
-
-        <!-- Menampilkan pesan respons jika ada -->
+    <!-- <div class="rounded-sm border mt-4 border-stroke bg-white px-5 p-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
+         <p class="text-lg font-bold text-gray-700 dark:text-gray-300 mb-2">Response</p>     
         <div v-if="responseMessage" class="mb-4 text-gray-800 dark:text-gray-200">
         <p>{{ responseMessage }}</p>
         </div>
-
-        <!-- Menampilkan data respons JSON dengan kotak yang scrollable jika konten terlalu panjang -->
-        <div v-if="responseData" class="bg-gray-100 p-4 rounded-lg shadow-sm max-h-96 overflow-auto whitespace-pre-wrap">
-        <!-- Respons JSON diformat dengan JSON.stringify -->
+        <div v-if="responseData" class="bg-gray-100 p-4 rounded-lg shadow-sm max-h-96 overflow-auto whitespace-pre-wrap">    
         <pre class="text-sm text-gray-800 dark:text-gray-200">{{ JSON.stringify(responseData, null, 2) }}</pre>
         </div>
-    </div>
+    </div> -->
+    <div class="rounded-sm border mt-4 border-stroke bg-white px-5 p-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
+      <div class="flex justify-between items-center mb-2">
+        <p class="text-lg font-bold text-gray-700 dark:text-gray-300">Response</p>
+      </div>
+      <div v-if="responseMessage" class="mb-4 text-gray-800 dark:text-gray-200">
+        <p>{{ responseMessage }}</p>
+      </div>
+      <div v-if="responseData" class="bg-gray-100 p-4 rounded-lg shadow-sm max-h-96 overflow-auto whitespace-pre-wrap">
+        <div class="flex justify-end">
+          <button
+            @click="copyToClipboard"
+            class="text-sm font-medium text-blue-500 hover:text-blue-700 focus:outline-none"
+          >
+            Copy
+          </button>
+        </div>
+        <pre class="text-sm text-gray-800 dark:text-gray-200">{{ JSON.stringify(responseData, null, 2) }}</pre>
+      </div>
+  </div>
   </DefaultLayout>
 </template>

@@ -1,26 +1,24 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import BreadcrumbDefault from '@/components/Breadcrumbs/BreadcrumbDefault.vue'
-// import TableOne from '@/components/Tables/TableOne.vue'
-// import TableTwo from '@/components/Tables/TableTwo.vue'
-// import TableThree from '@/components/Tables/TableThree.vue'
-import BasicChartView from '@/views/Charts/BasicChartView.vue'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
+import DataStatsOne from '@/components/DataStats/DataStatsOne.vue';
+import ChartOne from '@/components/Charts/ChartOne.vue';
+import ChartTwo from '@/components/Charts/ChartTwo.vue';
+import ChartThree from '@/components/Charts/ChartThree.vue';
 
 const pageTitle = ref('')
 </script>
 
 <template>
   <DefaultLayout>
-    <!-- Breadcrumb Start -->
-    <BreadcrumbDefault :pageTitle="pageTitle" />
-    <!-- Breadcrumb End -->
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
+      <DataStatsOne />
+    </div>
 
-    <div class="flex flex-col gap-10">
-      <!-- <TableOne />
-      <TableTwo /> -->
-      <TableThree />
-    <BasicChartView/>
+    <div class="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
+      <ChartOne />
+      <ChartTwo />
+      <ChartThree />
     </div>
   </DefaultLayout>
 </template>
