@@ -98,7 +98,7 @@ onMounted(() => {
     
     <div class="rounded-lg border border-stroke bg-white p-4 shadow-default dark:border-strokedark dark:bg-boxdark w-1/2">
       <div class="flex items-center gap-4">
-        <img src="../../assets/images/transaction/Failed.svg" alt="failed" class="flex w-12 h-12">
+        <img src="../../assets/images/transaction/failed.svg" alt="failed" class="flex w-12 h-12">
         <div>
           <h4 class="mt-5 mb-2 font-medium">Sum Failed Transaction</h4>
           <h3 id="totalKeluar" class="mb-2 text-title-md font-bold text-black dark:text-white">{{ dataCountStatus.false }}</h3>
