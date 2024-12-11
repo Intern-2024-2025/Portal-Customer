@@ -11,13 +11,14 @@ const selectedVersion = ref('V1.0');
 const dropdownVisible = ref(false);
 const versions = ref(['V1.0']);
 const selectedEndpoint = ref('');
+const isDisabled = ref(false)
 
 const endpoints = ref(['Login','Refresh Session', 'Random Number', 'Mac Generate', 'Mac Verify CMAC/HMAC-SHA256','Mac Verify GMAC-256',
 'Seal', 'Unseal','Symmetric Encryption','Asymmetric Encryption','Asymmetric Encryption with Session Key', 'Symmetric Decryption','Asymmetric Decryption','Asymmetric Decryption with Session Key',
 'Tokenize','Detokenize','Sign','Verify','Cert Sign','Cert Verify','Key Info','Secret Get', 'External Keypair Generate RSA', 'External Keypair Generate ECDSA', 'External Keypair Generate RSA with Cert',
 'External Keypair Generate ECDSA with Cert','External Key Generate','External Mac Generate', 'External Mac Verify CMAC/HMAC-SHA256', 'External Mac Verify GMAC-256','External Seal Symmetric Key',
-'External Seal Asymmetric Key','External Unseal Symmetric Key','External Unseal Asymmetric Key','External Encrypt Symmetric Encryption','External Encrypt Asymmetric Encryption','External Asymmetric Encryption With Session Key',
-'External Encrypt Symmetric Encryption','External Encrypt Asymmetric Encryption','External Asymmetric Encryption With Session Key','External Decrypt Symmetric Decryption','External Decrypt Asymmetric Decryption','External Decrypt Asymmetric Decryption With Session Key','external tokenize','external detokenize'
+'External Seal Asymmetric Key','External Unseal Symmetric Key','External Unseal Asymmetric Key','External Encrypt Symmetric Encryption','External Encrypt Asymmetric Encryption',
+'External Encrypt Asymmetric Encryption With Session Key','External Decrypt Symmetric Decryption','External Decrypt Asymmetric Decryption','External Decrypt Asymmetric Decryption With Session Key'
 ]); 
 
 const responseData = ref<any>(null);  // Menyimpan respons JSON dari API
@@ -445,7 +446,7 @@ const endpointData = {
     data: { sessionToken: '', slotId: '', publicKeyOrCert: '', text1: '', text2: '' },
     url: `/${selectedVersion.value}/external/encrypt`,
   },
-  'External Asymmetric Encryption With Session Key': {
+  'External Encrypt Asymmetric Encryption With Session Key': {
     fields: [
       { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
       { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
@@ -580,7 +581,7 @@ const sendRequest = async () => {
       }
     ]
   }
-  if(selectedEndpoint.value === "Asymmetric Encryption" || selectedEndpoint.value === "Asymmetric Encryption with Session Key" ||  selectedEndpoint.value === "External Encrypt Asymmetric Encryption" || selectedEndpoint.value === "External Asymmetric Encryption With Session Key"){
+  if(selectedEndpoint.value === "Asymmetric Encryption" || selectedEndpoint.value === "Asymmetric Encryption with Session Key" ||  selectedEndpoint.value === "External Encrypt Asymmetric Encryption" || selectedEndpoint.value === "External Encrypt Asymmetric Encryption With Session Key"){
     formData.plaintext = [
       {
         text: formData.text1
@@ -632,7 +633,7 @@ const sendRequest = async () => {
       }
     ]
   }
-  if(selectedEndpoint.value === "Tokenize"){
+  if(selectedEndpoint.value === "Tokenize" || selectedEndpoint.value === "External Tokenize"){
     formData.plaintext = [
       {
         text: formData.text1,
@@ -640,7 +641,7 @@ const sendRequest = async () => {
       }
     ]
   }
-  if(selectedEndpoint.value === "Detokenize"){
+  if(selectedEndpoint.value === "Detokenize" || selectedEndpoint.value === "External Detokenize"){
     formData.ciphertext = [
       {
         token: formData.token,
@@ -649,7 +650,7 @@ const sendRequest = async () => {
     ]
   }
   
-  return console.log(selectedEndpoint.value, endpoint)
+  return console.log(formData.ciphertext[0], endpoint)
 
   try {
     const response = await axiosInstance.post(`${endpoint}?token=${localStorage.getItem("token")}`, formData)
