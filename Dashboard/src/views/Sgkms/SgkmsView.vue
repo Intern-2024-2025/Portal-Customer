@@ -157,7 +157,7 @@ const endpointData = {
       { name: 'text1', label: 'plaintext text 1', placeholder: 'The plaintext 1 data to be encrypted' },
       { name: 'text2', label: 'plaintext text 2', placeholder: 'The plaintext 2 data to be encrypted' },
     ],
-    data: { sessionToken: '', slotId: '', keyId: '', useSessionKey: false, text1:'',text2:'' },
+    data: { sessionToken: '', slotId: '', keyId: '', useSessionKey: true, text1:'',text2:'' },
     url: `/${selectedVersion.value}/encrypt`,
   },
   'Symmetric Decryption': {
@@ -165,15 +165,15 @@ const endpointData = {
       { name: 'sessionToken', label: 'Session Token', placeholder: ' The session token for authentication' },
       { name: 'slotId', label: 'Slot ID', placeholder: ' The ID of the slot used for decryption' },
       { name: 'keyId', label: 'Key ID', placeholder: ' The ID of the key used for decryption (AES-256-GCM algorithm)' },
-      { name: 'keyVersion', label: 'Key Version', placeholder: ' The version of the key used for decryption' },
-      { name: 'text1', label: 'Ciphertext text 1', placeholder: ' The ciphertext to be decrypted' },
-      { name: 'aad1', label: 'Ciphertext aad 1', placeholder: ' Optional: The additional authentication data used during encryption' },
-      { name: 'mac1', label: 'Ciphertext mac 1', placeholder: ' The MAC (Message Authentication Code) to verify the integrity of the ciphertext' },
-      { name: 'iv1', label: 'Ciphertext iv 1', placeholder: ' The Initialization Vector (IV) used for encryption' },
-      { name: 'text2', label: 'Ciphertext text 2', placeholder: '' },
-      { name: 'aad2', label: 'Ciphertext aad 2', placeholder: '' },
-      { name: 'mac2', label: 'Ciphertext mac 2', placeholder: '' },
-      { name: 'iv2', label: 'Ciphertext iv 2', placeholder: '' },      
+      { name: 'keyVersion', label: 'Key Version', placeholder: 'The version of the key used for decryption' },
+      { name: 'text1', label: 'Ciphertext text 1', placeholder: 'The ciphertext to be decrypted' },
+      { name: 'aad1', label: 'Ciphertext aad 1', placeholder: 'Optional: The additional authentication data used during encryption' },
+      { name: 'mac1', label: 'Ciphertext mac 1', placeholder: 'The MAC (Message Authentication Code) to verify the integrity of the ciphertext' },
+      { name: 'iv1', label: 'Ciphertext iv 1', placeholder: 'The Initialization Vector (IV) used for encryption' },
+      { name: 'text2', label: 'Ciphertext text 2', placeholder: 'The ciphertext to be decrypted' },
+      { name: 'aad2', label: 'Ciphertext aad 2', placeholder: 'Optional: The additional authentication data used during encryption' },
+      { name: 'mac2', label: 'Ciphertext mac 2', placeholder: 'The MAC (Message Authentication Code) to verify the integrity of the ciphertext' },
+      { name: 'iv2', label: 'Ciphertext iv 2', placeholder: 'The Initialization Vector (IV) used for encryption' },      
     ],
     data: { sessionToken: '', slotId: '', keyId: '', keyVersion: '', text1:'',aad1:'',mac1:'',iv1:'',text2:'',aad2:'',mac2:'',iv2:'' },
     url: `/${selectedVersion.value}/decrypt`,
@@ -183,8 +183,8 @@ const endpointData = {
       { name: 'sessionToken', label: 'Session Token', placeholder: ' The session token for authentication' },
       { name: 'slotId', label: 'Slot ID', placeholder: ' The ID of the slot used for decryption' },
       { name: 'keyId', label: 'Key ID', placeholder: 'The ID of the key used for decryption (RSA algorithm)' },
-      { name: 'text1', label: 'Ciphertext text 1', placeholder: ' The ciphertext to be decrypted ' },
-      { name: 'text2', label: 'Ciphertext text 2', placeholder: '' },
+      { name: 'text1', label: 'Ciphertext text 1', placeholder: 'The ciphertext to be decrypted' },
+      { name: 'text2', label: 'Ciphertext text 2', placeholder: 'The ciphertext to be decrypted' },
     ],
     data: { sessionToken: '', slotId: '', keyId: '', text1:'',text2:'' },
     url: `/${selectedVersion.value}/decrypt`,
@@ -194,14 +194,14 @@ const endpointData = {
       { name: 'sessionToken', label: 'Session Token', placeholder: ' The session token for authentication' },
       { name: 'slotId', label: 'Slot ID', placeholder: 'The ID of the slot used for decryption' },
       { name: 'keyId', label: 'Key ID', placeholder: ' The ID of the key used for decryption (RSA algorithm)' },
-      { name: 'text1', label: 'Ciphertext text 1', placeholder: ' The ciphertext to be decrypted' }, 
-      { name: 'mac1', label: 'Ciphertext mac 1', placeholder: ' The MAC (Message Authentication Code) to verify the integrity of the ciphertext' },
-      { name: 'iv1', label: 'Ciphertext iv 1', placeholder: ' The Initialization Vector (IV) used for encryption' },
-      { name: 'wrappedSessionKey1', label: 'Ciphertext wrapped session key 1', placeholder: ' The wrapped session key obtained during the encryption process' },
-      { name: 'text2', label: 'Ciphertext text 2', placeholder: '' },
-      { name: 'mac2', label: 'Ciphertext mac 2', placeholder: '' },
-      { name: 'iv2', label: 'Ciphertext iv 2', placeholder: '' },
-      { name: 'wrappedSessionKey2', label: 'Ciphertext wrapped session key 2', placeholder: '{{wrapped_session_key_2}}" ' },      
+      { name: 'text1', label: 'Ciphertext text 1', placeholder: 'The ciphertext to be decrypted' }, 
+      { name: 'mac1', label: 'Ciphertext mac 1', placeholder: 'The MAC (Message Authentication Code) to verify the integrity of the ciphertext' },
+      { name: 'iv1', label: 'Ciphertext iv 1', placeholder: 'The Initialization Vector (IV) used for encryption' },
+      { name: 'wrappedSessionKey1', label: 'Ciphertext wrapped session key 1', placeholder: 'The wrapped session key obtained during the encryption process' },
+      { name: 'text2', label: 'Ciphertext text 2', placeholder: 'The ciphertext to be decrypted' },
+      { name: 'mac2', label: 'Ciphertext mac 2', placeholder: 'The MAC (Message Authentication Code) to verify the integrity of the ciphertext' },
+      { name: 'iv2', label: 'Ciphertext iv 2', placeholder: 'The Initialization Vector (IV) used for encryption' },
+      { name: 'wrappedSessionKey2', label: 'Ciphertext wrapped session key 2', placeholder: 'The wrapped session key obtained during the encryption process' },      
     ],
     data: { sessionToken: '', slotId: '', keyId: '', text1:'',mac1:'',iv1:'',wrappedSessionKey1:'',text2:'',mac2:'',iv2:'',wrappedSessionKey2:'' },
     url: `/${selectedVersion.value}/decrypt`,
@@ -211,10 +211,12 @@ const endpointData = {
       { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
       { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the tokenization request' },
       { name: 'keyId', label: 'Key Id', placeholder: 'The ID of the key used for tokenization' },
-      { name: 'text', label: 'Plaintext Text', placeholder: 'The plaintext data to be tokenized' },
-      { name: 'formatChar', label: 'Format Char', placeholder: 'Format-preserving characters to maintain original text structure' },
+      { name: 'text1', label: 'Text 1', placeholder: 'The plaintext data to be tokenized' },
+      { name: 'formatChar1', label: 'Format Char 1', placeholder: 'Format-preserving characters to maintain original text structure' },
+      { name: 'text2', label: 'Text 2', placeholder: 'The plaintext data to be tokenized' },
+      { name: 'formatChar2', label: 'Format Char 2', placeholder: 'Format-preserving characters to maintain original text structure' },
     ],
-    data: { sessionToken: '', slotId: '', keyId: '', text: '', formatChar: '' },
+    data: { sessionToken: '', slotId: '', keyId: '', text1: '', formatChar1: '', text2: '', formatChar2: '' },
     url: `/${selectedVersion.value}/tokenize`,
   },
   'Detokenize': {
@@ -222,10 +224,12 @@ const endpointData = {
       { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
       { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the detokenization request' },
       { name: 'keyId', label: 'Key Id', placeholder: 'The ID of the key used for detokenization' },
-      { name: 'token', label: 'Token', placeholder: 'The tokenized value to be detokenized' },
-      { name: 'metadata', label: 'Metadata', placeholder: ' Metadata associated with the tokenization process' },
+      { name: 'token1', label: 'Token 1', placeholder: 'The tokenized value to be detokenized' },
+      { name: 'metadata1', label: 'Metadata 1', placeholder: ' Metadata associated with the tokenization process' },
+      { name: 'token2', label: 'Token 2', placeholder: 'The tokenized value to be detokenized' },
+      { name: 'metadata2', label: 'Metadata 2', placeholder: ' Metadata associated with the tokenization process' },
     ],
-    data: { sessionToken: '', slotId: '', keyId: '', token:'', metadata:''},
+    data: { sessionToken: '', slotId: '', keyId: '', token1:'', metadata1:'', token2:'', metadata2:''},
     url: `/${selectedVersion.value}/detokenize`,
   },
   'Sign': {
@@ -669,16 +673,24 @@ const sendRequest = async () => {
     formData.plaintext = [
       {
         text: formData.text1,
-        formatChar: formData.formatChar
-      }
+        formatChar: formData.formatChar1
+      },
+      {
+        text: formData.text1,
+        formatChar: formData.formatChar1
+      },
     ]
   }
   if(selectedEndpoint.value === "Detokenize" || selectedEndpoint.value === "External Detokenize"){
     formData.ciphertext = [
       {
-        token: formData.token,
-        metadata: formData.metadata
-      }
+        token: formData.token1,
+        metadata: formData.metadata1
+      },
+      {
+        token: formData.token2,
+        metadata: formData.metadata2
+      },
     ]
   }
   // return console.log(formData)

@@ -220,7 +220,7 @@ class ExampleApp{
             const token = accesToken(req)
             const payload = (({sessionToken, slotId, keyId, keyVersion, ciphertext})=>({
                 sessionToken, slotId, keyId, ciphertext,
-                ...(keyVersion && { keyVersion }),
+                ...(keyVersion !== undefined && keyVersion !== null ? { keyVersion } : {}),
             }))(req.body)
             const data = await SGKMS.engineApiSGKMS("/v1.0/decrypt", payload)
             await createTranscation(res, {
