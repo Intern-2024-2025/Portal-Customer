@@ -588,6 +588,7 @@ const sendRequest = async () => {
   formData.validityPeriod = parseInt(formData.validityPeriod, 10)
   formData.keyVersion = parseInt(formData.keyVersion, 10)
   formData.useSessionKey = formData.useSessionKey === "true" ? true : formData.useSessionKey === "false" ? false : undefined
+  formData.withCert = formData.withCert === "true" ? true : formData.withCert === "false" ? false : undefined
 
   // console.log(endpoint === `/${selectedVersion.value}/seal`)
   if(selectedEndpoint.value === 'Seal' || selectedEndpoint.value === 'External Seal Symmetric Key' || selectedEndpoint.value === 'External Seal Asymmetric Key'){
