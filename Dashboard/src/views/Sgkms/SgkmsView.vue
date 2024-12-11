@@ -762,7 +762,7 @@ const sendRequest = async () => {
       <div v-if="responseMessage" class="mb-4 text-gray-800 dark:text-gray-200">
         <p>{{ responseMessage }}</p>
       </div>
-      <div v-if="responseData" class="bg-gray-100 p-4 rounded-lg shadow-sm max-h-96 overflow-auto whitespace-pre-wrap">
+      <div v-if="responseData" class="bg-gray-100 p-4 rounded-lg shadow-sm max-h-96 overflow-auto whitespace-pre-wrap dark:bg-boxdark ">
         <div class="flex justify-end">
           <button
             @click="copyToClipboard"
