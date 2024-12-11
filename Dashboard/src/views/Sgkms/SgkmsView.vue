@@ -681,7 +681,7 @@ const sendRequest = async () => {
     ]
   }
   
-  return console.log(formData)
+  // return console.log(formData)
 
   try {
     const response = await axiosInstance.post(`${endpoint}?token=${localStorage.getItem("token")}`, formData)
