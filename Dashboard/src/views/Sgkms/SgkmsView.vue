@@ -301,17 +301,17 @@ const endpointData = {
       { name: 'algoLength', label: 'Key Length', placeholder: 'The length of the key in bits(e., 2048, 3072, 4096)' },
       { name: 'wrappingKeyId', label: 'Wrapping Key ID', placeholder: 'The ID of the wrapping key used to secure the generated keys' }
     ],
-    data: { sessionToken: '', slotId: '', algo: 'RSA', algoLength: '', wrappingKeyID:'', withCert:''},
+    data: { sessionToken: '', slotId: '', algo: 'RSA', algoLength: '', wrappingKeyId:''},
     url: `/${selectedVersion.value}/external/keypair/generate`,
   },
   'External Keypair Generate ECDSA': { 
     fields: [
       { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
       { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
-      { name: 'algo', label: 'Algo', placeholder: 'RSA' },
+      { name: 'algo', label: 'Algo', placeholder: 'The ID of the key used for MAC verification' },
       { name: 'wrappingKeyId', label: 'Wrapping Key ID', placeholder: 'The ID of the wrapping key used to secure the generated keys' }
     ],
-    data: { sessionToken: '', slotId: '', algo: '', algoLength: '', wrappingKeyID:'', withCert:''},
+    data: { sessionToken: '', slotId: '', algo: 'ECDSA', wrappingKeyId:''},
     url: `/${selectedVersion.value}/external/keypair/generate`,
   },
   'External Keypair Generate RSA with Cert': { 
@@ -323,18 +323,18 @@ const endpointData = {
       { name: 'wrappingKeyId', label: 'Wrapping Key ID', placeholder: 'The ID of the wrapping key used to secure the generated keys' },
       { name: 'withCert', label: 'With Cert', placeholder: 'Boolean flag: true if a certificate should be generated' },
     ],
-    data: { sessionToken: '', slotId: '', algo: '', algoLength: '', wrappingKeyID:'', withCert:''},
+    data: { sessionToken: '', slotId: '', algo: 'RSA', algoLength: '', wrappingKeyId:'', withCert:''},
     url: `/${selectedVersion.value}/external/keypair/generate`,
   },
   'External Keypair Generate ECDSA with Cert': { 
     fields: [
       { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
       { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the request' },
-      { name: 'algo', label: 'Algo', placeholder: 'RSA' },
+      { name: 'algo', label: 'Algo', placeholder: 'The ID of the key used for MAC verification' },
       { name: 'wrappingKeyId', label: 'Wrapping Key ID', placeholder: 'The ID of the wrapping key used to secure the generated keys' },
       { name: 'withCert', label: 'With Cert', placeholder: 'Boolean flag: true if a certificate should be generated' },
     ],
-    data: { sessionToken: '', slotId: '', algo: '', algoLength: '', wrappingKeyID:'', withCert:''},
+    data: { sessionToken: '', slotId: '', algo: 'ECDSA', wrappingKeyId:'', withCert:''},
     url: `/${selectedVersion.value}/external/keypair/generate`,
   },
   'External Key Generate': {
