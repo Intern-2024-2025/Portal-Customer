@@ -28,7 +28,7 @@ class SGKMS {
       // console.log(endpoint)
       // console.log(payload)
       const response = await axiosInstance.post(endpoint, payload);
-      console.log(response.data)
+      console.log(payload)
       return response.data;
     } catch (err) {
       // console.error("message error:", err.response.data);
