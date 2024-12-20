@@ -24,7 +24,6 @@ const axiosInstance = axios.create({
 
 class SGKMS {
   static async engineApiSGKMS(endpoint, payload) {
-    console.log(payload)
     try {
       // console.log(endpoint)
       // console.log(payload)
