@@ -24,11 +24,11 @@ const axiosInstance = axios.create({
 
 class SGKMS {
   static async engineApiSGKMS(endpoint, payload) {
+    console.log(payload)
     try {
       // console.log(endpoint)
       // console.log(payload)
       const response = await axiosInstance.post(endpoint, payload);
-      console.log(payload)
       return response.data;
     } catch (err) {
       // console.error("message error:", err.response.data);
