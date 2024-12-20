@@ -18,9 +18,9 @@ class ClientAPI {
         return err.response.data;  
         }
     }
-    static async getSubmisson() {
+    static async getSubmisson(currentPage:number, status:string, search:string) {
         try {
-        const response = await axiosInstance.get("client-submisson");
+        const response = await axiosInstance.get(`client-submisson?curentPage=${currentPage}&status=${status}&search=${search}`);
         return response.data;
         } catch (err:any) {
         return err.response.data;  

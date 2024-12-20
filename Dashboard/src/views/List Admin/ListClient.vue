@@ -158,7 +158,7 @@ onMounted(() => {
           </tbody> 
         </table>
         <div class="flex items-center justify-center" v-if="dataClient?.length">
-          <PaginationStuff/>
+          <!-- <PaginationStuff/> -->
         </div>
       </div>
     </div>

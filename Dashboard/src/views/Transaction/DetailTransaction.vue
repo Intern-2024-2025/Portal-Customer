@@ -125,7 +125,7 @@ const pageTitle = ref('Transaction');
           </tbody>
         </table>
         <div class="flex items-center justify-center" v-if="dataTransaction?.length">
-          <PaginationStuff/>
+          <!-- <PaginationStuff/> -->
         </div>
       </div>
     </div>

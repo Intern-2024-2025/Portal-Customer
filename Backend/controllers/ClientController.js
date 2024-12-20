@@ -1,6 +1,8 @@
 const { handlerError, handleCreate, handleUpdate, handleDelete, handleGet } = require("../helper/HandlerError.js");
+const { paginator } = require("../helper/Pagination.js");
 const Models = require("../models/index.js");
 const Client = Models.Client;
+const { Sequelize, Op } = require("sequelize");
 
 class ClientController {
     static async CreateClient(req, res) {
@@ -27,15 +29,35 @@ class ClientController {
     }
     static async GetAllClientSubmisson(req, res) {
         try {
-            const data = await Models.ClientDetail.findAll({
+            const {currentPage, status, search} = req.query
+            let data = await Models.ClientDetail.findAll({
                 include: {
                     model: Client,
                     where: {
-                        status_verification_data: "process"
+                        status_verification_data: status || "process",
+                        [Op.and]: [
+                            {
+                            [Op.or]: [
+                                Sequelize.where(Sequelize.fn("lower", Sequelize.col(`username`)), {
+                                [Op.like]: `%${search.toLowerCase().replace("%20", " ")}%`,
+                                }),
+                                Sequelize.where(Sequelize.fn("lower", Sequelize.col(`email`)), {
+                                [Op.like]: `%${search.toLowerCase().replace("%20", " ")}%`,
+                                }),
+                            ],
+                            },
+                        ],
                     }
                 }
             })
-            handleGet(res, data);
+            const pagination = paginator(data, currentPage || 1, 10)
+            handleGet(res, {
+                pagination: {
+                    currentPages: pagination.currentPages,
+                    totalPages: pagination.totalPages
+                },
+                data: pagination.data
+            });
         } catch (error) {
             handlerError(res, error);
         }

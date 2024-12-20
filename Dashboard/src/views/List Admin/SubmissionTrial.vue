@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, reactive } from 'vue';
 import BreadcrumbDefault from '@/components/Breadcrumbs/BreadcrumbDefault.vue';
 import DefaultLayout from '@/layouts/DefaultLayout.vue';
 import ClientAPI from '@/api/client';
 import ProductAPI from '@/api/product';
 import FilterBar from '@/components/FIlterSearch/FilterBar.vue';
-import FilteSearch from '@/components/FIlterSearch/FilteSearch.vue';
+import FilterSearch from '@/components/FIlterSearch/FilteSearch.vue';
 import PaginationStuff from '@/components/Pagination/PaginationStuff.vue';
+import SearchBar from '@/components/FIlterSearch/SearchBar.vue';
 
 const pageTitle = ref('Submission Trial');
 
@@ -33,14 +34,15 @@ type TypeClient = {
   client: ClientDetail;
 };
 
-const defaultClientDetail: ClientDetail = {
-  id: 0,
-  username: '',
-  email: '',
-  otp: 0,
-  status_verification_data: false,
-  createdAt: '',
-};
+const pagination = ref({
+  currentPages: 1,
+  totalPages: 1,
+});
+const filters = ref({
+  filter: '',
+  search: '',
+});
+
 
 const createProduct = ref({
   name: '',
@@ -72,10 +74,15 @@ const openModal = async (id: number, mode: 'add' | 'detail' = 'add') => {
   showModal.value = true;
 };
 
-const getListClient = async () => {
+const getListClient = async (
+  currentPage: number = 1,
+  status: string = "process",
+  search: string = "",
+) => {
   try {
-    const response = await ClientAPI.getSubmisson();
-    dataSubmisson.value = response.data;
+    const response = await ClientAPI.getSubmisson(currentPage, status, search);
+    dataSubmisson.value = response.data.data;
+    pagination.value = response.data.pagination
     // console.log(dataSubmisson)
   } catch (error) {
     console.error('Failed to get client:', error);
@@ -95,6 +102,11 @@ const addProduct = async () => {
 };
 
 
+const handleUpdateFilters = (newFilters: { filter: string, search: string }) => {
+  filters.value = newFilters;
+  getListClient(1, newFilters.filter, newFilters.search); // Panggil data untuk halaman pertama
+};
+
 onMounted(() => {
   getListClient()
 })
@@ -103,10 +115,7 @@ onMounted(() => {
 <template>
   <DefaultLayout>
     <BreadcrumbDefault :pageTitle="pageTitle" />
-
-    <FilteSearch/>
-
-    <!-- Table -->
+    <SearchBar @updateFilters="handleUpdateFilters" />
     <div
       class="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"
     >
@@ -176,9 +185,11 @@ onMounted(() => {
             </tr>
           </tbody>
         </table>
-        <div class="flex items-center justify-center" v-if="dataSubmisson?.length">
-          <PaginationStuff/>
-        </div>
+        <PaginationStuff
+          v-if="pagination && getListClient"
+          :pagination="pagination"
+          :get-data="getListClient"
+        />
       </div>
     </div>
 

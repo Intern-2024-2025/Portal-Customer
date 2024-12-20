@@ -9,7 +9,7 @@ class TransactionController{
     static async getTransactionByClient(req,res){
         try {
             const token = accesToken(req)
-            const {page, filterCreate} = req.query
+            const {currentPage, filterCreate} = req.query
             await Transaction.findAll({
                 include: {
                     model: Models.Products,
@@ -26,7 +26,7 @@ class TransactionController{
                     },
                     { true: 0, false: 0 }
                 );
-                const data = paginator(result, page || 1, 10)
+                const data = paginator(result, currentPage || 1, 10)
                 handleGet(res, {
                     countStatus,
                     pagination: {

@@ -2,9 +2,9 @@ import axiosInstance from "./axiosInstance";
 
 
 class TransactionAPI {
-    static async getTransactionClient() {
+    static async getTransactionClient(currentPage: number) {
         try {
-        const response = await axiosInstance.get("transaction");
+        const response = await axiosInstance.get(`transaction?currentPage=${currentPage}`);
         return response.data;
         } catch (err:any) {
         return err.response.data;  

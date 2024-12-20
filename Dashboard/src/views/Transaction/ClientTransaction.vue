@@ -1,16 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed, defineComponent, reactive } from 'vue'
 import BreadcrumbDefault from '@/components/Breadcrumbs/BreadcrumbDefault.vue'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import TransactionAPI from '@/api/transaction';
 import PaginationStuff from '@/components/Pagination/PaginationStuff.vue';
 
-
-// const isDetailMode = ref(false);
-// const showModal = ref(false);
-
 type Transaction = {
-  id: string;
+  id: string; 
   endpoint: string;
   create: string;
   status: boolean;
@@ -23,13 +19,13 @@ const dataTransaction = ref<Transaction[]>([])
 const dataCountStatus = ref({ true: 0, false: 0 });
 
 const pagination = ref({
-  currentPage: 1,
-  totalPages: 0,
+  currentPages: 1,
+  totalPages: 1,
 });
 
-const getTransaction = async () => {
+const getTransaction = async (currentPage:number) => {
   try{ 
-    const resposne = await TransactionAPI.getTransactionClient()
+    const resposne = await TransactionAPI.getTransactionClient(currentPage)
     dataTransaction.value = resposne.data.data
     dataCountStatus.value = resposne.data.countStatus
     pagination.value = resposne.data.pagination
@@ -40,43 +36,10 @@ const getTransaction = async () => {
 }
 
 
-// // Data client (example)
-// const csrKey = ref([
-//   { id: 1, name: 'Free Package', price: '$0.00', invoiceDate: 'Jan 13, 2025', status: 'Paid' },
-//   { id: 2, name: 'Standard Package', price: '$59.00', invoiceDate: 'Jan 13, 2025', status: 'Paid' },
-// ]);
-
-// // Client yang diedit atau dilihat
-// const newClient = ref({
-//   id: 0,
-//   name: '',
-//   price: '',
-//   invoiceDate: '',
-//   status: '',
-// });
 
 const pageTitle = ref('Transaction');
-
-// // Fungsi untuk modal
-// const openModal = (client?: typeof newClient.value, mode: 'edit' | 'detail' = 'edit') => {
-//   if (client) {
-//     newClient.value = { ...client };
-//     isDetailMode.value = mode === 'detail';
-//   } else {
-//     newClient.value = {
-//       id: 0,
-//       name: '',
-//       price: '',
-//       invoiceDate: '',
-//       status: ''
-//     };
-//     isDetailMode.value = false;
-//   }
-//   showModal.value = true;
-// };
-
 onMounted(() => {
-  getTransaction()
+  getTransaction(1)
 })
 </script>
 
@@ -144,53 +107,15 @@ onMounted(() => {
             <td class="py-5 px-4">
               <p class="text-black dark:text-white">{{ item.create }}</p>
             </td>
-            <!-- <td class="py-5 px-4">
-              <div class="flex items-center space-x-3.5">
-                <button class="hover:text-primary">
-                  <svg
-                    class="fill-current"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 18 18"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M8.99981 14.8219C3.43106 14.8219 0.674805 9.50624 0.562305 9.28124C0.47793 9.11249 0.47793 8.88749 0.562305 8.71874C0.674805 8.49374 3.43106 3.20624 8.99981 3.20624C14.5686 3.20624 17.3248 8.49374 17.4373 8.71874C17.5217 8.88749 17.5217 9.11249 17.4373 9.28124C17.3248 9.50624 14.5686 14.8219 8.99981 14.8219ZM1.85605 8.99999C2.4748 10.0406 4.89356 13.5562 8.99981 13.5562C13.1061 13.5562 15.5248 10.0406 16.1436 8.99999C15.5248 7.95936 13.1061 4.44374 8.99981 4.44374C4.89356 4.44374 2.4748 7.95936 1.85605 8.99999Z"
-                      fill=""
-                    />
-                    <path
-                      d="M9 11.3906C7.67812 11.3906 6.60938 10.3219 6.60938 9C6.60938 7.67813 7.67812 6.60938 9 6.60938C10.3219 6.60938 11.3906 7.67813 11.3906 9C11.3906 10.3219 10.3219 11.3906 9 11.3906ZM9 7.875C8.38125 7.875 7.875 8.38125 7.875 9C7.875 9.61875 8.38125 10.125 9 10.125C9.61875 10.125 10.125 9.61875 10.125 9C10.125 8.38125 9.61875 7.875 9 7.875Z"
-                      fill=""
-                    />
-                  </svg>
-                </button>
-                </div>
-              </td> -->
-            </tr>
-          </tbody>
-        </table>
-        <div class="flex items-center justify-center" v-if="dataTransaction?.length">
-          <!-- <PaginationStuff/> -->
-           <PaginationStuff
-            :currentPage="pagination.currentPage"
-            :totalPages="pagination.totalPages"
-            @pageChange="getTransaction"
-          />
-        </div>
+          </tr>
+        </tbody>
+      </table>
       </div>
-    </div>
-    <!-- <div v-if="showModal" class="fixed inset-0 flex items-center justify-center z-50">
-      <div class="bg-white rounded-lg shadow-lg p-6 w-96">
-
-        <div v-if="isDetailMode">
-          <p><strong>Name:</strong> {{ newClient.name }}</p>
-          <p><strong>Price:</strong> {{ newClient.price }}</p>
-          <p><strong>Invoice Date:</strong> {{ newClient.invoiceDate }}</p>
-          <p><strong>Status:</strong> {{ newClient.status }}</p>
-        </div>
-        <button @click="showModal = false" class="bg-gray-500 text-white px-4 py-2 rounded mt-4">Close</button>
-      </div>
-    </div> -->
+      <PaginationStuff
+        v-if="pagination && getTransaction"
+        :pagination="pagination"
+        :get-data="getTransaction"
+      />
+  </div>
   </DefaultLayout>
 </template>
