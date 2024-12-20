@@ -562,7 +562,7 @@ const endpointData = {
     fields: [
       { name: 'sessionToken', label: 'Session Token', placeholder: 'The session token for authentication' },
       { name: 'slotId', label: 'Slot Id', placeholder: 'The ID of the slot associated with the verification request' },
-      { name: 'PublicKeyOrCert', label: 'Public Key', placeholder: 'The public key or certificate for verification' },
+      { name: 'publicKeyOrCert', label: 'Public Key', placeholder: 'The public key or certificate for verification' },
       { name: 'signature', label: 'Signature', placeholder: 'The digital signature to be verified' },
       { name: 'data', label: 'Original Data', placeholder: 'The original plaintext data that was signed' },
     ],
