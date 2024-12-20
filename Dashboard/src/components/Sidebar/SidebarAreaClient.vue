@@ -69,7 +69,7 @@ const menuGroups = ref([
                   </defs>
                 </svg>`,
         label: 'Documentation',
-        route: '/example-app'
+        route: '/documentation'
       },
       {
         icon: `<svg

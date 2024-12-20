@@ -20,7 +20,7 @@ import ListClient from '@/views/List Admin/ListClient.vue'
 import AdminTransaction from '@/views/Transaction/AdminTransaction.vue'
 import RegisterVerification from '@/views/List Admin/SubmissionTrial.vue'
 import SubmissionTrial from '@/views/List Admin/SubmissionTrial.vue'
-import ExampleAppClient from '@/views/ExampleApp/ExampleAppClient.vue'
+import Documentation from '@/views/Documentation/Documentation.vue'
 import ClientVerifView from '@/views/Authentication/ClientVerifView.vue'
 import DetailTransaction from '@/views/Transaction/DetailTransaction.vue'
 import WaitingView from '@/views/WaitPage/WaitingView.vue'
@@ -122,14 +122,6 @@ const routes = [
       title: 'Verify Client '
     }
   },
-  // {
-  //   path: '/example-app',
-  //   name: 'Example App',
-  //   component: ExampleAppClient,
-  //   meta: {
-  //     title: 'Example App '
-  //   }
-  // },
   {
     path: '/list-client',
     name: 'List Client',
@@ -241,9 +233,9 @@ const routes = [
     },
   },
   {
-    path: '/example-app',
-    name: 'example-app',
-    component: ExampleAppClient,
+    path: '/documentation',
+    name: 'documentation',
+    component: Documentation,
     meta: {
       requiresAuth: true,
       title: 'How To Make SGKMS'
