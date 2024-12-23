@@ -5,6 +5,7 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue';
 import ClientAPI from '@/api/client';
 import PaginationStuff from '@/components/Pagination/PaginationStuff.vue';
 import FilteSearch from '@/components/FIlterSearch/FilteSearch.vue';
+import SearchBar from '@/components/FIlterSearch/SearchBar.vue';
 
 const dataClient = ref<TypeClient[]>()
 const pageTitle = ref('List Client');
@@ -46,6 +47,15 @@ const detailClient = ref<TypeClient>({
   client_detail: defaultClientDetail,
 });
 
+const pagination = ref({
+  currentPages: 1,
+  totalPages: 1,
+});
+const filters = ref({
+  filter: '',
+  search: '',
+});
+
 const isEditMode = ref(false);
 const isDetailMode = ref(false);
 
@@ -62,15 +72,23 @@ const openModal = async (id: number, mode: 'edit' | 'detail' = 'edit') => {
   showModal.value = true;
 };
 
-const getListClient = async () => {
+const getListClient = async (
+  currentPage: number = 1,
+  search: string = ""
+) => {
   try {
-    const response = await ClientAPI.getClient();
-    dataClient.value = response.data;
+    const response = await ClientAPI.getClient(currentPage, search);
+    dataClient.value = response.data.data;
+    pagination.value = response.data.pagination
   } catch (error) {
     console.error('Failed to get client:', error);
   }
 };
 
+const handleSearchBar = (newFilters: { filter: string, search: string }) => {
+  filters.value = newFilters;
+  getListClient(1, newFilters.search);
+};
 
 onMounted(() => {
   getListClient()
@@ -81,7 +99,7 @@ onMounted(() => {
   <DefaultLayout>
     <BreadcrumbDefault :pageTitle="pageTitle" />
 
-    <FilteSearch/>
+    <SearchBar @update-filters="handleSearchBar"/>
     
     <!-- Table -->
     <div
@@ -121,7 +139,7 @@ onMounted(() => {
                 <p class="text-black dark:text-white">{{ item.status_verification_data }}</p>
               </td>
               <td class="py-5 px-4">
-                <p class="text-black dark:text-white">{{ item.createdAt }}</p>
+                <p class="text-black dark:text-white">{{ new Date(item.createdAt).toLocaleString() }}</p>
               </td>
               <td class="py-5 px-4">
                 <div class="flex items-center space-x-3.5">
@@ -157,9 +175,11 @@ onMounted(() => {
             </tr>
           </tbody> 
         </table>
-        <div class="flex items-center justify-center" v-if="dataClient?.length">
-          <!-- <PaginationStuff/> -->
-        </div>
+        <PaginationStuff
+          v-if="pagination && getListClient"
+          :pagination="pagination"
+          :get-data="getListClient"
+        />
       </div>
     </div>
     

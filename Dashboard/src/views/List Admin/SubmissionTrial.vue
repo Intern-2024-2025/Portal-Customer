@@ -153,7 +153,7 @@ onMounted(() => {
                 <p class="text-black dark:text-white">{{ item.client.status_verification_data }}</p>
               </td>
               <td class="py-5 px-4">
-                <p class="text-black dark:text-white">{{ item.client.createdAt }}</p>
+                <p class="text-black dark:text-white">{{ new Date(item.client.createdAt).toLocaleString() }}</p>
               </td>
               <td class="py-5 px-4">
                 <div class="flex items-center space-x-3.5">

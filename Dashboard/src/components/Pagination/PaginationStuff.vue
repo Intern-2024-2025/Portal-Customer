@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type PropType, computed } from 'vue';
 
-// Props dari Parent
+
 const props = defineProps({
   pagination: {
     type: Object as PropType<{
@@ -16,7 +16,6 @@ const props = defineProps({
   },
 });
 
-// Komputasi untuk menampilkan halaman yang terlihat
 const visiblePages = computed(() => {
   const { currentPages, totalPages } = props.pagination;  
   const start = Math.max(1, currentPages - 2);

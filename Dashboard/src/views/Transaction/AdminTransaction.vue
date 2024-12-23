@@ -5,6 +5,8 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import TransactionAPI from '@/api/transaction';
 import router from '@/router/index'
 import FilteSearch from '@/components/FIlterSearch/FilteSearch.vue';
+import SearchBar from '@/components/FIlterSearch/SearchBar.vue';
+import PaginationStuff from '@/components/Pagination/PaginationStuff.vue';
 
 const isEditMode = ref(false);
 const isDetailMode = ref(false);
@@ -23,17 +25,29 @@ type Transaction = {
 }
 const dataTransaction = ref<Transaction[]>([]) 
 
-const getTransaction = async () => {
+const pagination = ref({
+  currentPages: 1,
+  totalPages: 1,
+});
+const filters = ref({
+  filter: '',
+  search: '',
+});
+
+const getTransaction = async (
+  currentPage: number = 1,
+  search: string = ''
+) => {
   try{ 
-    const resposne = await TransactionAPI.getTransactionAdmin()
-    dataTransaction.value = resposne.data
+    const resposne = await TransactionAPI.getTransactionAdmin(currentPage, search)
+    dataTransaction.value = resposne.data.data
+    pagination.value = resposne.data.pagination
     console.log(resposne.data)
   } catch (error) {
     console.log('get product failed', error)
   }
 }
 
-// Client yang diedit
 const newClient = ref({
   id: 0,
   name: '',
@@ -43,58 +57,14 @@ const newClient = ref({
 });
 
 const pageTitle = ref('Transaction');
-
-// // Fungsi untuk modal
-// const openModal = (client?: typeof newClient.value, mode: 'edit' | 'detail' = 'edit') => {
-//   if (client) {
-//     newClient.value = { ...client };
-//     isEditMode.value = mode === 'edit';
-//     isDetailMode.value = mode === 'detail';
-//   } else {
-//     newClient.value = {
-//       id: 0,
-//       name: '',
-//       price: '',
-//       invoiceDate: '',
-//       status: ''
-//     };
-//     isEditMode.value = false;
-//     isDetailMode.value = false;
-//   }
-//   showModal.value = true;
-// };
-
 const openModal = (productId: string) => {
   router.push(`/transaction-detail/${productId}`)
 };
 
-
-// add
-// const saveClient = () => {
-//   if (newClient.value.name && newClient.value.price) {
-//     if (isEditMode.value) {
-//       const index = csrKey.value.findIndex(item => item.id === newClient.value.id);
-//       if (index !== -1) {
-//         csrKey.value[index] = { ...newClient.value };
-//       }
-//     } else {
-//       newClient.value.id = csrKey.value.length + 1; // Buat ID baru
-//       csrKey.value.push({ ...newClient.value });
-//     }
-
-//     newClient.value = {
-//       id: 0,
-//       name: '',
-//       price: '',
-//       invoiceDate: '',
-//       status: ''
-//     };
-
-//     showModal.value = false;
-//   } else {
-//     alert('Please fill out all required fields.');
-//   }
-// };
+const handleUpdateFilters = (newFilters: { filter: string, search: string }) => {
+  filters.value = newFilters;
+  getTransaction(1, newFilters.search);
+};
 
 onMounted(() => {
   getTransaction()
@@ -104,7 +74,7 @@ onMounted(() => {
 <template>      
   <DefaultLayout>
     <BreadcrumbDefault :pageTitle="pageTitle" />
-    <FilteSearch/>
+    <SearchBar @updateFilters="handleUpdateFilters"/>
     <div
       class="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"
     >
@@ -127,7 +97,10 @@ onMounted(() => {
             </tr>
           </thead>
           <tbody> 
-            <tr v-for="(item, index) in dataTransaction" :key="index">
+            <tr v-if="!dataTransaction?.length">
+              <td colspan="8" class="py-10 text-center text-gray-500 bg-white dark:text-white dark:bg-boxdark">No Transaction Data Available</td>
+            </tr>
+            <tr v-else v-for="(item, index) in dataTransaction" :key="index">
               <td class="py-5 px-4">
                 <p class="text-black dark:text-white">{{ index+1 }}</p>
               </td>
@@ -173,6 +146,10 @@ onMounted(() => {
             </tr>
           </tbody>
         </table>
+        <PaginationStuff
+        :pagination="pagination"
+        :get-data="getTransaction"
+        />
       </div>
     </div>
 

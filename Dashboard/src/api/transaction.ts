@@ -10,17 +10,17 @@ class TransactionAPI {
         return err.response.data;  
         }
     }
-    static async getTransactionAdmin() {
+    static async getTransactionAdmin(currentPage:number, search:string) {
         try {
-        const response = await axiosInstance.get("transaction-admin");
+        const response = await axiosInstance.get(`transaction-admin?currentPage=${currentPage}&search=${search}`);
         return response.data;
         } catch (err:any) {
         return err.response.data;  
         }
     }
-    static async getTransactionByClient(productId:any) {
+    static async getTransactionByClient(productId:any, currentPage:number) {
         try {
-        const response = await axiosInstance.get(`/transaction-detail-admin/${productId}`);
+        const response = await axiosInstance.get(`/transaction-detail-admin/${productId}?currentPage=${currentPage}`);
         return response.data;
         } catch (err:any) {
         return err.response.data;  
