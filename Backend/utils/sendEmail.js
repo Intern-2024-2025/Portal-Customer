@@ -30,7 +30,7 @@ async function sendMail(targetEmail, subject, content) {
     });
 
     const mailOptions = {
-      from: "diptya@sandhiguna.com",
+      from: '"OTP Sandhiguna" <admin@sandhiguna.com>',
       to: targetEmail,
       subject: subject,
       text: content,

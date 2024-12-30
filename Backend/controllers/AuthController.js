@@ -89,7 +89,7 @@ class AuthController {
       sendMail(
         req.body.email,
         "Reset Password Sandhiguna",
-        `Kode OTP Anda adalah: ${otp}`
+        `Your One-Time Password (OTP) is: ${otp}`
       );
 
       handleGet(res, {
@@ -153,7 +153,7 @@ class AuthController {
       sendMail(
         email,
         "Kode OTP Register Sandhiguna",
-        `Kode OTP Anda adalah: ${otp}`
+        `Your One-Time Password (OTP) is: ${otp}`
       );
       handleCreateCustom(res, "Kami sudah kirim OTP di Email Anda");
     } catch (error) {
