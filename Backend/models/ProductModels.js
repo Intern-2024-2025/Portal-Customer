@@ -53,6 +53,20 @@ const Product = (sequelizeInstance) => {
           },
         },
       },
+      key_id: {
+        type: Sequelize.TEXT,
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: "Key Id can't be Null!",
+          },
+          notEmpty: {
+            args: true,
+            msg: "Key Id can't be Empty!",
+          },
+        },
+      },
       slot_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -78,20 +92,6 @@ const Product = (sequelizeInstance) => {
           notEmpty: {
             args: true,
             msg: "Password Can't be Empty!",
-          },
-        },
-      },
-      finance_key: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          notNull: {
-            args: true,
-            msg: " Finance Key Can't be Null!",
-          },
-          notEmpty: {
-            args: true,
-            msg: "Finance Key Can't be Empty!",
           },
         },
       },
