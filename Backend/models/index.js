@@ -70,7 +70,7 @@ db.ClientDetail.belongsTo(db.Client, {
   targetKey:"id",
 })
 
-db.Products.hasOne(db.Transaction, {
+db.Products.hasMany(db.Transaction, {
   foreignKey:{
     name:"productId",
     type: Sequelize.UUID,
