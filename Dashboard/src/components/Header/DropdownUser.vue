@@ -14,17 +14,19 @@ onClickOutside(target, () => {
 // const username = localStorage.getItem("username")
 
 const username = ref() 
+username.value = localStorage.getItem("username")
 
-const fetchUser = async () =>{
-  try {
-    await API.fetch().then(fetchData=>{
-      // localStorage.setItem('username', fetchData.data.username);
-      username.value = fetchData.data.username
-    })
-  } catch (error) {
-    console.log("error")
-  }
-}
+// const fetchUser = async () =>{
+//   try {
+//     await API.fetch().then(fetchData=>{
+//       localStorage.setItem('username', fetchData.data.username);
+//       username.value = localStorage.getItem("username")
+//       // fetchData.data.username
+//     })
+//   } catch (error) {
+//     console.log("error")
+//   }
+// }
 
 const logout = async () =>{
   try {
@@ -36,7 +38,7 @@ const logout = async () =>{
 }
 
 onMounted(() => {
-  fetchUser()
+  // fetchUser()
 })
 </script>
 

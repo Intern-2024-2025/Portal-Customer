@@ -23,7 +23,7 @@ const verifyClient = async () => {
       router.push('/product')
     }
   } catch (error) {
-    console.log('verivy gagal:', error)
+    console.log('Failed To Verify:', error)
   }
   // if (!fullname.value || !phone.value || !address.value || !categoryBusiness.value || !descriptionBusiness.value) {
   //   alert('All fields are required!')

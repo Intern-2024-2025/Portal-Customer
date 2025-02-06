@@ -15,7 +15,7 @@ const props = defineProps(['subtitle', 'title', 'customClasses'])
         </router-link>
 
         <p class="font-medium text-sm sm:text-base xl:text-lg 2xl:px-20">
-          Welcome To Athena!
+          Welcome To Sandhiguna!
         </p>
         <p class="font-medium text-sm sm:text-base xl:text-lg 2xl:px-20">
           Secure Today, Safe Tommorow

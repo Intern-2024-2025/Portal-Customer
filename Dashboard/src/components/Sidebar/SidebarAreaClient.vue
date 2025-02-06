@@ -69,7 +69,12 @@ const menuGroups = ref([
                   </defs>
                 </svg>`,
         label: 'Documentation',
-        route: '/documentation'
+        route: '#',
+        children: [
+          { label: 'Sandhiguna Rest API', route: '/documentation/rest-api'},
+          { label: 'Postman Integration', route: '/documentation/postman-integration'},
+          { label: 'Code Integration', route: '/documentation/code-integration'},
+        ]
       },
       {
         icon: `<svg

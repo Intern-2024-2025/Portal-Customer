@@ -9,5 +9,15 @@
     "paths": {
       "@/*": ["./src/*"]
     },
+    "strict": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "target": "ESNext",
+    "jsx": "preserve",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "types": ["vite/client"]
   }
 }

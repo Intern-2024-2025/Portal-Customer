@@ -1,3 +1,4 @@
+import axios from "axios";
 import axiosInstance from "./axiosInstance";
 
 class API {
@@ -21,9 +22,15 @@ class API {
       return err.response.data;
     }
   }
-  static async fetch() {
+  static async fetch(token:any) {
     try {
-      const response = await axiosInstance.get("fetch");
+      // const response = await axiosInstance.get("fetch");
+      const response = await axios.get('http://localhost:5003/fetch', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      // console.log(response)
       return response.data;
     } catch (err:any) {
       return err.response.data;
