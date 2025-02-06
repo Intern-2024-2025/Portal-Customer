@@ -3,8 +3,8 @@ import router from '../router/index';
 const token = localStorage.getItem("token")
 
 const axiosInstance = axios.create({
-  // baseURL: "http://localhost:5003/",
-  baseURL: "https://backend.sandhiguna.com/",
+  baseURL: "http://localhost:5003/",
+  // baseURL: "https://backend.sandhiguna.com/",
   headers: {
     "Content-Type": "application/json",
      Authorization: `Bearer ${token}`
@@ -16,12 +16,12 @@ async function interceptors(): Promise<any> {
       axiosInstance.interceptors.response.use(
       response => response,
       error => {
-        if (error.response && error.response.status === 401 || error.response.status === 403 ) {
-           alert("Session Anda Habis, Anda akan diarahkan login kembali...")
-          setTimeout(() => {
-            router.push('/auth/signin');
-          }, 500);
-        } 
+        // if (error.response && error.response.status === 401 || error.response.status === 403 ) {
+        //    alert("Session Anda Habis, Anda akan diarahkan login kembali...")
+        //   setTimeout(() => {
+        //     router.push('/auth/signin');
+        //   }, 500);
+        // } 
         return Promise.reject(error);
       }
     );

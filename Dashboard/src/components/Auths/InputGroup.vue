@@ -7,7 +7,7 @@ const emit = defineEmits(['update:modelValue']);
   <div class="mb-4">
     <label class="mb-2.5 block font-medium text-black dark:text-white">{{ props.label }}</label>
     <div class="relative">
-      <input
+      <input required
         :type="props.type"
         :placeholder="props.placeholder"
         :value="props.modelValue"

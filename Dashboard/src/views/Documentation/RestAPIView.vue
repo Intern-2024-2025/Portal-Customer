@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import DefaultLayout from '@/layouts/DefaultLayout.vue';
 import BreadcrumbDefault from '@/components/Breadcrumbs/BreadcrumbDefault.vue';
 
-const pageTitle = ref('Documentation');
+const pageTitle = ref('Sandhiguna Rest API');
 // const apiDocsUrl = ref(`http://localhost:5003/api-docs/${localStorage.getItem('token')}`);
 const apiDocsUrl = ref(`https://backend.sandhiguna.com/api-docs/${localStorage.getItem('token')}`);
 const isLoading = ref(true);

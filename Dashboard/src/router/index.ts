@@ -20,12 +20,14 @@ import ListClient from '@/views/List Admin/ListClient.vue'
 import AdminTransaction from '@/views/Transaction/AdminTransaction.vue'
 import RegisterVerification from '@/views/List Admin/SubmissionTrial.vue'
 import SubmissionTrial from '@/views/List Admin/SubmissionTrial.vue'
-import Documentation from '@/views/Documentation/Documentation.vue'
+import Documentation from '@/views/Documentation/RestAPIView.vue'
 import ClientVerifView from '@/views/Authentication/ClientVerifView.vue'
 import DetailTransaction from '@/views/Transaction/DetailTransaction.vue'
 import WaitingView from '@/views/WaitPage/WaitingView.vue'
 import NotFoundView from '@/views/Pages/NotFoundView.vue'
 import SgkmsView from '@/views/Sgkms/SgkmsView.vue'
+import PostmanIntegrationView from '@/views/Documentation/PostmanIntegrationView.vue'
+import CodeIntegrationView from '@/views/Documentation/CodeIntegrationView.vue'
 
 const routes = [
   {
@@ -34,7 +36,7 @@ const routes = [
     component: Dashboard,
     meta: {
       requiresAuth: true,
-      role: 'admin', 
+      role: 'admin',
       title: 'Dashboard'
     }
   },
@@ -164,7 +166,7 @@ const routes = [
     component: DetailTransaction,
     meta: {
       requiresAuth: true,
-      role: 'admin', 
+      role: 'admin',
       title: 'Detail Transaction'
     }
   },
@@ -230,17 +232,35 @@ const routes = [
     component: VerificationView,
     meta: {
       title: 'VerificationEmail'
-    },
+    }
   },
   {
-    path: '/documentation',
-    name: 'documentation',
+    path: '/documentation/rest-api',
+    name: 'Sandhiguna Rest API',
     component: Documentation,
     meta: {
       requiresAuth: true,
-      title: 'How To Make SGKMS'
-    },
+      title: 'Sandhiguna Rest API'
+    }
   },
+  {
+    path: '/documentation/postman-integration',
+    name: 'Postman Integration',
+    component: PostmanIntegrationView,
+    meta: {
+      requiresAuth: true,
+      title: 'Postman Integration'
+    }
+  },
+  {
+    path: '/documentation/code-integration',
+    name: 'Code Integration',
+    component: CodeIntegrationView,
+    meta: {
+      requiresAuth: true,
+      title: 'Code Integration'
+    }
+  }
 ]
 
 const router = createRouter({
@@ -261,6 +281,7 @@ router.beforeEach((to, from, next) => {
       next({ name: 'signin' })
     } else if (to.meta.role && to.meta.role !== userRole) {
       if(userRole != 'client'){
+        
         next({ name: 'dashboard' })
       }else{
         next({ name: 'product' })
