@@ -59,8 +59,7 @@ const loginUser = async () => {
 
   try {
     const response = await API.login(username.value, password.value);
-    // console.log(response)
-    if (response.code === 400) {
+    if (response.code === 400 || response.code === 500) {
     message.value = response.message;
     return;
     // } else if (response.code === 400) {
