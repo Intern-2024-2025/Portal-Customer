@@ -9,7 +9,7 @@ const {
 const Models = require("../models/index.js");
 const Product = Models.Products;
 const { accesToken } = require("../helper/chekAccessToken.js");
-
+ 
 class ProductController {
   static async createProduct(req, res) {
     try {
