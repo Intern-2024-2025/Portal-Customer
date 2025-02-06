@@ -61,7 +61,7 @@ const loginUser = async () => {
     const response = await API.login(username.value, password.value);
     console.log(response)
     if (response.code === 400 || response.code === 500 || response.msg) {
-    message.value = response.message || response.msg;
+    message.value = response.message || response.msg ? "Account not found" : "Account not found";
     return;
     // } else if (response.code === 400) {
     //   message.value = "Account not found. Please check your username or email.";
