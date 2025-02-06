@@ -19,24 +19,24 @@ class ProductController {
         postmanPem,
         slotId,
         password,
-        financeKey,
         count_trial,
-        clientId
+        clientId,
+        keyId,
       } = req.body;
       await Product.create({
         name,
-        csr_key : csrKey,
-        postman_pem : postmanPem,
+        csr_key: csrKey,
+        postman_pem: postmanPem,
         slot_id: slotId,
         password,
-        finance_key : financeKey,
         status: true,
         call_api: 0,
         count_trial: count_trial || 100,
-        clientId
+        clientId,
+        key_id: JSON.stringify(keyId),
       });
       await Models.Client.update(
-        { status_verification_data: 'verifed' },
+        { status_verification_data: "verifed" },
         { where: { id: clientId } }
       );
       handleCreate(res);
@@ -69,8 +69,14 @@ class ProductController {
   static async UpdateProduct(req, res) {
     try {
       const { id } = req.params;
-      const { name, csr_key, postman_pem, slot_id, password, finance_key } =
-        req.body;
+      const {
+        name,
+        csr_key,
+        postman_pem,
+        slot_id,
+        password,
+        keyId: key_id,
+      } = req.body;
       const product = await Product.findByPk(id);
 
       if (!product) {
@@ -84,7 +90,7 @@ class ProductController {
           postman_pem,
           slot_id,
           password,
-          finance_key,
+          key_id,
         },
         {
           where: {
@@ -116,11 +122,14 @@ class ProductController {
   static async getDetailProductByClient(req, res) {
     try {
       const token = accesToken(req);
-      await Product.findOne({ where: { clientId: token.id } }).then((data) => {
-        if (data) {
-          data.dataValues.csr_key = `${data.dataValues.csr_key.slice(0, 30)}...`;
-          data.dataValues.postman_pem = `${data.dataValues.postman_pem.slice(0, 30)}...`;
-        }
+      await Product.findOne({
+        where: { clientId: token.id },
+        include: [{ model: Models.Transaction }],
+      }).then((data) => {
+        // if (data) {
+        //   data.dataValues.csr_key = `${data.dataValues.csr_key.slice(0, 30)}...`;
+        //   data.dataValues.postman_pem = `${data.dataValues.postman_pem.slice(0, 30)}...`;
+        // }
         // const dataProduct = data.map(result=>{
         //   return{
         //     ...result.dataValues,
@@ -129,7 +138,12 @@ class ProductController {
         //   }
         // })
         // console.log(data)
-        handleGet(res, data);
+        const { transactions, ...save } = data.dataValues;
+        handleGet(res, {
+          ...save,
+          call_api: transactions.length,
+          keyId: JSON.parse(data.dataValues.key_id),
+        });
       });
     } catch (error) {
       handlerError(res, error);
