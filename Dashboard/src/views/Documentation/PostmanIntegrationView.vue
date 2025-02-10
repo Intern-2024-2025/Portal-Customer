@@ -75,7 +75,7 @@ const downloadJSON = () => {
                           version 11.28.3)
                         </li>
                         <img
-                          src="../../assets/images/documentation/posmtanIntegration/setting-postman.png"
+                          src="../../assets/images/documentation/PostmanIntegration/setting-postman.png"
                           class="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-3xl h-auto object-contain"
                           alt="setting postman"
                         />
@@ -85,7 +85,7 @@ const downloadJSON = () => {
                           >.
                         </li>
                         <img
-                          src="../../assets/images/documentation/posmtanIntegration/add-sertificate.png"
+                          src="../../assets/images/documentation/PostmanIntegration/add-sertificate.png"
                           class="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-3xl h-auto object-contain"
                           alt="insert sertificate"
                         />
@@ -94,7 +94,7 @@ const downloadJSON = () => {
                           <code>.key</code>, then click <strong>Add</strong>.
                         </li>
                         <img
-                          src="../../assets/images/documentation/PosmtanIntegration/save-sertificate.png"
+                          src="../../assets/images/documentation/PostmanIntegration/save-sertificate.png"
                           class="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-3xl h-auto object-contain"
                           alt="add sertificate"
                         />
@@ -107,7 +107,7 @@ const downloadJSON = () => {
                       <strong>Current Value</strong> column with the required data for API testing.
                       Click save or <strong>ctrl+s</strong> to save variables.
                       <img
-                        src="../../assets/images/documentation/PosmtanIntegration/add-variable.png"
+                        src="../../assets/images/documentation/PostmanIntegration/add-variable.png"
                         class="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-3xl h-auto object-contain"
                         alt="add variable"
                       />
@@ -134,7 +134,7 @@ const downloadJSON = () => {
                             the Sandhiguna REST API has been completed successfully.
                           </li>
                           <img
-                            src="../../assets/images/documentation/posmtanIntegration/result-login.png"
+                            src="../../assets/images/documentation/PostmanIntegration/result-login.png"
                             class="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-3xl h-auto object-contain"
                             alt="insert sertificate"
                           />
