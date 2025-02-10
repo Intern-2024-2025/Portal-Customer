@@ -20,7 +20,7 @@ import SourceCodeEnvJs from '@/components/Copy/Javascript/SourceCodeEnvJs.vue'
 import SourceCodeRefreshSessionJS from '@/components/Copy/Javascript/SourceCodeRefreshSessionJS.vue'
 import SourceCodeDecryptionJS from '@/components/Copy/Javascript/SourceCodeDecryptionJS.vue'
 import SidebarAreaClient from '@/components/Sidebar/SidebarAreaClient.vue'
-import HeaderArea from '@/components/Header/HeaderArea.vue' 
+import HeaderArea from '@/components/Header/HeaderArea.vue'
 
 const pageTitle = ref('Code Integration')
 </script>
