@@ -37,7 +37,7 @@ const pageTitle = ref('Code Integration')
             <div class="flex flex-col lg:flex-row bg-white dark:border-strokedark dark:bg-boxdark">
               <main class="flex-1 p-4 h-screen overflow-y-auto w-full lg:w-3/4">
                 <section id="overview1" class="mb-6 pr-6 pl-6">
-                  <h2 class="text-2xl font-bold mb-4 pt-8">Introducton</h2>
+                  <h2 class="text-2xl font-bold mb-4 pt-8">Introduction</h2>
                   <p class="text-lg mb-6">
                     Sandhiguna Key Management System (SG-KMS) is a cryptographic and key management
                     software with a hardware-based TEE as its root of trust. It manages
@@ -338,7 +338,7 @@ const pageTitle = ref('Code Integration')
               <aside class="hidden lg:block w-1/4 p-4">
                 <h2 class="text-l font-medium mb-4">Sub Header</h2>
                 <ul>
-                  <li class="mb-1"><a href="#overview1" class="hover:underline">Introducton</a></li>
+                  <li class="mb-1"><a href="#overview1" class="hover:underline">Introduction</a></li>
                   <li class="mb-1">
                     <a href="#overview2" class="hover:underline">Sandhiguna KMS Architecture</a>
                   </li>
