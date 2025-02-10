@@ -22,18 +22,20 @@ function hashPassword(password) {
   const hash = bcrypt.hashSync(password, salt);
   return hash;
 }
+  const failedAttempts = new Map();
 
 class AuthController {
   static async Login(req, res) {
     try {
+      const { username, password} = req.body
       const userAdmin = await User.scope("visiblePassword").findOne({
-        where: { username: req.body.username },
+        where: { username },
       });
 
       const userClient = await Models.Client.scope("visiblePassword").findOne({
         where: {
           [Op.or]: [
-            { username: req.body.username },
+            { username},
             { email: req.body.username },
           ],
         },
@@ -45,13 +47,63 @@ class AuthController {
         user = userClient;
         user.dataValues.role = "client"
         if(user.dataValues.status_verification_email != true){
-          return res.status(400).json({ msg: "Akun tidak ditemukan" });
+          return res.status(400).json({ code:400, message: "Account not found. Please check your username or email." });
         }
       }
-      if (!user) return res.status(400).json({ msg: "Akun tidak ditemukan" });
+      if (!user) return res.status(400).json({ code:400, message: "Account not found. Please check your username or email." });
 
-      const match = await bcrypt.compare(req.body.password, user.password);
-      if (!match) return handlerErrorCustom(res, "email atau username dan password tidak match");
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!failedAttempts.has(username)) {
+        failedAttempts.set(username, { count: 0, lockUntil: null });
+      } 
+      console.log(failedAttempts);
+
+      const attempts = failedAttempts.get(username);
+
+      if (!isMatch) {
+          attempts.count += 1;
+          if (attempts.count >= 3) {
+              if (!attempts.lockUntil) {
+                  attempts.lockUntil = Date.now() + 5 * 60 * 1000;
+                  setTimeout(() => failedAttempts.delete(username), 5 * 60 * 1000);
+              }
+              return res.status(400).json({
+                  code: 400,
+                  message: attempts.count === 3 
+                      ? "Too many failed login attempts. Please try again in 5 minutes."
+                      : "Your account is temporarily locked. Please try again later.",
+                      lockUntil: Math.floor(attempts.lockUntil / 1000)
+              });
+          }
+
+          return res.status(400).json({ code: 400, message: "Incorrect email or password. Please try again." });
+      }
+
+      // const attempts = failedAttempts.get(username);
+      // if(!isMatch){
+      //   attempts.count += 1;
+      //   if(attempts.count == 3 && !isMatch){
+      //     const lockUntil = Date.now() + 5 * 60 * 1000;
+      //     attempts.lockUntil = lockUntil
+      //     setTimeout(() => {
+      //         failedAttempts.delete(username)
+      //       }, 5 * 60 * 1000); 
+      //     return res.status(429).json({
+      //       message: "sudah tiga kali email atau username dan password tidak match",
+      //       lockUntil: lockUntil,
+      //     });
+      //   }else if (attempts.count >= 3  && !isMatch){  
+      //     return res.status(429).json({
+      //       message: "gagal lebih tiga kali email atau username dan password tidak match",
+      //       lockUntil: attempts.lockUntil,
+      //     });
+      //   }
+      //   return res.status(429).json({
+      //     message: "email atau username dan password tidak match"
+      //   });
+      // }
+
+
       const accessToken = jwt.sign(
         {
           id: user.id,
