@@ -98,7 +98,7 @@ const loginUser = async () => {
 </script>
 
 <template>
-  <DefaultAuthCard title="Sign In to Athena">
+  <DefaultAuthCard title="Sign In to Sandhiguna">
     <form @submit.prevent="loginUser">
       <InputGroup required v-model="username" label="Email or Username" type="text" placeholder="Enter Your Username" />
       <InputGroup required v-model="password" label="Password" type="password" placeholder="Enter Your Password" />
