@@ -581,6 +581,7 @@ class ExampleApp{
             if(payload.publicKeyOrCert){
                 payload.publicKeyOrCert = payload.publicKeyOrCert.replace(/\\n/g, '\n');
             }
+            console.log(payload.publicKeyOrCert)
             const data = await SGKMS.engineApiSGKMS("/v1.0/external/verify", payload)
             await createTranscation(res, {
                 userId: token.id,
@@ -606,6 +607,54 @@ class ExampleApp{
                 userId: token.id,
                 status: !data.fault,
                 endpoint: "secret-get"
+            });         
+            if (data.fault) {
+                return handlerErrorCustom(res, data);
+            }
+            return res.status(200).json(data);
+        } catch (error) {
+            handlerError(res, error)
+        }
+    }
+    static async CertSign(req,res){
+        try {
+            const token = accesToken(req)
+            const payload = (({sessionToken, slotId, validityPeriod, keyId, csr})=>({
+                sessionToken, slotId, validityPeriod, keyId, csr
+            }))(req.body)
+            if(payload.csr){
+                payload.csr = payload.csr.replace(/\\n/g, '\n');
+            }
+            console.log(payload.csr)
+            const data = await SGKMS.engineApiSGKMS("/v1.0/cert/sign", payload)
+            await createTranscation(res, {
+                userId: token.id,
+                status: !data.fault,
+                endpoint: "cert-sign"
+            });         
+            if (data.fault) {
+                return handlerErrorCustom(res, data);
+            }
+            return res.status(200).json(data);
+        } catch (error) {
+            handlerError(res, error)
+        }
+    }
+    static async CertVerify(req,res){
+        try {
+            const token = accesToken(req)
+            const payload = (({sessionToken, slotId, keyId, certificate})=>({
+                sessionToken, slotId, keyId, certificate
+            }))(req.body)
+            if(payload.certificate){
+                payload.certificate = payload.certificate.replace(/\\n/g, '\n');
+            }
+            console.log(payload.certificate)
+            const data = await SGKMS.engineApiSGKMS("/v1.0/cert/verify", payload)
+            await createTranscation(res, {
+                userId: token.id,
+                status: !data.fault,
+                endpoint: "cert-verify"
             });         
             if (data.fault) {
                 return handlerErrorCustom(res, data);

@@ -1,7 +1,7 @@
 function handlerError(res, error) {
   if (error.errors) {
-    return res.status(500).json({
-      code: 500,
+    return res.status(400).json({
+      code: 400,
       message: error.errors[0].message,
     });
   } else {
@@ -12,8 +12,8 @@ function handlerError(res, error) {
   }
 }
 function handlerErrorCustom(res, error) {
-  return res.status(500).json({
-      code: 500,
+  return res.status(400).json({
+      code: 400,
       message: error,
     });
 }

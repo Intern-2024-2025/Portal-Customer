@@ -8,49 +8,56 @@ import API from '@/api/auth';
 const username = ref('');
 const password = ref('');
 const message = ref('');
-// const loginAttempts = ref(0);
-// const isLocked = ref(false);
-// const lockUntil = ref<number | null>(null);
-// const remainingTime = ref(0);
-// let timer: ReturnType<typeof setInterval>;
+const isLocked = ref(false);
+const lockUntil = ref<number | null>(null);
+const remainingTime = ref(0);
+let timer: ReturnType<typeof setInterval>;
 
-// onMounted(() => {
-//   const savedLockUntil = localStorage.getItem('lockUntil');
-//   if (savedLockUntil) {
-//     const lockTime = parseInt(savedLockUntil, 10);
-//     if (lockTime > Date.now()) {
-//       isLocked.value = true;
-//       lockUntil.value = lockTime;
-//       updateCountdown();
-//     } else {
-//       localStorage.removeItem('lockUntil');
-//     }
-//   }
-// });
+onMounted(() => {
+  const savedLockUntil = localStorage.getItem("lockUntil");
+  if (savedLockUntil) {
+    const lockTime = parseInt(savedLockUntil, 10);
+    if (lockTime > Date.now()) {
+      isLocked.value = true;
+      lockUntil.value = lockTime;
+      updateCountdown();
+    } else {
+      localStorage.removeItem("lockUntil");
+    }
+  }
+});
 
-// const updateCountdown = () => {
-//   if (timer) clearInterval(timer);
-//   timer = setInterval(() => {
-//     const now = Date.now();
-//     if (lockUntil.value && lockUntil.value > now) {
-//       remainingTime.value = Math.ceil((lockUntil.value - now) / 1000);
-//     } else {
-//       clearInterval(timer);
-//       isLocked.value = false;
-//       localStorage.removeItem('lockUntil');
-//     }
-//   }, 1000);
-// };
+const updateCountdown = () => {
+  if (timer) clearInterval(timer);
+  timer = setInterval(() => {
+    const now = Date.now();
+    if (lockUntil.value && lockUntil.value > now) {
+      remainingTime.value = Math.ceil((lockUntil.value - now) / 1000);
+    } else {
+      clearInterval(timer);
+      isLocked.value = false;
+      localStorage.removeItem("lockUntil");
+    }
+  }, 1000);
+};
 
-// const formattedTime = computed(() => `${remainingTime.value} seconds`);
+const formattedTime = computed(() => {
+  let time = remainingTime.value;
+  if (time < 0) return "0s"; 
+
+  const minutes = Math.floor(time / 60);
+  const seconds = time % 60;
+
+  return minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
+});
 
 const loginUser = async () => {
   message.value = "";
 
-  // if (isLocked.value) {
-  //   message.value = `Please wait ${formattedTime.value} before trying again.`;
-  //   return;
-  // }
+  if (isLocked.value) {
+    message.value = `Please wait ${formattedTime.value} before trying again.`;
+    return;
+  }
 
   if (!username.value || !password.value) {
     message.value = 'Please input your Username and Password';
@@ -59,75 +66,54 @@ const loginUser = async () => {
 
   try {
     const response = await API.login(username.value, password.value);
-    console.log(response)
+    console.log(response);
+
     if (response.code === 400 || response.code === 500) {
-    message.value = response.message;
-    return;
-    // } else if (response.code === 400) {
-    //   message.value = "Account not found. Please check your username or email.";
-    //   return;
+      message.value = response.message;
+      
+      if (response.lockUntil) {
+        lockUntil.value = response.lockUntil * 1000;
+        isLocked.value = true;
+        localStorage.setItem("lockUntil", lockUntil.value.toString());
+        updateCountdown();
+      }
+      return;
     }
-    // if (response.lockUntil) {
-    //   isLocked.value = true;
-    //   lockUntil.value = response.lockUntil;
-    //   localStorage.setItem('lockUntil', response.lockUntil.toString());
-    //   updateCountdown();
-    //   message.value = response.message
-    //   return;
-    // }
 
     if (response.accessToken) {
       localStorage.setItem('token', response.accessToken);
       localStorage.setItem('role', response.role);
-      
+
       const fetchData = await API.fetch(response.accessToken);
       localStorage.setItem('username', fetchData.data.username);
       localStorage.setItem('verificationData', fetchData.data.verificationData);
-      
+
       router.push(response.role === 'client' ? '/product' : '/');
       setTimeout(() => window.location.reload(), 100);
     }
   } catch (error: any) {
     console.error(error);
-    // if (error.response) {
-    //   switch (error.response.status) {
-    //     case 400:
-    //       message.value = "Invalid username, email, or password.";
-    //       break;
-    //     case 429:
-    //       isLocked.value = true;
-    //       lockUntil.value = error.response.data.lockUntil;
-    //       localStorage.setItem('lockUntil', lockUntil.value.toString());
-    //       updateCountdown();
-    //       message.value = error.response.data.message;
-    //       break;
-    //     default:
-    //       message.value = "An error occurred. Please try again later.";
-    //   }
-    // } else {
-    //   message.value = "Network error. Please check your connection.";
-    // }
   }
 };
 </script>
 
 <template>
-  <DefaultAuthCard title="Sign In to Athena">
+  <DefaultAuthCard title="Sign In to Sandhiguna">
     <form @submit.prevent="loginUser">
       <InputGroup required v-model="username" label="Email or Username" type="text" placeholder="Enter Your Username" />
       <InputGroup required v-model="password" label="Password" type="password" placeholder="Enter Your Password" />
 
       <p v-if="message" class="text-danger">{{ message }}</p>
-      <!-- <p v-if="isLocked" class="text-warning">*Please wait {{ formattedTime }} before trying again.</p> -->
+      <p v-if="isLocked" class="text-warning">*Please wait {{ formattedTime }} before trying again.</p> 
       
       <div class="mb-5 mt-6">
         <button 
           type="submit" 
-          class="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 font-medium text-white transition hover:bg-opacity-90">
+          class="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 font-medium text-white transition hover:bg-opacity-90"
+          :disabled="isLocked" >
           Sign In
         </button>
       </div>
-      <!-- :disabled="isLocked"  -->
 
       <div class="mb-5 mt-6">
         <router-link to="/auth/signup">
