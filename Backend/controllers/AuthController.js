@@ -79,31 +79,6 @@ class AuthController {
           return res.status(400).json({ code: 400, message: "Incorrect email or password. Please try again." });
       }
 
-      // const attempts = failedAttempts.get(username);
-      // if(!isMatch){
-      //   attempts.count += 1;
-      //   if(attempts.count == 3 && !isMatch){
-      //     const lockUntil = Date.now() + 5 * 60 * 1000;
-      //     attempts.lockUntil = lockUntil
-      //     setTimeout(() => {
-      //         failedAttempts.delete(username)
-      //       }, 5 * 60 * 1000); 
-      //     return res.status(429).json({
-      //       message: "sudah tiga kali email atau username dan password tidak match",
-      //       lockUntil: lockUntil,
-      //     });
-      //   }else if (attempts.count >= 3  && !isMatch){  
-      //     return res.status(429).json({
-      //       message: "gagal lebih tiga kali email atau username dan password tidak match",
-      //       lockUntil: attempts.lockUntil,
-      //     });
-      //   }
-      //   return res.status(429).json({
-      //     message: "email atau username dan password tidak match"
-      //   });
-      // }
-
-
       const accessToken = jwt.sign(
         {
           id: user.id,
