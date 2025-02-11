@@ -12,7 +12,7 @@ const blogItems = [
     photo: "../src/assets/images/Kripto.svg",
     description:
       "Istilah kripto dan kriptografi sering terdengar, terutama ketika kita berbicara tentang keamanan siber dan mata uang digital...",
-    link: "/blogdetail",
+    link: "/blog-detail",
   },
   // {
   //   title: "Pak Vincent beserta muridnya pergi dengan jumlah orang 2",
@@ -45,7 +45,7 @@ const filteredBlogItems = computed(() => {
 </script>
 
 <template>
-  <div class="untree_co-section bg-light">
+  <div class="untree_co-section bg-light" id="blog-section">
     <div class="container">
       <div class="row mb-4 justify-content-center text-center">
         <div class="col-md-8" data-aos="fade-up" data-aos-delay="0">
@@ -87,7 +87,7 @@ const filteredBlogItems = computed(() => {
             <div class="news-contents mb-4">
               <!-- <span class="post-meta-2">{{ item.category }}, 4 min read</span> -->
               <h3>
-                <a href="/blogdetail">{{ item.title }}</a>
+                <a href="/blog-detail">{{ item.title }}</a>
               </h3>
               <span class="post-meta-2">{{ item.description }}</span>
             </div>

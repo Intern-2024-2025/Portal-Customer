@@ -23,10 +23,10 @@ const buttonPricing = "Pricing";
             </div>
             <div class="col-lg-6">
               <!-- heading -->
-              <h1 class="heroPage" data-aos="fade-up" data-aos-delay="0">
+              <h1 class="heroPage" style="color: #142c48;" data-aos="fade-up" data-aos-delay="0">
                 Secure <b>Today.</b><br />
-                Safe <b>Tomorrow.</b>
-                <h2>When you don't plan accident but you can plan to stay save from catastrophic damage.</h2>
+                Safe <b style="color: #bca846">Tomorrow.</b>
+                <h2 style="color: #142c48;">"When you don't plan accident but you can plan to stay save from catastrophic damage."</h2>
               </h1>
               <p>
                 <a

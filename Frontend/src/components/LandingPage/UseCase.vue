@@ -4,7 +4,7 @@
       <div class="row pricing-title">
         <div class="col-12 text-center">
           <h2 class="heading" style="color: white; font-weight: bold;">Use Cases</h2>
-          <p style="color: white;">How Athena-KMS Helps Your Business</p>
+          <p style="color: white;">How Sandhiguna KMS Helps Your Business</p>
         </div>
       </div>
       <div class="col-lg-12">

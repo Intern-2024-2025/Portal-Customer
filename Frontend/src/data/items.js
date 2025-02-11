@@ -1,5 +1,5 @@
 const themeColor = '#407BFF'
-const siteName = 'Athena'
+const siteName = 'Sandhiguna'
 
 const contactInfo = {
     // address: 'JL. Kaliurang KM.14.5',

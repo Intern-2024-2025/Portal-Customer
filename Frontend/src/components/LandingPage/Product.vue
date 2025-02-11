@@ -1,6 +1,6 @@
 <script setup>
 import { themeColor } from "../../data/items";
-const heading = "Athena";
+const heading = "Product Sandhiguna";
 const subHeading =
   "Is highly secured and trusted cryptographic engine on Hardware-based Secure Enclave technology enforced by Intel® SGX to secure your data's confidentiality, criticality and regulatory complied, at the enterprise level across various industries.  ";
 const startButtonName = "Get Started";
@@ -21,7 +21,7 @@ const packages = [
 </script>
 
 <template>
-  <div class="untree_co-section" id="pricing-section">
+  <div class="untree_co-section" id="product-section">
     <div class="container">
       <div class="row pricing-title">
         <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
@@ -30,7 +30,7 @@ const packages = [
         </div>
       </div>
 
-      <div class="row justify-content-center">
+      <!-- <div class="row justify-content-center">
         <div class="col-lg-10">
           <div class="row">
             <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
@@ -39,9 +39,9 @@ const packages = [
                   <p>AthenaSHIELD (aTS)</p>
                 </div>
                 <ul class="list-unstyled ul-check primary mb-5">
-                  <!-- <li>There live the blind texts</li>
+                  <li>There live the blind texts</li>
                   <li>Far far away behind the word</li>
-                  <li>Far from the countries Vokalia and Consonantia</li> -->
+                  <li>Far from the countries Vokalia and Consonantia</li>
                 </ul>
                 <p class="text-center mb-0">
                   <a
@@ -62,9 +62,9 @@ const packages = [
                   <p>ATHENA's EDGE in the Market</p>
                 </div>
                 <ul class="list-unstyled ul-check primary mb-5">
-                  <!-- <li>Encryption key management system for data protection as part of cyber security</li>
+                  <li>Encryption key management system for data protection as part of cyber security</li>
                   <li>Forced by the most talented local Indonesian software engineer team and visionary leadership</li>
-                  <li> Build and develop with effective local resources we had belief and more confidence in market competition with competitive price strategy without beats the quality</li> -->
+                  <li> Build and develop with effective local resources we had belief and more confidence in market competition with competitive price strategy without beats the quality</li>
                 </ul>
                 <p class="text-center mb-0">
                   <a
@@ -85,9 +85,9 @@ const packages = [
                   <p>AthenaARCOS (aRC)</p>
                 </div>
                 <ul class="list-unstyled ul-check primary mb-5">
-                  <!-- <li>There live the blind texts</li>
+                  <li>There live the blind texts</li>
                   <li>Far far away behind the word</li>
-                  <li>Far from the countries Vokalia and Consonantia</li> -->
+                  <li>Far from the countries Vokalia and Consonantia</li>
                 </ul>
                 <p class="text-center mb-0">
                   <a
@@ -104,11 +104,11 @@ const packages = [
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="row paragraf">
         <div class="col-12" data-aos="fade-up" data-aos-delay="0">
-          <p>1. ATHENA is encryption key management system for data protection as
+          <p>1. Sandhiguna is encryption key management system for data protection as
           part of cyber security product of PT Sandhiguna Widya Proteksi was
           becoming the first 'Confidential Computing Technology' adopter in
           Indonesia, we’ve complete to build and release with standard of
@@ -132,7 +132,7 @@ const packages = [
           effortless handling the complexity of business applications on
           premises, cloud or hybrid environment.
           </p>
-          <p> 5. Believed on ATHENA is the future proof product for digital society
+          <p> 5. Believed on Sandhiguna is the future proof product for digital society
           and global trend of digital transformation</p>
         </div>
       </div>
@@ -142,7 +142,7 @@ const packages = [
 
 <style scoped>
 .paragraf {
-  padding: 70px;
+  /* padding: 70px; */
   text-align: justify;
 }
 .padding-product {
