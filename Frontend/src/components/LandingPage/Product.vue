@@ -127,7 +127,7 @@ const packages = [
           and comply with achievement at 87.7% scores.
           </p>
           <p>4. Creativity and Innovation in cutting-edge technology was fueled the
-          AthenaSHIELD to answer the challenges for centralized encryption key
+          Sandhiguna to answer the challenges for centralized encryption key
           management with adaptive and elastic architecture system design to
           effortless handling the complexity of business applications on
           premises, cloud or hybrid environment.
