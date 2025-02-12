@@ -15,9 +15,14 @@ const toggleMenu = () => {
   <nav class="site-nav dark js-site-navbar mb-5 site-navbar-target">
     <div class="container">
       <div class="site-navigation">
-        <a href="" class="logo m-0 float-left"
-          >{{ siteName }}<span class="text-primary">.</span></a
-        >
+        <a href="" class="logo m-0 float-left">
+        <!-- {{ siteName }}<span class="text-primary">.</span> -->
+        <img
+              src="../../assets/images/logo/logo_sandhiguna.png"
+              class="logo m-0 w-2 h-2 float-left"
+              style="width: 195px; height: 50px"
+            />
+        </a>
         <ul class="js-clone-nav d-none d-lg-inline-block site-menu float-left">
           <!-- <li class="active">
             <a href="#home-section" class="nav-link">Home</a>
@@ -43,27 +48,27 @@ const toggleMenu = () => {
           class="js-clone-nav d-none mt-1 d-lg-inline-block site-menu float-right"
         >
           <li>
-            <router-link to="/" active-class="active"
+            <router-link to="/" active-class="button-nav"
               >Home</router-link
             >
             <!-- <a href="/" class="nav-link">Home</a> -->
           </li>
           <!-- contoh a href menuju ke id #about-section -->
           <li>
-            <router-link to="/technology" active-class="active"
+            <router-link to="/technology" active-class="button-nav"
               >Technology</router-link
             >
           </li>
           <li>
-            <router-link to="/product" active-class="active"
+            <router-link to="/product" active-class="button-nav"
               >Product</router-link
             >
           </li>
+          <!-- <li>
+            <router-link to="/blog" active-class="button-nav">Blog</router-link>
+          </li> -->
           <li>
-            <router-link to="/blog" active-class="active">Blog</router-link>
-          </li>
-          <li>
-            <router-link to="/contact" active-class="active">Contact Us</router-link>
+            <router-link to="/contact" active-class="button-nav">Contact Us</router-link>
           </li>
           <!-- <li><router-link to="/contact" active-class="active">Contact Us</router-link></li> -->
           <li class="cta-button-rounded">
@@ -93,11 +98,11 @@ const toggleMenu = () => {
 
         <ul v-if="isMenuOpen" class="js-clone-nav d-lg-none mt-3 site-menu float-left mobile-menu" id="mobile-menu">
           <button class="close-btn" @click="toggleMenu">&times;</button>
-          <li><router-link to="/" active-class="active">Home</router-link></li>
-          <li><router-link to="/technology" active-class="active">Technology</router-link></li>
-          <li><router-link to="/product" active-class="active">Product</router-link></li>
-          <li><router-link to="/blog" active-class="active">Blog</router-link></li>
-          <li><router-link to="/contact" active-class="active">Contact Us</router-link></li>
+          <li><router-link to="/" active-class="button-nav">Home</router-link></li>
+          <li><router-link to="/technology" active-class="button-nav">Technology</router-link></li>
+          <li><router-link to="/product" active-class="button-nav">Product</router-link></li>
+          <!-- <li><router-link to="/blog" active-class="button-nav">Blog</router-link></li> -->
+          <li><router-link to="/contact" active-class="button-nav">Contact Us</router-link></li>
           <li class="cta-button-rounded"><a class="btn-outline-primary-header" href="http://localhost:5173/">Sign Up</a></li>
         </ul>
       </div>
@@ -107,9 +112,9 @@ const toggleMenu = () => {
 
 <style>
 .btn-outline-primary-header:hover {
-  background-color: hsl(240, 100%, 50%) !important;
+  background-color: #142c48 !important;
   color: white !important;
-  border-color: hsl(240, 100%, 50%) !important;
+  border-color: #142c48 !important;
   font-size: 10px;
   font-weight: normal;
 }
@@ -118,6 +123,11 @@ const toggleMenu = () => {
   background-color: hsl(240, 80%, 40%) !important;
   color: white !;
   border-color: hsl(240, 80%, 40%);
+}
+
+.button-nav {
+  color: #bca846 !important;
+  font-weight: bold;
 }
 
 /* Default menu styling */

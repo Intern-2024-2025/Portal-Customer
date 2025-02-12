@@ -200,7 +200,7 @@ h4,
   color: #407bff;
 }
 .active {
-  /* color: red; */
+  color: #BCA846;
   font-weight: bold;
 }
 
@@ -761,7 +761,7 @@ h4,
 
 .untree_co-hero .dots {
   position: absolute;
-  width: 100%;
+  /* width: 100%; */
   height: 200%;
 }
 .untree_co-hero .dots:before {

@@ -18,7 +18,7 @@ import UseCase from "../../components/LandingPage/UseCase.vue"
 <template>
   <Header />
   <Hero />
-  <Partner/>
+  <!-- <Partner/> -->
   <service1/>
   <Service2/>
   <UseCase/>

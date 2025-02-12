@@ -4,7 +4,7 @@ import personPhoto from "../../assets/images/person_1.jpg";
 import mainPhoto from "../../assets/images/service1.jpg";
 
 const service1Heading = "Digital Services";
-const service1SubHeading = "Athena Key Management System";
+const service1SubHeading = "Sandhiguna Key Management System";
 const service1Quote =
   '"Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia."';
 const personName = "James Anderson";
@@ -19,7 +19,7 @@ const designation = "Facebook, Product Lead";
     <div class="container">
       <div class="row pricing-title">
         <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
-          <h2 class="heading">Athena Key Management System</h2>
+          <h2 class="heading">Sandhiguna Key Management System</h2>
           <p>
             Software-Based Key Management System with Hardware-Based Root of
             Trust
@@ -88,7 +88,7 @@ const designation = "Facebook, Product Lead";
             </p> -->
             <ul class="list-unstyled ul-check primary">
               <li>
-                Athena Key Management System as a data encryption strategy is a
+                Sandhiguna Key Management System as a data encryption strategy is a
                 crucial component in mitigating security risks and legitimate
                 access must pass through all layers of defense.
               </li>

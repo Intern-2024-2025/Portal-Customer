@@ -1,8 +1,8 @@
 <script setup>
 import { contactInfo } from "../../data/items";
 
-const copyrightText = "Copyright 2024, All rights reserved.";
-const column1Heading = "Athena Key Management Server";
+const copyrightText = "Copyright 2021, All rights reserved.";
+const column1Heading = "Sandhiguna Key Management Server";
 const column1Text = "Secure Today. Safe Tomorrow";
 const column2Heading = "Projects";
 const column3Heading = "Services";
@@ -48,6 +48,8 @@ const socialItems = [
               When you don't plan accident but you can plan to stay save from
               catastrophic damage.
             </p>
+
+            <p>email : ayu@sandhiguna.com</p>
           </div>
           <!-- <div class="widget">
             <h3>{{ connectHeading }}</h3>
@@ -95,18 +97,18 @@ const socialItems = [
         <div class="col-lg-2">
           <div class="widget">
             <h3>{{ column3Heading }}</h3>
-            <p></p>
+            <!-- <p></p>
             <p>Technology</p>
             <p>Product</p>
             <p>Blog</p>
-            <p>Contact Us</p>
-            <!-- <ul class="list-unstyled links">
-              <li><a href="#">Home</a></li>
-              <li><a href="#">Technology</a></li>
-              <li><a href="#">Product</a></li>
-              <li><a href="#">Blog</a></li>
-              <li><a href="#">Contact Us</a></li>
-            </ul> -->
+            <p>Contact Us</p> -->
+            <ul class="list-unstyled links">
+              <li><a href="#home-section">Home</a></li>
+              <li><a href="#technology-section">Technology</a></li>
+              <li><a href="#product-section">Product</a></li>
+              <li><a href="#blog-section">Blog</a></li>
+              <li><a href="#contact-section">Contact Us</a></li>
+            </ul>
           </div>
         </div>
         <!-- <div class="col-lg-3">

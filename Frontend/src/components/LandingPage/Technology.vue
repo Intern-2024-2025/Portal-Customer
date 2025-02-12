@@ -26,13 +26,13 @@ const total = 4;
 </script>
 
 <template>
-  <div class="jarak">
+  <div class="jarak" id="technology-section">
     <div class="container">
       <div class="row pricing-title">
         <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="100">
-          <h2 class="heading">Athena Technology</h2>
+          <h2 class="heading">Sandhiguna Technology</h2>
           <p>
-            ATHENA's KMS utilizes several advanced technologies to provide
+            Sandhiguna KMS utilizes several advanced technologies to provide
             secure key management and protection services
           </p>
         </div>
@@ -45,7 +45,7 @@ const total = 4;
           </div>
           <h5 class="bold" >Intel® Software Guard Extensions (SGX)</h5>
           <p>
-            ATHENA KMS leverages Intel SGX to create secure enclaves within the
+            Sandhiguna KMS leverages Intel SGX to create secure enclaves within the
             CPU. These enclaves ensure that sensitive data, such as encryption
             keys, are processed and stored in an isolated and protected
             environment. SGX also supports remote attestation, proving that the
@@ -67,7 +67,7 @@ const total = 4;
             <br />
           </div>
           <h5 class="bold">Remote attestation</h5>
-          <p>ATHENA KMS uses SGX’s remote attestation feature to verify that the software running in the enclave is genuine and secure, further protecting against unauthorized tampering or access to sensitive keys.</p>
+          <p>Sandhiguna KMS uses SGX’s remote attestation feature to verify that the software running in the enclave is genuine and secure, further protecting against unauthorized tampering or access to sensitive keys.</p>
         </div>
         <div class="box-technology">
           <div data-aos="fade-up" data-aos-delay="100">
@@ -75,9 +75,9 @@ const total = 4;
             <br />
           </div>
           <h5 class="bold">Trusted Execution Environment (TEE)</h5>
-          <p>ATHENA KMS operates within a SoftTEE (a software-based trusted execution environment) enabled by Intel SGX.</p>
+          <p>Sandhiguna KMS operates within a SoftTEE (a software-based trusted execution environment) enabled by Intel SGX.</p>
           <p>This ensures that sensitive data like keys and certificates are processed in a secure, hardware-backed environment that protects against external threats.</p>
-          <p>These technologies combine to offer a highly secure environment for key management, making ATHENA KMS an effective solution for managing cryptographic keys in a secure and trusted manner.</p>
+          <p>These technologies combine to offer a highly secure environment for key management, making Sandhiguna KMS an effective solution for managing cryptographic keys in a secure and trusted manner.</p>
         </div>
       </div>
     </div>
