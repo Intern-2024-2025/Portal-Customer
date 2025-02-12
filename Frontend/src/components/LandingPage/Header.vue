@@ -101,7 +101,7 @@ const toggleMenu = () => {
           <li><router-link to="/" active-class="button-nav">Home</router-link></li>
           <li><router-link to="/technology" active-class="button-nav">Technology</router-link></li>
           <li><router-link to="/product" active-class="button-nav">Product</router-link></li>
-          <li><router-link to="/blog" active-class="button-nav">Blog</router-link></li>
+          <!-- <li><router-link to="/blog" active-class="button-nav">Blog</router-link></li> -->
           <li><router-link to="/contact" active-class="button-nav">Contact Us</router-link></li>
           <li class="cta-button-rounded"><a class="btn-outline-primary-header" href="http://localhost:5173/">Sign Up</a></li>
         </ul>
