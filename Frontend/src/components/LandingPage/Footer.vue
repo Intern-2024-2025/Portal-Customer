@@ -48,6 +48,8 @@ const socialItems = [
               When you don't plan accident but you can plan to stay save from
               catastrophic damage.
             </p>
+
+            <p>email : ayu@sandhiguna.com</p>
           </div>
           <!-- <div class="widget">
             <h3>{{ connectHeading }}</h3>

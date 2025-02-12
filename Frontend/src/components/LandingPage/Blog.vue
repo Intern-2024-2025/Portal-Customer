@@ -9,7 +9,7 @@ const blogItems = [
     // name: "Encrypt vs Kriptografi",
     date: "Jun 14, 2020",
     category: "Digital Service",
-    photo: "../src/assets/images/Kripto.svg",
+    photo: "../src/assets/images/kripto.svg",
     description:
       "Istilah kripto dan kriptografi sering terdengar, terutama ketika kita berbicara tentang keamanan siber dan mata uang digital...",
     link: "/blog-detail",

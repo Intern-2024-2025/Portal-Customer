@@ -18,11 +18,11 @@ const routes = [
     name: "dashboard",
     component: () => import("../views/Dashboard/Dashboard.vue"),
   },
-  {
-    path: "/blog",
-    name: "blog",
-    component: () => import("../views/blog/Blog.vue"),
-  },
+  // {
+  //   path: "/blog",
+  //   name: "blog",
+  //   component: () => import("../views/blog/Blog.vue"),
+  // },
   {
     path: "/contact",
     name: "contact",

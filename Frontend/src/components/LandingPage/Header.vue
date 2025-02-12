@@ -64,9 +64,9 @@ const toggleMenu = () => {
               >Product</router-link
             >
           </li>
-          <li>
+          <!-- <li>
             <router-link to="/blog" active-class="button-nav">Blog</router-link>
-          </li>
+          </li> -->
           <li>
             <router-link to="/contact" active-class="button-nav">Contact Us</router-link>
           </li>

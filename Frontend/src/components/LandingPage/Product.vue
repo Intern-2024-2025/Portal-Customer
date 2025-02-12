@@ -30,33 +30,34 @@ const packages = [
         </div>
       </div>
 
-      <!-- <div class="row justify-content-center">
+      <div class="row justify-content-center">
         <div class="col-lg-10">
-          <div class="row">
+          <div class="row-sertificate">
             <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
               <div class="pricing-product">
                 <div class="price">
-                  <p>AthenaSHIELD (aTS)</p>
+                  <img src="../../../src/assets/images/sertificate/rekognisi_common_criteria.png" />
+                  <p>Sertificate <br> Rekognisi Common Criteria</p>
                 </div>
-                <ul class="list-unstyled ul-check primary mb-5">
-                  <li>There live the blind texts</li>
-                  <li>Far far away behind the word</li>
-                  <li>Far from the countries Vokalia and Consonantia</li>
-                </ul>
-                <p class="text-center mb-0">
-                  <a
-                    href="/contact"
-                    class="btn btn-outline-primary"
-                    :style="[
-                      { color: themeColor },
-                      { borderColor: themeColor },
-                    ]"
-                    >Contact Us</a
-                  >
-                </p>
               </div>
             </div>
             <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+              <div class="pricing-product">
+                <div class="price">
+                  <img src="../../../src/assets/images/sertificate/common_criteria.png" />
+                  <p>Sertificate <br> Common Criteria Singapore</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+              <div class="pricing-product">
+                <div class="price">
+                  <img src="../../../src/assets/images/sertificate/tkdn_hd.png" />
+                  <p>Sertificate <br> Tingkat Komponen Dalam Negri (TKDN)</p>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
               <div class="pricing-product active">
                 <div class="price">
                   <p>ATHENA's EDGE in the Market</p>
@@ -78,8 +79,8 @@ const packages = [
                   >
                 </p>
               </div>
-            </div>
-            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+            </div> -->
+            <!-- <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
               <div class="pricing-product shadow active">
                 <div class="price">
                   <p>AthenaARCOS (aRC)</p>
@@ -101,39 +102,46 @@ const packages = [
                   >
                 </p>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
-      </div> -->
+      </div>
 
       <div class="row paragraf">
         <div class="col-12" data-aos="fade-up" data-aos-delay="0">
-          <p>1. Sandhiguna is encryption key management system for data protection as
-          part of cyber security product of PT Sandhiguna Widya Proteksi was
-          becoming the first 'Confidential Computing Technology' adopter in
-          Indonesia, we’ve complete to build and release with standard of
-          enterprise grade and regulatory compliance digital product for global
-          market.</p>
-          
-          <p>2. Forced by the most talented local Indonesian software engineer team
-          and visioner leadership, had achieved of product development in cyber
-          security industrial global standard also certified by International
-          Cyber Security Agency 'Common Criteria' in Singapore.
+          <p>
+              Sandhiguna is encryption key management system for data
+            protection as part of cyber security product of PT Sandhiguna Widya
+            Proteksi was becoming the first 'Confidential Computing Technology'
+            adopter in Indonesia, we’ve complete to build and release with
+            standard of enterprise grade and regulatory compliance digital
+            product for global market.
           </p>
-          <p>3. Build and develop with effective local resources we had belief and
-          more confidence in market competition with competitive price strategy
-          without beats the quality, especially for Indonesian market in
-          regulated for Domestic Component level (TKDN) we already registered
-          and comply with achievement at 87.7% scores.
+
+          <p>
+              Forced by the most talented local Indonesian software engineer
+            team and visioner leadership, had achieved of product development in
+            cyber security industrial global standard also certified by
+            International Cyber Security Agency 'Common Criteria' in Singapore.
           </p>
-          <p>4. Creativity and Innovation in cutting-edge technology was fueled the
-          Sandhiguna to answer the challenges for centralized encryption key
-          management with adaptive and elastic architecture system design to
-          effortless handling the complexity of business applications on
-          premises, cloud or hybrid environment.
+          <p>
+              Build and develop with effective local resources we had belief
+            and more confidence in market competition with competitive price
+            strategy without beats the quality, especially for Indonesian market
+            in regulated for Domestic Component level (TKDN) we already
+            registered and comply with achievement at 87.7% scores.
           </p>
-          <p> 5. Believed on Sandhiguna is the future proof product for digital society
-          and global trend of digital transformation</p>
+          <p>
+              Creativity and Innovation in cutting-edge technology was fueled
+            the Sandhiguna to answer the challenges for centralized encryption
+            key management with adaptive and elastic architecture system design
+            to effortless handling the complexity of business applications on
+            premises, cloud or hybrid environment.
+          </p>
+          <p>
+              Believed on Sandhiguna is the future proof product for digital
+            society and global trend of digital transformation
+          </p>
         </div>
       </div>
     </div>
@@ -149,7 +157,22 @@ const packages = [
   text-align: center;
   padding-bottom: 70px;
 }
-.pricing-product {
+.row-sertificate {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 48px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 kolom */
+  gap: 10px; /* Kurangi jarak antar kotak */
+  width: 100%;
+}
+.pricing-product {  
+  display: flex;
+  flex-direction: column; /* Agar gambar di atas teks */
+  align-items: center; /* Memusatkan isi */
+  justify-content: center;
+  width: 323px; /* Sesuaikan ukuran */
+  height: 489px;
   position: relative;
   padding: 20px;
   border: 2px solid #ffffff;
@@ -157,15 +180,21 @@ const packages = [
   border-radius: 10px;
   transition: all 0.3s ease; /* Animasi perubahan */
 }
+
 .price p {
-  font-size: 24px;
-  text-align: center;
+  font-size: 16px;
+  font-size: medium;
 }
+.price img {
+  width: 275px; /* Sesuaikan ukuran */
+  height: 385px;
+  margin-bottom: 8px; /* Jarak antara gambar dan teks */
+}
+
 .pricing-product:hover {
-  border-color: hsl(240, 100%, 50%); /* Warna border berubah saat hover */
   transform: translateY(-10px); /* Efek terangkat */
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Bayangan muncul saat hover */
-  color:black
+  color: black;
 }
 
 .pricing-product .body {
@@ -175,7 +204,29 @@ const packages = [
 .price {
   font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 1rem;
+  padding: 24px;
+}
+
+.price img:hover {
+  transform: scale(1.5); /* Perbesar gambar saat hover */
+}
+
+/* Media Query untuk tampilan lebih kecil (tablet) */
+@media (max-width: 768px) {
+  .row-sertificate {
+    grid-template-columns: 1fr; /* 1 kolom untuk tablet dan smartphone */
+  }
+
+  .pricing-product {
+    width: 100%; /* Lebar penuh pada tablet */
+    height: auto; /* Sesuaikan tinggi otomatis */
+    margin-bottom: 20px; /* Jarak antar kotak */
+  }
+
+  .price img {
+    width: 100%; /* Gambar lebar penuh */
+    height: auto; /* Sesuaikan tinggi gambar */
+  }
 }
 
 .ul-check {
