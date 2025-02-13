@@ -15,7 +15,7 @@ const toggleMenu = () => {
   <nav class="site-nav dark js-site-navbar mb-5 site-navbar-target">
     <div class="container">
       <div class="site-navigation">
-        <a href="" class="logo m-0 float-left">
+        <a href="/#" class="logo m-0 float-left">
         <!-- {{ siteName }}<span class="text-primary">.</span> -->
         <img
               src="../../assets/images/logo/logo_sandhiguna.png"
