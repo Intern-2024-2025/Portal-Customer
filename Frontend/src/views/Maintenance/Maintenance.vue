@@ -23,7 +23,7 @@
         </p>
         <p class="signature">
           Best regards,<br />
-          SANDHIGUNA<br />
+          SANDHIGUNA - Enigma Series<br />
           Secure Today. Safe Tomorrow.
         </p>
       </div>

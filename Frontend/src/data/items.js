@@ -1,5 +1,5 @@
 const themeColor = '#407BFF'
-const siteName = 'Sandhiguna'
+const siteName = "Sandhiguna - Enigma Series";
 
 const contactInfo = {
     // address: 'JL. Kaliurang KM.14.5',

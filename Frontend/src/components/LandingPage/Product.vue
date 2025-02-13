@@ -1,6 +1,6 @@
 <script setup>
 import { themeColor } from "../../data/items";
-const heading = "Product Sandhiguna";
+const heading = "Product Sandhiguna - Enigma Series";
 const subHeading =
   "Is highly secured and trusted cryptographic engine on Hardware-based Secure Enclave technology enforced by Intel® SGX to secure your data's confidentiality, criticality and regulatory complied, at the enterprise level across various industries.  ";
 const startButtonName = "Get Started";
@@ -110,7 +110,7 @@ const packages = [
       <div class="row paragraf">
         <div class="col-12" data-aos="fade-up" data-aos-delay="0">
           <p>
-              Sandhiguna is encryption key management system for data
+              Sandhiguna - Enigma Series is encryption key management system for data
             protection as part of cyber security product of PT Sandhiguna Widya
             Proteksi was becoming the first 'Confidential Computing Technology'
             adopter in Indonesia, we’ve complete to build and release with
@@ -133,13 +133,13 @@ const packages = [
           </p>
           <p>
               Creativity and Innovation in cutting-edge technology was fueled
-            the Sandhiguna to answer the challenges for centralized encryption
+            the Sandhiguna - Enigma Series to answer the challenges for centralized encryption
             key management with adaptive and elastic architecture system design
             to effortless handling the complexity of business applications on
             premises, cloud or hybrid environment.
           </p>
           <p>
-              Believed on Sandhiguna is the future proof product for digital
+              Believed on Sandhiguna - Enigma Series is the future proof product for digital
             society and global trend of digital transformation
           </p>
         </div>

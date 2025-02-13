@@ -2,7 +2,7 @@
 import { contactInfo } from "../../data/items";
 
 const copyrightText = "Copyright 2021, All rights reserved.";
-const column1Heading = "Sandhiguna Key Management Server";
+const column1Heading = "Sandhiguna - Enigma Series";
 const column1Text = "Secure Today. Safe Tomorrow";
 const column2Heading = "Projects";
 const column3Heading = "Services";
