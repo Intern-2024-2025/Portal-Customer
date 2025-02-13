@@ -40,7 +40,7 @@ const socialItems = [
     <div class="container">
       <div class="row">
         <div class="col-lg-5">
-          <h3 style="font-weight: bold;">PT Sandhiguna Widya Proteksi</h3>
+          <h3 style="font-weight: bold">PT Sandhiguna Widya Proteksi</h3>
           <div class="widget">
             <h3>{{ column1Heading }}</h3>
             <p>
@@ -97,18 +97,18 @@ const socialItems = [
         <div class="col-lg-2">
           <div class="widget">
             <h3>{{ column3Heading }}</h3>
+            <ul class="list-unstyled-services">
+              <li><a href="/#">Home</a></li>
+              <li><a href="/technology/#">Technology</a></li>
+              <li><a href="/product/#">Product</a></li>
+              <!-- <li><a href="#blog-section">Blog</a></li> -->
+              <li><a href="/contact/#">Contact Us</a></li>
+            </ul>
             <!-- <p></p>
             <p>Technology</p>
             <p>Product</p>
             <p>Blog</p>
             <p>Contact Us</p> -->
-            <ul class="list-unstyled links">
-              <li><a href="#home-section">Home</a></li>
-              <li><a href="#technology-section">Technology</a></li>
-              <li><a href="#product-section">Product</a></li>
-              <li><a href="#blog-section">Blog</a></li>
-              <li><a href="#contact-section">Contact Us</a></li>
-            </ul>
           </div>
         </div>
         <!-- <div class="col-lg-3">
@@ -142,3 +142,29 @@ const socialItems = [
     </div>
   </div>
 </template>
+
+<style>
+.list-unstyled-services {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+
+.list-unstyled-services li {
+  margin-bottom: 5px;
+}
+
+.list-unstyled-services a {
+  text-decoration: none;
+  color: #777;
+  font-size: 16px;
+  padding: 2px 0; 
+  display: block; 
+  transition: color 0.3s ease;
+}
+
+.list-unstyled-services a:hover {
+  color: #333;
+}
+</style>
