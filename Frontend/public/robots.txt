@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://staging.sandhiguna.com/sitemap.xml
