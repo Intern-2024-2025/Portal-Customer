@@ -1,0 +1,11 @@
+services:
+ dashboard-vue-app:
+    build: .
+    ports:
+      - "5173:5173"  # Menghubungkan port host dengan port di container
+    environment:
+      - HOST=0.0.0.0
+      - PORT=5173
+    volumes:
+      - .:/app
+      - /app/node_modules  # Pastikan node_modules tetap berada di container
